@@ -139,7 +139,7 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qmZ-tJ-lgC">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="zain112" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qmZ-tJ-lgC">
                                                                         <rect key="frame" x="10" y="40" width="334" height="40"/>
                                                                         <color key="backgroundColor" red="0.98039215690000003" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                         <constraints>
@@ -187,14 +187,14 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="96T-6Q-KDJ">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1234567" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="96T-6Q-KDJ">
                                                                         <rect key="frame" x="10" y="40" width="334" height="40"/>
                                                                         <color key="backgroundColor" red="0.98039215690000003" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="40" id="BJW-Ng-jeV"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                                                     </textField>
                                                                     <button opaque="NO" alpha="0.45000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7n-xE-Zxp">
                                                                         <rect key="frame" x="229" y="80" width="115" height="30"/>
@@ -2074,11 +2074,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pdA-lh-AfF"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" id="aeS-8C-7V5"/>
+                    <tabBarItem key="tabBarItem" title="" image="person.3.fill" catalog="system" id="aeS-8C-7V5"/>
                     <connections>
+                        <outlet property="newReleasesCollectionView" destination="7HG-29-SJ2" id="cY9-ox-3cd"/>
                         <outlet property="recomcollectionview" destination="7em-R4-quu" id="HiL-E4-Dn9"/>
                         <outlet property="recordAction" destination="Z0D-hr-Sj1" id="Lyc-lj-Y7u"/>
-                        <outlet property="relcollectionview" destination="7HG-29-SJ2" id="cY9-ox-3cd"/>
                         <outlet property="trendcollectionview" destination="lTL-oN-4F8" id="BTW-pL-8o6"/>
                         <outlet property="uppercollectionview" destination="weX-U0-8Zh" id="57Y-6a-QPd"/>
                     </connections>
@@ -2427,7 +2427,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Vjf-gs-l3Q"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" id="Gjh-FP-9ej"/>
+                    <tabBarItem key="tabBarItem" title="" image="person.3" catalog="system" id="Gjh-FP-9ej"/>
                     <connections>
                         <outlet property="catdowncollectionview" destination="MOc-3K-7ZA" id="vkl-Zw-a8c"/>
                         <outlet property="catupcollectionview" destination="cWY-O6-A9v" id="YTH-8y-84d"/>
@@ -2991,7 +2991,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FA2-Hv-m2L"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" id="pQd-r2-nXu"/>
+                    <tabBarItem key="tabBarItem" title="" image="person.crop.circle" catalog="system" id="pQd-r2-nXu"/>
                     <connections>
                         <outlet property="bottoncollectionview" destination="ddh-5F-SFu" id="634-GY-j7y"/>
                         <outlet property="uppercollectionview" destination="taS-y2-ab5" id="W0q-zN-FAw"/>
@@ -3574,6 +3574,9 @@
         <image name="forgetNameDoneImage" width="132" height="42"/>
         <image name="main" width="59" height="59"/>
         <image name="person" catalog="system" width="128" height="117"/>
+        <image name="person.3" catalog="system" width="128" height="62"/>
+        <image name="person.3.fill" catalog="system" width="128" height="61"/>
+        <image name="person.crop.circle" catalog="system" width="128" height="121"/>
         <image name="recomone" width="46" height="50.5"/>
         <image name="releaseone" width="46" height="50.5"/>
         <image name="startUploading" width="456" height="438"/>

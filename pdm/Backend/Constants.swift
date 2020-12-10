@@ -12,12 +12,22 @@ let kGMS_APIKEY = "AIzaSyCFispDflTAC3cJCZHJHiKA9ESeVOLaUNI"
 
 //MARK: api methods
 let klogin = "auth/login"
+let khome = "home/"
+let khome_mic = "home/mic"
 
 
 //MARK: API KEYS
 let kusername = "username"
 let kpassword = "password"
 let kis_email = "is_email"
+let kdata = "data"
+let kfeatured = "featured"
+let ktrending = "trending"
+let krecommended = "recommended"
+let knewRelease = "newRelease"
+let kvideo = "video"
+
+
 
 //let kis_email = "id"
 //let kis_email = "userName"
@@ -128,7 +138,6 @@ let kApiKey = "1234567890"
 let kfull_name = "full_name"
 let kmobileNumber = "mobile_number"
 let kdistance = "distance"
-let kduration = "duration"
 let kmobile = "mobile_number"
 let kMOBILE = "mobile"
 let kdiscount_enable = "discount_enable"
@@ -184,7 +193,6 @@ var korder_id = "order_id"
 var korderStartTime = "order_start_time"
 var korderStatus = "order_status"
 var kvehicleType = "vehicle_type"
-var kdata = "data"
 var korder_type = "order_type"
 //var korderScheduleAt = "order_schedule_at"
 var kschedule_date = "schedule_date"
@@ -442,16 +450,6 @@ let kOrderScooter = "OrderScooter"
 let kOrderFlatTruck = "OrderFlatTruck"
 let kOrderVehicletype = "Vehicle type:"
 
-//MARK: SideMenu
-let kHome = "Home"
-let kProfile = "Profile"
-let kMyOrder = "My Order"
-let kPayment = "Payment"
-let kAbout = "About"
-let kContactUs = "Contact Us"
-let kShare = "Share"
-let kLogout = "Logout"
-let kInfo = "info@carigologistics.com"
 
 //MARK: DropOff
 let kTransform = "transform.scale"

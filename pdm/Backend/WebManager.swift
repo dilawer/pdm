@@ -61,11 +61,21 @@ class WebManager: NSObject {
         return WebManager(d: delegate)
     }
     
+    //MARK: homeData
+    func getHomeData() {
+        let params = [:] as [String : Any]
+        let url = "\(kbaseURL)\(khome)"
+        makeRequest(requestUrl: url, method: .get, parameters: params)
+    }
+    func getHomeTrendingData() {
+        let params = [:] as [String : Any]
+        let url = "\(kbaseURL)\(khome_mic)"
+        makeRequest(requestUrl: url, method: .get, parameters: params)
+    }
     
     
     //MARK: authentication
     func signInWithEmail(email: String, pass: String) {
-        isCancelOrder = true
         let params = [kusername: email, kpassword: pass, kis_email: "2"] as [String : Any]
         let url = "\(kbaseURL)\(klogin)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
@@ -75,8 +85,16 @@ class WebManager: NSObject {
     func makeRequest(requestUrl: String, method: HTTPMethod = .get, parameters: Parameters? = nil) {
         let retryCount = 3
         if Utility.isInternetConnected() {
-            AF.request(requestUrl, method: method,
-                            parameters: parameters)
+            var headers: HTTPHeaders = []
+            if User.getInstance()?.isLogin == true {
+                headers = [
+                    "Authorization": "Bearer \(User.getInstance()?.access_token ?? "")",
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                ]
+            }
+            
+            AF.request(requestUrl, method: method, parameters: parameters, headers: headers)
             .responseJSON { response in
                 switch (response.result) {
                 case .success(_):

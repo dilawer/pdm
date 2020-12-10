@@ -17,8 +17,11 @@ let kupdatedAt = "updatedAt"
 let kprofile_image = "profileImage"
 let kautoplay = "autoplay"
 let kcover_image = "coverImage"
+let kaccess_token = "access_token"
+let kisLogin = "isLogin"
 
 let k_user = "user"
+let ktoken = "token"
 
 
 class User: NSObject, NSCoding {
@@ -29,19 +32,16 @@ var fullName : String
 var email: String
     
     var autoplay: Bool
+    var isLogin: Bool
     var dob : String
 var createdAt : String
 var updatedAt : String
 var profile_image : String
 var cover_image : String
-    
-
-    
-    
-    
+    var access_token : String
     
     // MARK: init methods
-    init(userid: String, username: String, fullName: String, email: String, dob: String, createdAt: String, updatedAt: String, profileImage : String, autoplay: Bool, coverImage: String) {
+    init(userid: String, username: String, fullName: String, email: String, dob: String, createdAt: String, updatedAt: String, profileImage : String, autoplay: Bool, coverImage: String, access_token: String, isLogin: Bool) {
         self.userid = userid
         self.userName = username
         self.fullName = fullName
@@ -52,6 +52,8 @@ var cover_image : String
         self.profile_image = profileImage
         self.autoplay = autoplay
         self.cover_image = coverImage
+        self.access_token = access_token
+        self.isLogin = isLogin
     }
     
     override init() {
@@ -66,15 +68,16 @@ var cover_image : String
         self.profile_image = ""
         self.autoplay = false
         self.cover_image = ""
+        self.access_token = ""
+        self.isLogin = false
         
     }
     
     class func getInstance() -> User? {
         if let data = UserDefaults.standard.object(forKey: k_user) as? NSData {
-//            return NSK
             return NSKeyedUnarchiver.unarchiveObject(with: data as Data) as? User
         }
-        return User(userid: "", username: "", fullName: "", email: "", dob: "", createdAt: "", updatedAt: "", profileImage : "", autoplay: false, coverImage: "")
+        return User(userid: "", username: "", fullName: "", email: "", dob: "", createdAt: "", updatedAt: "", profileImage : "", autoplay: false, coverImage: "", access_token: "", isLogin: false)
     }
     
     func saveUser() {
@@ -83,16 +86,20 @@ var cover_image : String
     }
     func setUserData(data : NSDictionary) {
         
-        self.userid = data[kId] as? String ?? ""
-        self.userName = data[kuserName] as? String ?? ""
-        self.fullName = data[kfullName] as? String ?? ""
-        self.email = data[kemail] as? String ?? ""
-        self.dob = data[kdob] as? String ?? ""
-        self.createdAt = data[kcreatedAt] as? String ?? ""
-        self.updatedAt = data[kupdatedAt] as? String ?? ""
-        self.profile_image = data[kprofile_image] as? String ?? ""
-        self.autoplay = data[kautoplay] as! Bool
-        self.cover_image = data[kcover_image] as? String ?? ""
+        let user = data.object(forKey: k_user)! as! NSDictionary
+        let token = data.object(forKey: ktoken)! as! NSDictionary
+        self.userid = "\(user[kId] ?? "")"
+        self.userName = user[kuserName] as? String ?? ""
+        self.fullName = user[kfullName] as? String ?? ""
+        self.email = user[kemail] as? String ?? ""
+        self.dob = user[kdob] as? String ?? ""
+        self.createdAt = user[kcreatedAt] as? String ?? ""
+        self.updatedAt = user[kupdatedAt] as? String ?? ""
+        self.profile_image = user[kprofile_image] as? String ?? ""
+        self.autoplay = user[kautoplay] as! Bool
+        self.cover_image = user[kcover_image] as? String ?? ""
+        self.access_token = token[kaccess_token] as? String ?? ""
+        self.isLogin = true
         self.saveUser()
     }
     
@@ -107,6 +114,8 @@ var cover_image : String
         self.profile_image = ""
         self.autoplay = false
         self.cover_image = ""
+        self.access_token = ""
+        self.isLogin = false
         saveUser()
     }
     
@@ -122,8 +131,10 @@ var cover_image : String
         let profile_image = decoder.decodeObject(forKey: kprofile_image) as! String
         let autoplay: Bool = decoder.decodeBool(forKey: kautoplay)
         let cover_image = decoder.decodeObject(forKey: kcover_image) as! String
+        let access_token = decoder.decodeObject(forKey: kaccess_token) as! String
+        let isLogin: Bool = decoder.decodeBool(forKey: kisLogin)
         
-        self.init(userid: userid, username: userName, fullName: fullName, email: email, dob: dob, createdAt: createdAt, updatedAt: updatedAt, profileImage : profile_image, autoplay: autoplay, coverImage: cover_image)
+        self.init(userid: userid, username: userName, fullName: fullName, email: email, dob: dob, createdAt: createdAt, updatedAt: updatedAt, profileImage : profile_image, autoplay: autoplay, coverImage: cover_image, access_token: access_token, isLogin: isLogin)
     }
     
     func encode(with coder: NSCoder) {
@@ -137,6 +148,8 @@ var cover_image : String
         coder.encode(self.profile_image, forKey: kprofile_image)
         coder.encode(self.autoplay, forKey: kautoplay)
         coder.encode(self.cover_image, forKey: kcover_image)
+        coder.encode(self.access_token, forKey: kaccess_token)
+        coder.encode(self.isLogin, forKey: kisLogin)
         
     }
 }

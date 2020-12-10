@@ -24,12 +24,20 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         self.customization()
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        
+        
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        let user = User.getInstance()
+        if user?.isLogin == true{
+            let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
+            self.navigationController?.pushViewController(vcone!, animated: false)
+        }
     }
     
     func customization() {
@@ -94,28 +102,7 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         
             let userName = userNameTF.text
             let password = passwordTF.text
-//        let dict : [String:Any] = ["username": userNameTF.text!, "password": passwordTF.text!, "is_email" : "2"]
-//        if self.messageTF.text == kEmpty || self.passTF.text == kEmpty {
-//            let alert = UIAlertController(title: kEmpty, message: kFillAllFields, preferredStyle: UIAlertControllerStyle.alert)
-//            alert.addAction(UIAlertAction(title: kOk, style: UIAlertActionStyle.default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-//        } else {
-//            let userName = self.messageTF.text
-//            let password = self.passTF.text
-//            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-//            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-//            if isValidEmail(testStr: userName!) == true {
-//                //activityIndicator.startAnimating()
-//                Utilities.HelperFuntions.delegate.showProgessBar(self.view)
-                WebManager.getInstance(delegate: self)?.signInWithEmail(email: userName!, pass      : password!)
-//            } else {
-//                let alert = UIAlertController(title: kEmpty, message: kValidEmail, preferredStyle: UIAlertControllerStyle.alert)
-//                alert.addAction(UIAlertAction(title: kOk, style: UIAlertActionStyle.default, handler: nil))
-//                self.present(alert, animated: true, completion: nil)
-//            }
-//        }
-        
-//        Api_withParameters(aDictParam: dict)
+                WebManager.getInstance(delegate: self)?.signInWithEmail(email: userName!, pass: password!)
     }
     @IBAction func continueWithFBTapped(_ sender: Any) {
         let vcone = storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
@@ -166,7 +153,6 @@ extension SignInViewController: WebManagerDelegate {
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             } else {
-                let result = result.object(forKey: "user")! as! NSDictionary
                 let user = User.getInstance()
                 user?.setUserData(data: result)
                 let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;

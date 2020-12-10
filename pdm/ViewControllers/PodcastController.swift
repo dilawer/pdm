@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class PodcastController: UIViewController , UICollectionViewDelegate , UICollectionViewDataSource {
     
@@ -14,9 +15,15 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
     
     @IBOutlet weak var recomcollectionview: UICollectionView!
     
-    @IBOutlet weak var relcollectionview: UICollectionView!
+    @IBOutlet weak var newReleasesCollectionView: UICollectionView!
     
     @IBOutlet weak var recordAction: UIImageView!
+    
+    
+    var trendingEpisodes: [Episode]=[]
+    var newReleaseEpisodes: [Episode]=[]
+    var recommendedEpisodes: [Episode]=[]
+    
     
     let textArr = ["Pod \n of the","Trending \n pod"]
     let trendtitleArr = ["Lip Service","Brilliant Idiots","Orphan Album"]
@@ -92,20 +99,22 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
         layoutthree.itemSize = CGSize(width: itemSizerel + 30, height: itemSizerel + 30)
         layoutthree.minimumInteritemSpacing = 10
         layoutthree.minimumLineSpacing = 0
-        relcollectionview.collectionViewLayout = layoutthree
+        newReleasesCollectionView.collectionViewLayout = layoutthree
+        
+        WebManager.getInstance(delegate: self)?.getHomeTrendingData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.uppercollectionview {
                return textArr.count
            } else if collectionView == trendcollectionview{
-               return trendtitleArr.count
+               return trendingEpisodes.count
            }
            else if collectionView == recomcollectionview{
-               return recomtitleArr.count
+               return recommendedEpisodes.count
            }
-           else if collectionView == relcollectionview{
-               return reltitleArr.count
+           else if collectionView == newReleasesCollectionView{
+               return newReleaseEpisodes.count
            }
         return 0
     }
@@ -130,10 +139,10 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
                
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Trendcell", for: indexPath) as! TrendCollectionViewCell
                 
-                cell.imagetrend.image = trendimageArr[indexPath.row]
-                cell.titletrend.text = trendtitleArr[indexPath.row]
-                cell.episodetrend.text = trendsubtitleArr[indexPath.row]
-                cell.timetrend.text = trendtimeArr[indexPath.row]
+//            cell.imagetrend.image = self.trendingEpisodes[indexPath.row].icon
+                cell.titletrend.text = self.trendingEpisodes[indexPath.row].eposide_name
+                cell.episodetrend.text = self.trendingEpisodes[indexPath.row].eposide_name
+                cell.timetrend.text = self.trendingEpisodes[indexPath.row].duration
                 cell.layer.cornerRadius = 10
                 return cell
             }
@@ -141,27 +150,107 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
                
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recomcell", for: indexPath) as! RecomCollectionViewCell
                 
-                cell.recomimage.image = recomimageArr[indexPath.row]
-                cell.recomtitle.text = recomtitleArr[indexPath.row]
-                cell.recomepisode.text = recomsubtitleArr[indexPath.row]
-                cell.recomtime.text = recomtimeArr[indexPath.row]
+//                cell.recomimage.image = self.recommendedEpisodes[indexPath.row].icon
+                cell.recomtitle.text = self.recommendedEpisodes[indexPath.row].eposide_name
+                cell.recomepisode.text = self.recommendedEpisodes[indexPath.row].eposide_name
+                cell.recomtime.text = self.recommendedEpisodes[indexPath.row].duration
                 cell.layer.cornerRadius = 10
                 return cell
             }
-            else if collectionView == relcollectionview{
+            else if collectionView == newReleasesCollectionView{
                
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "relcell", for: indexPath) as! releaseCollectionViewCell
                 
-                cell.relimage.image = releaseimageArr[indexPath.row]
-                cell.reltitle.text = reltitleArr[indexPath.row]
-                cell.relsubtitle.text = relsubtitleArr[indexPath.row]
-                cell.reltime.text = reltimeArr[indexPath.row]
+//                cell.relimage.image = self.newReleaseEpisodes[indexPath.row].icon
+                cell.reltitle.text = self.newReleaseEpisodes[indexPath.row].eposide_name
+                cell.relsubtitle.text = self.newReleaseEpisodes[indexPath.row].eposide_name
+                cell.reltime.text = self.newReleaseEpisodes[indexPath.row].duration
                 cell.layer.cornerRadius = 10
                 return cell
             }
         return UICollectionViewCell()
     }
-    
-    
+}
 
+extension PodcastController: WebManagerDelegate {
+    func failureResponse(response: AFDataResponse<Any>) {
+     //   activityIndicator.stopAnimating()
+//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
+        Utility.showAlertWithSingleOption(controller: self, title: kEmpty, message: kCannotConnect, preferredStyle: .alert, buttonText: kok, buttonHandler: nil)
+    }
+    
+    func networkFailureAction() {
+//        Utility.stopSpinner(activityIndicator: activityIndicator)
+//        activityIndicator.stopAnimating()
+//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
+
+        let alert = UIAlertController(title: kEmpty, message: kInternetError, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: kOk, style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        return
+    }
+    
+    func successResponse(response: AFDataResponse<Any> ,webManager: WebManager) {
+        
+        switch(response.result) {
+        case .success(let JSON):
+            //SVProgressHUD.dismiss()
+            let result = JSON as! NSDictionary
+            let successresponse = result.object(forKey: "success")!
+            if(successresponse as! Bool == false) {
+                let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                let data = result.object(forKey: kdata) as! NSDictionary
+                var episodes = data.object(forKey: ktrending) as! NSArray
+                for i in 0 ..< episodes.count {
+                    let episode = Episode()
+                    episode.setEpisodeData(data: episodes[i] as! NSDictionary)
+                    trendingEpisodes.append(episode)
+                }
+                self.trendcollectionview.reloadData()
+                episodes = data.object(forKey: krecommended) as! NSArray
+                for i in 0 ..< episodes.count {
+                    let episode = Episode()
+                    episode.setEpisodeData(data: episodes[i] as! NSDictionary)
+                    recommendedEpisodes.append(episode)
+                }
+                self.recomcollectionview.reloadData()
+                episodes = data.object(forKey: knewRelease) as! NSArray
+                for i in 0 ..< episodes.count {
+                    let episode = Episode()
+                    episode.setEpisodeData(data: episodes[i] as! NSDictionary)
+                    newReleaseEpisodes.append(episode)
+                }
+                self.newReleasesCollectionView.reloadData()
+                
+//
+//                featuredPodcasts.removeAll()
+//                for i in 0 ..< podcasts.count {
+//                    let podcast = Podcast()
+//                    podcast.setPodcastData(data: podcasts[i] as! NSDictionary)
+//                    featuredPodcasts.append(podcast)
+//                }
+//
+//                video.setVideoData(data: data.object(forKey: kvideo) as! NSDictionary)
+//                podcastOfTheWeek.setPodcastData(data: data.object(forKey: kpodcast_of_the_week) as! NSDictionary)
+//                if podcastOfTheWeek.podcastID != ""  {
+//                    textArr.insert("Pod \n of the \n week", at: 0)
+//                    imageArr.insert(UIImage(named: "upperone")!, at: 0)
+//                }
+                //reload array
+                
+                
+            }
+            
+            break
+        case .failure(_):
+            //SVProgressHUD.dismiss()
+            let alert = UIAlertController(title: "Error", message: "Please enter correct username and password.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        }
+    }
 }

@@ -10,6 +10,9 @@
 		04F403AB973C71CE7C4250CC /* Pods_pdm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A6454BA3E80D66A5577EA9 /* Pods_pdm.framework */; };
 		1873A6A1258196D700CD607D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A0258196D700CD607D /* Utility.swift */; };
 		1873A6A325819C8700CD607D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A225819C8700CD607D /* User.swift */; };
+		1873A6A5258297D600CD607D /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A4258297D600CD607D /* Podcast.swift */; };
+		1873A6A72582AC6100CD607D /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A62582AC6100CD607D /* Video.swift */; };
+		1873A6A92582C23700CD607D /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A82582C23700CD607D /* Episode.swift */; };
 		1AEF532625318F7C00968ED7 /* PodcastController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEF532525318F7C00968ED7 /* PodcastController.swift */; };
 		1AEF532B2531BF8A00968ED7 /* PodcastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEF532A2531BF8A00968ED7 /* PodcastCollectionViewCell.swift */; };
 		1AEF53342531CE6300968ED7 /* TrendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEF53332531CE6300968ED7 /* TrendCollectionViewCell.swift */; };
@@ -73,6 +76,9 @@
 		17EDFD8F055FBA146976FDAD /* Pods-pdm-pdmTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pdm-pdmTests.debug.xcconfig"; path = "Target Support Files/Pods-pdm-pdmTests/Pods-pdm-pdmTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1873A6A0258196D700CD607D /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		1873A6A225819C8700CD607D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		1873A6A4258297D600CD607D /* Podcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
+		1873A6A62582AC6100CD607D /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		1873A6A82582C23700CD607D /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		1AEF532525318F7C00968ED7 /* PodcastController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastController.swift; sourceTree = "<group>"; };
 		1AEF532A2531BF8A00968ED7 /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
 		1AEF53332531CE6300968ED7 /* TrendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -296,6 +302,9 @@
 		C6EEC7ED25765DCD00AC6D1B /* Backend */ = {
 			isa = PBXGroup;
 			children = (
+				1873A6A62582AC6100CD607D /* Video.swift */,
+				1873A6A4258297D600CD607D /* Podcast.swift */,
+				1873A6A82582C23700CD607D /* Episode.swift */,
 				1873A6A225819C8700CD607D /* User.swift */,
 				1873A6A0258196D700CD607D /* Utility.swift */,
 				C6EEC7F425765E1300AC6D1B /* WebManager.swift */,
@@ -578,11 +587,14 @@
 				C6EEC7F525765E1300AC6D1B /* WebManager.swift in Sources */,
 				1AEF53642532409C00968ED7 /* ProfileCollectionViewCell.swift in Sources */,
 				C6CDE29B2526F00200B8C411 /* AppDelegate.swift in Sources */,
+				1873A6A5258297D600CD607D /* Podcast.swift in Sources */,
+				1873A6A72582AC6100CD607D /* Video.swift in Sources */,
 				1AEF533C2531E58A00968ED7 /* RecomCollectionViewCell.swift in Sources */,
 				C6CDE29D2526F00200B8C411 /* SceneDelegate.swift in Sources */,
 				C6CDE2D42526F07C00B8C411 /* SignInViewController.swift in Sources */,
 				C6CDE2CF2526F06700B8C411 /* LaunchViewController.swift in Sources */,
 				C6CDE2E32526F50900B8C411 /* ForgetPasswordViewController.swift in Sources */,
+				1873A6A92582C23700CD607D /* Episode.swift in Sources */,
 				1AEF532B2531BF8A00968ED7 /* PodcastCollectionViewCell.swift in Sources */,
 				C6CDE2DE2526F4F400B8C411 /* ForgetNameViewController.swift in Sources */,
 				1AEF53342531CE6300968ED7 /* TrendCollectionViewCell.swift in Sources */,
