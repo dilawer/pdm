@@ -3,11 +3,33 @@ import Foundation
 
 let kheader : [String : String] = ["Content-Type":"application/json"]
 
-let kbaseURL = "http://staging.oqh.obm.mybluehost.me/"
+let kbaseURL = "https://staging.oqh.obm.mybluehost.me/api/"
 let kFbUrl = "https:carigologistics.com/signin_with_facebook"
 let kFcmTokenUrl = "https:carigologistics.com/user/updateFcmToken"
 let kFetchCategoriesURL = "https:carigologistics.com/get_categories"
 let kGMS_APIKEY = "AIzaSyCFispDflTAC3cJCZHJHiKA9ESeVOLaUNI"
+
+
+//MARK: api methods
+let klogin = "auth/login"
+
+
+//MARK: API KEYS
+let kusername = "username"
+let kpassword = "password"
+let kis_email = "is_email"
+
+//let kis_email = "id"
+//let kis_email = "userName"
+//let kis_email = "fullName"
+//let kis_email = "email"
+//let kis_email = "coverImage"
+//let kis_email = "autoplay"
+//let kis_email = "dob"
+//let kis_email = "createdAt"
+//let kis_email = "updatedAt"
+//let kis_email = "profileImage"
+
 
 
 //MARK: identifiers for pick up and drop off
@@ -102,8 +124,7 @@ let kFcmToken = "fcm_token"
 let kvehicle_id = "vehicle_id"
 let klocations_detail = "locations_detail"
 let kApiKey = "1234567890"
-let kemail = "email"
-let kpassword = "password"
+//let kemail = "email"
 let kfull_name = "full_name"
 let kmobileNumber = "mobile_number"
 let kdistance = "distance"
@@ -280,7 +301,7 @@ let kDirectionAPIDestination = "&destination="
 let kDirectionAPIkey = "&key="
 
 //API for facebook
-let kfullName = "full_name"
+//let kfullName = "full_name"
 let kfbToken = "fb_token"
 
 //API for Update profile information

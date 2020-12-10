@@ -10,19 +10,6 @@ import Alamofire
 import SVProgressHUD
 
 class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
-    let userDefault = UserDefaults(suiteName:"User")
-    struct dKeys {
-        static let keyId = "id"
-        static let keyuserName = "userName"
-        static let keyfullName = "fullName"
-        static let keyemail = "email"
-        static let keyprofileimage = "profileImage"
-        static let keycoverimage = "coverImage"
-        static let keyautoplay = "autoplay"
-        static let keydob = "dob"
-        static let keycreatedAt = "createdAt"
-        static let keyupdatedAt = "updatedAt"
-    }
     @IBOutlet weak var signupButtonOutlet: UIButton!
     @IBOutlet weak var loginSignUpStackView: UIStackView!
     @IBOutlet weak var loginButtonOutlet: UIButton!
@@ -103,79 +90,32 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.pushViewController(vctwo!, animated: true)
     }
     
-    func Api_withParameters(aDictParam : Dictionary<String, Any>) {
-        let passingURL = "https://staging.oqh.obm.mybluehost.me/api/auth/login"
-        //SVProgressHUD.show()
-        AF.request(passingURL, method: HTTPMethod.post,
-                          parameters: aDictParam)
-          .responseJSON { response in
-            print(response)
-            switch(response.result) {
-            case .success(let JSON):
-                //SVProgressHUD.dismiss()
-                let result = JSON as! NSDictionary
-                let successresponse = result.object(forKey: "success")!
-                if(successresponse as! Bool == false) {
-                    let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                } else {
-                    let result = result.object(forKey: "user")! as! NSDictionary
-                    let id = result["id"]
-                    let userName = result["userName"]
-                    let fullName = result["fullName"]
-                    let email = result["email"]
-                    let coverImage = result["coverImage"] as? String
-                    let autoplay = result["autoplay"]
-                    let dob = result["dob"]
-                    let createdAt = result["createdAt"]
-                    let updatedAt = result["updatedAt"]
-                    let imageURL = result["profileImage"] as? String
-                    self.userDefault!.set(id, forKey: dKeys.keyId)
-                    self.userDefault!.set(userName, forKey: dKeys.keyuserName)
-                    self.userDefault!.set(fullName, forKey: dKeys.keyfullName)
-                    self.userDefault!.set(email, forKey: dKeys.keyemail)
-                    self.userDefault!.set(autoplay, forKey: dKeys.keyautoplay)
-                    self.userDefault!.set(dob, forKey: dKeys.keydob)
-                    self.userDefault!.set(createdAt, forKey: dKeys.keycreatedAt)
-                    self.userDefault!.set(updatedAt, forKey: dKeys.keyupdatedAt)
-                    if (imageURL != "") {
-                        DispatchQueue.global().async {
-                            let fileUrl = URL(string: imageURL!)
-                            let data = try? Data(contentsOf:fileUrl!)
-                            self.userDefault!.set(data, forKey: dKeys.keyprofileimage)
-                            self.userDefault!.set(imageURL, forKey: "Link")
-                        }
-                    }
-                    if (coverImage != "") {
-                        DispatchQueue.global().async {
-                            let fileUrl = URL(string: coverImage!)
-                            let data = try? Data(contentsOf:fileUrl!)
-                            self.userDefault!.set(data, forKey: dKeys.keycoverimage)
-                            self.userDefault!.set(imageURL, forKey: "coverLink")
-                        }
-                    }
-                    
-                    self.userDefault!.synchronize()
-                    let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
-                    self.navigationController?.pushViewController(vcone!, animated: true)
-                }
-                
-                break
-            case .failure(_):
-                //SVProgressHUD.dismiss()
-                let alert = UIAlertController(title: "Error", message: "Please enter correct username and password.", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                break
-            }
-            
-        }
-    }
-    
     @IBAction func continueButtonTapped(_ sender: Any) {
-        let dict : [String:Any] = ["username": userNameTF.text!, "password": passwordTF.text!, "is_email" : "2"]
-        Api_withParameters(aDictParam: dict)
+        
+            let userName = userNameTF.text
+            let password = passwordTF.text
+//        let dict : [String:Any] = ["username": userNameTF.text!, "password": passwordTF.text!, "is_email" : "2"]
+//        if self.messageTF.text == kEmpty || self.passTF.text == kEmpty {
+//            let alert = UIAlertController(title: kEmpty, message: kFillAllFields, preferredStyle: UIAlertControllerStyle.alert)
+//            alert.addAction(UIAlertAction(title: kOk, style: UIAlertActionStyle.default, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//        } else {
+//            let userName = self.messageTF.text
+//            let password = self.passTF.text
+//            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+//            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+//            if isValidEmail(testStr: userName!) == true {
+//                //activityIndicator.startAnimating()
+//                Utilities.HelperFuntions.delegate.showProgessBar(self.view)
+                WebManager.getInstance(delegate: self)?.signInWithEmail(email: userName!, pass      : password!)
+//            } else {
+//                let alert = UIAlertController(title: kEmpty, message: kValidEmail, preferredStyle: UIAlertControllerStyle.alert)
+//                alert.addAction(UIAlertAction(title: kOk, style: UIAlertActionStyle.default, handler: nil))
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//        }
+        
+//        Api_withParameters(aDictParam: dict)
     }
     @IBAction func continueWithFBTapped(_ sender: Any) {
         let vcone = storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
@@ -196,6 +136,56 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
      */
     
 }
+extension SignInViewController: WebManagerDelegate {
+    func failureResponse(response: AFDataResponse<Any>) {
+     //   activityIndicator.stopAnimating()
+//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
+        Utility.showAlertWithSingleOption(controller: self, title: kEmpty, message: kCannotConnect, preferredStyle: .alert, buttonText: kok, buttonHandler: nil)
+    }
+    
+    func networkFailureAction() {
+//        Utility.stopSpinner(activityIndicator: activityIndicator)
+//        activityIndicator.stopAnimating()
+//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
+
+        let alert = UIAlertController(title: kEmpty, message: kInternetError, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: kOk, style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        return
+    }
+    
+    func successResponse(response: AFDataResponse<Any> ,webManager: WebManager) {
+        
+        switch(response.result) {
+        case .success(let JSON):
+            //SVProgressHUD.dismiss()
+            let result = JSON as! NSDictionary
+            let successresponse = result.object(forKey: "success")!
+            if(successresponse as! Bool == false) {
+                let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                let result = result.object(forKey: "user")! as! NSDictionary
+                let user = User.getInstance()
+                user?.setUserData(data: result)
+                let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
+                self.navigationController?.pushViewController(vcone!, animated: true)
+            }
+            
+            break
+        case .failure(_):
+            //SVProgressHUD.dismiss()
+            let alert = UIAlertController(title: "Error", message: "Please enter correct username and password.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        }
+    }
+}
+
+
+
 
 extension UITextField {
     func attributedTextField() {

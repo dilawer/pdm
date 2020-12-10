@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		04F403AB973C71CE7C4250CC /* Pods_pdm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A6454BA3E80D66A5577EA9 /* Pods_pdm.framework */; };
+		1873A6A1258196D700CD607D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A0258196D700CD607D /* Utility.swift */; };
+		1873A6A325819C8700CD607D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A225819C8700CD607D /* User.swift */; };
 		1AEF532625318F7C00968ED7 /* PodcastController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEF532525318F7C00968ED7 /* PodcastController.swift */; };
 		1AEF532B2531BF8A00968ED7 /* PodcastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEF532A2531BF8A00968ED7 /* PodcastCollectionViewCell.swift */; };
 		1AEF53342531CE6300968ED7 /* TrendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEF53332531CE6300968ED7 /* TrendCollectionViewCell.swift */; };
@@ -69,6 +71,8 @@
 		04822D410241155FDDB0F28A /* Pods-pdm-pdmTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pdm-pdmTests.release.xcconfig"; path = "Target Support Files/Pods-pdm-pdmTests/Pods-pdm-pdmTests.release.xcconfig"; sourceTree = "<group>"; };
 		11E30EE46D0F12069A5C6173 /* Pods-pdm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pdm.release.xcconfig"; path = "Target Support Files/Pods-pdm/Pods-pdm.release.xcconfig"; sourceTree = "<group>"; };
 		17EDFD8F055FBA146976FDAD /* Pods-pdm-pdmTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pdm-pdmTests.debug.xcconfig"; path = "Target Support Files/Pods-pdm-pdmTests/Pods-pdm-pdmTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1873A6A0258196D700CD607D /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		1873A6A225819C8700CD607D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1AEF532525318F7C00968ED7 /* PodcastController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastController.swift; sourceTree = "<group>"; };
 		1AEF532A2531BF8A00968ED7 /* PodcastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCollectionViewCell.swift; sourceTree = "<group>"; };
 		1AEF53332531CE6300968ED7 /* TrendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -292,6 +296,8 @@
 		C6EEC7ED25765DCD00AC6D1B /* Backend */ = {
 			isa = PBXGroup;
 			children = (
+				1873A6A225819C8700CD607D /* User.swift */,
+				1873A6A0258196D700CD607D /* Utility.swift */,
 				C6EEC7F425765E1300AC6D1B /* WebManager.swift */,
 				C6EEC7F925765E8900AC6D1B /* Constants.swift */,
 			);
@@ -582,9 +588,11 @@
 				1AEF53342531CE6300968ED7 /* TrendCollectionViewCell.swift in Sources */,
 				C614895425489A7C00DDCA2C /* recordServiceViewController.swift in Sources */,
 				C67B63D72549412500D9E4C4 /* selectedPodcastViewController.swift in Sources */,
+				1873A6A1258196D700CD607D /* Utility.swift in Sources */,
 				1AEF536C25324AF300968ED7 /* CategoryViewController.swift in Sources */,
 				C642A756253CC13C00F48EC2 /* LipServiceViewController.swift in Sources */,
 				C6967AB32527482200FCD7A6 /* OTPresetPasswordViewController.swift in Sources */,
+				1873A6A325819C8700CD607D /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,17 +769,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4TH5BY4R5W;
+				DEVELOPMENT_TEAM = Q5ZXDW6NC6;
 				INFOPLIST_FILE = pdm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tboxSolutionz.pdm;
+				PRODUCT_BUNDLE_IDENTIFIER = com.obm.pdm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -781,17 +792,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4TH5BY4R5W;
+				DEVELOPMENT_TEAM = Q5ZXDW6NC6;
 				INFOPLIST_FILE = pdm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tboxSolutionz.pdm;
+				PRODUCT_BUNDLE_IDENTIFIER = com.obm.pdm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
