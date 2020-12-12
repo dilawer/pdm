@@ -121,6 +121,15 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vctwo = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
+        if collectionView == self.uppercollectionview {
+            vctwo?.episode = self.trendingEpisodes[indexPath.row]
+        }else if collectionView == trendcollectionview{
+            vctwo?.episode = self.trendingEpisodes[indexPath.row]
+        }else if collectionView == recomcollectionview{
+            vctwo?.episode = self.recommendedEpisodes[indexPath.row]
+        }else if collectionView == newReleasesCollectionView{
+            vctwo?.episode = self.newReleaseEpisodes[indexPath.row]
+        }
         self.navigationController?.pushViewController(vctwo!, animated: true)
     }
     
@@ -224,26 +233,7 @@ extension PodcastController: WebManagerDelegate {
                     newReleaseEpisodes.append(episode)
                 }
                 self.newReleasesCollectionView.reloadData()
-                
-//
-//                featuredPodcasts.removeAll()
-//                for i in 0 ..< podcasts.count {
-//                    let podcast = Podcast()
-//                    podcast.setPodcastData(data: podcasts[i] as! NSDictionary)
-//                    featuredPodcasts.append(podcast)
-//                }
-//
-//                video.setVideoData(data: data.object(forKey: kvideo) as! NSDictionary)
-//                podcastOfTheWeek.setPodcastData(data: data.object(forKey: kpodcast_of_the_week) as! NSDictionary)
-//                if podcastOfTheWeek.podcastID != ""  {
-//                    textArr.insert("Pod \n of the \n week", at: 0)
-//                    imageArr.insert(UIImage(named: "upperone")!, at: 0)
-//                }
-                //reload array
-                
-                
             }
-            
             break
         case .failure(_):
             //SVProgressHUD.dismiss()

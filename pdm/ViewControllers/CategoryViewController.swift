@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource {
     
@@ -27,6 +28,7 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
         UIImage(named: "Rectangle -6")!,
         UIImage(named: "Rectangle -5")!,
     ]
+    var categories: [Category]=[]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +49,7 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         playButtonTapped.isUserInteractionEnabled = true
         playButtonTapped.addGestureRecognizer(tapGestureRecognizer)
-        
+        WebManager.getInstance(delegate: self)?.getCategoriesData()
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -60,7 +62,7 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
                return textArr.count
            }
        else  if collectionView == self.catdowncollectionview {
-               return cattextArr.count
+               return categories.count
            }
         
         return 0
@@ -83,14 +85,63 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
        else if collectionView == self.catdowncollectionview {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "celldown", for: indexPath) as! CatDownCollectionViewCell
             
-        cell.celldownimage.image = catimageArr[indexPath.row]
-        cell.celldownlabel.text = cattextArr[indexPath.row]
+            cell.celldownimage.image = catimageArr[indexPath.row]
+            cell.celldownlabel.text = self.categories[indexPath.row].category_name
             
             return cell
             }
         
         return UICollectionViewCell()
     }
-    
-   
 }
+extension CategoryViewController: WebManagerDelegate {
+    func failureResponse(response: AFDataResponse<Any>) {
+     //   activityIndicator.stopAnimating()
+//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
+        Utility.showAlertWithSingleOption(controller: self, title: kEmpty, message: kCannotConnect, preferredStyle: .alert, buttonText: kok, buttonHandler: nil)
+    }
+    
+    func networkFailureAction() {
+//        Utility.stopSpinner(activityIndicator: activityIndicator)
+//        activityIndicator.stopAnimating()
+//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
+
+        let alert = UIAlertController(title: kEmpty, message: kInternetError, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: kOk, style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        return
+    }
+    
+    func successResponse(response: AFDataResponse<Any> ,webManager: WebManager) {
+        
+        switch(response.result) {
+        case .success(let JSON):
+            //SVProgressHUD.dismiss()
+            let result = JSON as! NSDictionary
+            let successresponse = result.object(forKey: "success")!
+            if(successresponse as! Bool == false) {
+                let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                let data = result.object(forKey: kdata) as! NSDictionary
+                let categories = data.object(forKey: kcategories) as! NSArray
+                for i in 0 ..< categories.count {
+                    let category = Category()
+                    category.setCategoryData(data:categories[i] as! NSDictionary)
+                    self.categories.append(category)
+                }
+                self.catdowncollectionview.reloadData()
+            }
+            
+            break
+        case .failure(_):
+            //SVProgressHUD.dismiss()
+            let alert = UIAlertController(title: "Error", message: "Please enter correct username and password.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        }
+    }
+}
+

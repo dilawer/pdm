@@ -7,7 +7,6 @@
 
 import UIKit
 import Alamofire
-import SVProgressHUD
 
 class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var signupButtonOutlet: UIButton!
@@ -145,7 +144,6 @@ extension SignInViewController: WebManagerDelegate {
         
         switch(response.result) {
         case .success(let JSON):
-            //SVProgressHUD.dismiss()
             let result = JSON as! NSDictionary
             let successresponse = result.object(forKey: "success")!
             if(successresponse as! Bool == false) {
@@ -154,14 +152,13 @@ extension SignInViewController: WebManagerDelegate {
                 self.present(alert, animated: true, completion: nil)
             } else {
                 let user = User.getInstance()
-                user?.setUserData(data: result)
+                user?.setUserData(data: result.object(forKey: kdata)! as! NSDictionary)
                 let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
                 self.navigationController?.pushViewController(vcone!, animated: true)
             }
             
             break
         case .failure(_):
-            //SVProgressHUD.dismiss()
             let alert = UIAlertController(title: "Error", message: "Please enter correct username and password.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)

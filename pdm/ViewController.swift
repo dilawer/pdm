@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class ViewController: UIViewController {
 
@@ -15,7 +16,5 @@ class ViewController: UIViewController {
         let vctwo = storyboard?.instantiateViewController(withIdentifier: "signinVC") as? SignInViewController;
         self.navigationController?.pushViewController(vctwo!, animated: true)
     }
-
-
 }
 

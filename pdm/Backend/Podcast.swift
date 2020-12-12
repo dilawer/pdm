@@ -8,7 +8,6 @@
 import UIKit
 
 
-let kpodcast_name = "podcast_name"
 let kuser_id = "user_id"
 let kcategory_id = "category_id"
 let kpodcast_of_the_week = "podcast_of_the_week"

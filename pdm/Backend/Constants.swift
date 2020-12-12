@@ -14,6 +14,11 @@ let kGMS_APIKEY = "AIzaSyCFispDflTAC3cJCZHJHiKA9ESeVOLaUNI"
 let klogin = "auth/login"
 let khome = "home/"
 let khome_mic = "home/mic"
+let kpodcast_selected = "podcast/selected/"
+let khome_categories = "home/categories"
+let kprofile_detail = "home/profile/detail"
+let kforgot_username = "/auth/forgotUsername"
+
 
 
 //MARK: API KEYS
@@ -21,6 +26,11 @@ let kusername = "username"
 let kpassword = "password"
 let kis_email = "is_email"
 let kdata = "data"
+let krecentlyPlayed = "recentlyPlayed"
+
+let klatest_episode = "latest_episode"
+let kmore_episodes = "more_episodes"
+let kcategories = "categories"
 let kfeatured = "featured"
 let ktrending = "trending"
 let krecommended = "recommended"
@@ -499,6 +509,7 @@ let kFields = "fields"
 let kIdNameEmail = "id, name, email"
 let kFailedRequest = "Failed to start graph request;"
 let kId = "id"
+let kepisode_id = "episode_id"
 
 
 //MARK: Courier Company

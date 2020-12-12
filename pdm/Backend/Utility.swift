@@ -174,6 +174,10 @@ extension String {
         }
         return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
     }
+   var subStringAfterLastslash : String {
+        guard let subrange = self.range(of: "/\\s?", options: [.regularExpression, .backwards]) else { return self }
+        return String(self[subrange.upperBound...])
+    }
     
     var htmlToAttributedString: NSAttributedString? {
         guard let data = data(using: .utf8) else { return NSAttributedString() }

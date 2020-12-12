@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import AVFoundation
+import SVProgressHUD
 
 protocol WebManagerDelegate {
     func successResponse(response: AFDataResponse<Any>, webManager: WebManager)
@@ -72,6 +73,21 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(khome_mic)"
         makeRequest(requestUrl: url, method: .get, parameters: params)
     }
+    func getSelectedPodcast(selected: String) {
+        let params = [:] as [String : Any]
+        let url = "\(kbaseURL)\(kpodcast_selected)\(selected)"
+        makeRequest(requestUrl: url, method: .get, parameters: params)
+    }
+    func getProfileDetail() {
+        let params = [:] as [String : Any]
+        let url = "\(kbaseURL)\(kprofile_detail)"
+        makeRequest(requestUrl: url, method: .get, parameters: params)
+    }
+    func getCategoriesData() {
+        let params = [:] as [String : Any]
+        let url = "\(kbaseURL)\(khome_categories)"
+        makeRequest(requestUrl: url, method: .get, parameters: params)
+    }
     
     
     //MARK: authentication
@@ -80,11 +96,35 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(klogin)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
+    func forgotUsername(email: String) {
+        let params = [kemail: email] as [String : Any]
+        let url = "\(kbaseURL)\(kforgot_username)"
+        makeRequest(requestUrl: url, method: .post, parameters: params)
+    }
+    
+    func downloadImage(imageUrl: String, imageView: UIImageView) {
+        let destination: DownloadRequest.Destination = { _, _ in
+            let documentsURL = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask)[0]
+            let fileURL = documentsURL.appendingPathComponent(imageUrl.subStringAfterLastslash)
+
+                return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+        }
+
+        AF.download(imageUrl, to: destination).response { response in
+            debugPrint(response)
+
+            if response.error == nil, let imagePath = response.fileURL?.path {
+                imageView.image = UIImage(contentsOfFile: imagePath)
+            }
+        }
+    }
+    
 
     //MARK: helper method
     func makeRequest(requestUrl: String, method: HTTPMethod = .get, parameters: Parameters? = nil) {
         let retryCount = 3
         if Utility.isInternetConnected() {
+            SVProgressHUD.show()
             var headers: HTTPHeaders = []
             if User.getInstance()?.isLogin == true {
                 headers = [
@@ -98,9 +138,11 @@ class WebManager: NSObject {
             .responseJSON { response in
                 switch (response.result) {
                 case .success(_):
+                    SVProgressHUD.dismiss()
                     self.delegate.successResponse(response: response,webManager: self)
                     break
                 case .failure(_):
+                    SVProgressHUD.dismiss()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                         self.retryRequest(requestUrl: requestUrl, retryCount:retryCount)
                     })

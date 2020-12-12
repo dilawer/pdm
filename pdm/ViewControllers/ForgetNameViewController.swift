@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ForgetNameViewController: UIViewController, UIGestureRecognizerDelegate {
 
@@ -30,26 +31,48 @@ class ForgetNameViewController: UIViewController, UIGestureRecognizerDelegate {
 
 //    forgetNameDoneVC
     @IBAction func submitBtnTapped(_ sender: Any) {
-        let vctwo = storyboard?.instantiateViewController(withIdentifier: "forgetNameDoneVC") as? ForgetNameDoneViewController;
-        self.navigationController?.pushViewController(vctwo!, animated: true)
+        WebManager.getInstance(delegate: self)?.forgotUsername(email:emailTFoutlet.text!)
     }
     
 }
-
-//extension UITextField {
-//    func attributedTextField() {
-//        self.borderStyle = .none
-//        self.backgroundColor = UIColor.systemBackground
-//        self.layer.cornerRadius = self.frame.size.height / 2
-//        self.layer.cornerRadius = 0.2 * self.bounds.size.height
-//        self.layer.borderWidth = 0.25
-//        self.layer.borderColor = UIColor.white.cgColor
-//        self.layer.shadowOpacity = 1
-//        self.layer.shadowRadius = 3.0
-//        self.layer.shadowOffset = CGSize.zero // Use any CGSize
-//        self.layer.shadowColor = UIColor.lightGray.cgColor
-//        let paddingView : UIView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: self.frame.height))
-//        self.leftView = paddingView
-//        self.leftViewMode = UITextField.ViewMode.always
-//    }
-//}
+extension ForgetNameViewController: WebManagerDelegate {
+    func failureResponse(response: AFDataResponse<Any>) {
+        Utility.showAlertWithSingleOption(controller: self, title: kEmpty, message: kCannotConnect, preferredStyle: .alert, buttonText: kok, buttonHandler: nil)
+    }
+    
+    func networkFailureAction() {
+        let alert = UIAlertController(title: kEmpty, message: kInternetError, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: kOk, style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        return
+    }
+    
+    func successResponse(response: AFDataResponse<Any> ,webManager: WebManager) {
+        
+        switch(response.result) {
+        case .success(let JSON):
+            let result = JSON as! NSDictionary
+            let successresponse = result.object(forKey: "success")!
+            if(successresponse as! Bool == false) {
+                let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                 let vctwo = storyboard?.instantiateViewController(withIdentifier: "forgetNameDoneVC") as? ForgetNameDoneViewController;
+                vctwo?.email = emailTFoutlet.text!
+                 self.navigationController?.pushViewController(vctwo!, animated: true)
+//                let user = User.getInstance()
+//                user?.setUserData(data: result.object(forKey: kdata)! as! NSDictionary)
+//                let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
+//                self.navigationController?.pushViewController(vcone!, animated: true)
+            }
+            
+            break
+        case .failure(_):
+            let alert = UIAlertController(title: "Error", message: "Please enter email", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        }
+    }
+}
