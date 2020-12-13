@@ -22,10 +22,14 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
     @IBOutlet weak var settingsView: UIView!
     @IBOutlet weak var profilecollectionview: UICollectionView!
     @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var totalListens: UILabel!
     @IBOutlet weak var totalMins: UILabel!
     @IBOutlet weak var uploadedPods: UILabel!
     
+    @IBOutlet weak var tfName: UITextField!
+    @IBOutlet weak var tfEmail: UITextField!
+    @IBOutlet weak var tfAge: UITextField!
     var recentPlayedEpisodes: [Episode]=[]
     
     let profiletitleArr = ["In the Mix","the friend Zone","Shots Film","Kind Advise","Good Advise"]
@@ -66,8 +70,11 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
         self.totalMins.text = user?.totalMins
         self.uploadedPods.text = user?.totalUploads
         self.userNameLabel.text = user?.fullName
+        self.tfName.text = user?.fullName
+        self.tfName.text = user?.fullName
         // Use Alamofire to download the image
         WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: user!.profile_image, imageView: self.profileImageView)
+        WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: user!.cover_image, imageView: self.coverImageView)
         WebManager.getInstance(delegate: self)?.getProfileDetail()
     }
     
@@ -114,6 +121,16 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
         }}))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    @IBAction func actionPrivacyPolicy(_ sender: Any) {
+        if let url = URL(string: kTermsUrl) {
+            UIApplication.shared.open(url)
+        }
+    }
+    @IBAction func actionTremsandConditions(_ sender: Any) {
+        if let url = URL(string: kPrivacyURL) {
+            UIApplication.shared.open(url)
+        }
     }
     
     @IBAction func backBtnTapped(_ sender: Any) {

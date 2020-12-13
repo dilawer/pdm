@@ -3,7 +3,10 @@ import Foundation
 
 let kheader : [String : String] = ["Content-Type":"application/json"]
 
+//MARK: APP URLS
 let kbaseURL = "https://staging.oqh.obm.mybluehost.me/api/"
+let kTermsUrl = "https://google.com"
+let kPrivacyURL = "https://google.com"
 let kFbUrl = "https:carigologistics.com/signin_with_facebook"
 let kFcmTokenUrl = "https:carigologistics.com/user/updateFcmToken"
 let kFetchCategoriesURL = "https:carigologistics.com/get_categories"
@@ -38,6 +41,8 @@ let knewRelease = "newRelease"
 let kvideo = "video"
 
 
+//MARK: App Constants
+let kCATEGORIES = "CATEGORIES"
 
 //let kis_email = "id"
 //let kis_email = "userName"

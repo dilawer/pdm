@@ -16,6 +16,7 @@ class selectedPodcastViewController: UIViewController,UICollectionViewDelegate,U
     @IBOutlet weak var podcastImageView: UIImageView!
     
     @IBOutlet weak var podcastCoverImage: UIImageView!
+    var podcast = Podcast()
     var episode = Episode()
     var latestEpisode = Episode()
     var moreEpisodes: [Episode]=[]
@@ -43,7 +44,10 @@ class selectedPodcastViewController: UIViewController,UICollectionViewDelegate,U
         layout.minimumLineSpacing = 15
         selectedCollectionView.collectionViewLayout = layout
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        WebManager.getInstance(delegate: self)?.getSelectedPodcast(selected: self.episode.episodeID)
+        if podcast.podcastID != ""{
+            WebManager.getInstance(delegate: self)?.getSelectedPodcast(selected: self.podcast.podcastID)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -18,7 +18,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     
     
     
-    var textArr = ["CATEGORIES"]
+    var textArr = [kCATEGORIES]
     var imageArr: [UIImage] = [
 //        UIImage(named: "upperone")!,
         UIImage(named: "uppertwo")!,
@@ -69,15 +69,36 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vctwo = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
-        self.navigationController?.pushViewController(vctwo!, animated: true)
+        if collectionView == self.uppercollectionview {
+            let text = textArr[indexPath.row]
+            if text == kCATEGORIES {
+                // open categories
+                self.tabBarController?.selectedIndex = 2
+            }else{
+                
+                let selectedPodcastViewController = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
+                selectedPodcastViewController?.podcast = podcastOfTheWeek
+                self.navigationController?.pushViewController(selectedPodcastViewController!, animated: true)
+            }
+           }
+        else if collectionView == self.bottoncollectionview{
+               let vctwo = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
+               self.navigationController?.pushViewController(vctwo!, animated: true)
+           }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.uppercollectionview {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "homeupper", for: indexPath) as! HomeUpperCollectionViewCell
             
-            cell.mainimage.image = imageArr[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "homeupper", for: indexPath) as! HomeUpperCollectionViewCell
+            let text = textArr[indexPath.row]
+            if text == kCATEGORIES {
+                cell.mainimage.image = imageArr[indexPath.row]
+            }else{
+                WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: podcastOfTheWeek.podcast_name, imageView: cell.mainimage)
+            }
+            
             cell.mainlabel.text = textArr[indexPath.row]
             
             return cell

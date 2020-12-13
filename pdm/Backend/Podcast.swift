@@ -14,6 +14,8 @@ let kpodcast_of_the_week = "podcast_of_the_week"
 let kpodcast_is_featured = "podcast_is_featured"
 let kpodcast_icon = "podcast_icon"
 let kadmin_approval = "admin_approval"
+let kuser_cover_image = "user_cover_image"
+
 let kpodcast_description = "podcast_description"
 
 class Podcast{
@@ -28,6 +30,7 @@ var category_id: String
     var created_at: String
     var updated_at: String
     var podcast_description: String
+    var user_cover_image: String
     var admin_approval: Int
     
     // MARK: init methods
@@ -42,6 +45,7 @@ var category_id: String
         self.created_at = ""
         self.updated_at = ""
         self.podcast_description = ""
+        self.user_cover_image = ""
         self.admin_approval = 0
         
     }
@@ -57,6 +61,7 @@ var category_id: String
         self.created_at = data[kcreated_at] as? String ?? ""
         self.updated_at = data[kupdated_at] as? String ?? ""
         self.podcast_name = data[kpodcast_name] as? String ?? ""
+        self.user_cover_image = data[kuser_cover_image] as? String ?? ""
         self.podcast_description = data[kpodcast_description] as? String ?? ""
         self.admin_approval = data[kadmin_approval] as? Int ?? 0
     }

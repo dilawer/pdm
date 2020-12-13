@@ -9,10 +9,12 @@ import UIKit
 
 let kepisode_name = "episode_name"
 let kpodcast_name = "podcast_name"
-let kduration = "duration"
+let kduration = "episode_duration"
 let kicon = "icon"
-let kauthor = "author"
-let kfile_link = "file_link"
+let kauthor = "episode_author"
+let kfile_link = "episode_file_link"
+let kepisode_description = "episode_description"
+
 
 
 class Episode{

@@ -23,9 +23,9 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
     var trendingEpisodes: [Episode]=[]
     var newReleaseEpisodes: [Episode]=[]
     var recommendedEpisodes: [Episode]=[]
+    var podcastOfTheWeek = Podcast()
     
-    
-    let textArr = ["Pod \n of the","Trending \n pod"]
+    var textArr : [String]=[]
     let trendtitleArr = ["Lip Service","Brilliant Idiots","Orphan Album"]
     let trendsubtitleArr = ["Episode Name","Episode Name","Episode Name"]
     let trendtimeArr = ["40.00","40.00","40.00"]
@@ -122,7 +122,7 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vctwo = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
         if collectionView == self.uppercollectionview {
-            vctwo?.episode = self.trendingEpisodes[indexPath.row]
+            vctwo?.podcast = podcastOfTheWeek
         }else if collectionView == trendcollectionview{
             vctwo?.episode = self.trendingEpisodes[indexPath.row]
         }else if collectionView == recomcollectionview{
@@ -138,18 +138,16 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
        
         if collectionView == self.uppercollectionview {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upperCell", for: indexPath) as! PodcastCollectionViewCell
-            
-            cell.imageCell.image = imageArr[indexPath.row]
-            cell.LabelCell.text = textArr[indexPath.row]
+                WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: podcastOfTheWeek.podcast_icon, imageView: cell.imageCell)
+            cell.LabelCell.text = textArr[indexPath.row] as! String
             
             return cell
             }
             else if collectionView == trendcollectionview{
                
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Trendcell", for: indexPath) as! TrendCollectionViewCell
-                
-//            cell.imagetrend.image = self.trendingEpisodes[indexPath.row].icon
-                cell.titletrend.text = self.trendingEpisodes[indexPath.row].eposide_name
+                WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: self.trendingEpisodes[indexPath.row].icon, imageView: cell.imagetrend)
+                cell.titletrend.text = self.trendingEpisodes[indexPath.row].podcast_name
                 cell.episodetrend.text = self.trendingEpisodes[indexPath.row].eposide_name
                 cell.timetrend.text = self.trendingEpisodes[indexPath.row].duration
                 cell.layer.cornerRadius = 10
@@ -158,9 +156,8 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
             else if collectionView == recomcollectionview{
                
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recomcell", for: indexPath) as! RecomCollectionViewCell
-                
-//                cell.recomimage.image = self.recommendedEpisodes[indexPath.row].icon
-                cell.recomtitle.text = self.recommendedEpisodes[indexPath.row].eposide_name
+                WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: self.recommendedEpisodes[indexPath.row].icon, imageView: cell.recomimage)
+                cell.recomtitle.text = self.recommendedEpisodes[indexPath.row].podcast_name
                 cell.recomepisode.text = self.recommendedEpisodes[indexPath.row].eposide_name
                 cell.recomtime.text = self.recommendedEpisodes[indexPath.row].duration
                 cell.layer.cornerRadius = 10
@@ -169,9 +166,8 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
             else if collectionView == newReleasesCollectionView{
                
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "relcell", for: indexPath) as! releaseCollectionViewCell
-                
-//                cell.relimage.image = self.newReleaseEpisodes[indexPath.row].icon
-                cell.reltitle.text = self.newReleaseEpisodes[indexPath.row].eposide_name
+            WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: self.newReleaseEpisodes[indexPath.row].icon, imageView: cell.relimage)
+                cell.reltitle.text = self.newReleaseEpisodes[indexPath.row].podcast_name
                 cell.relsubtitle.text = self.newReleaseEpisodes[indexPath.row].eposide_name
                 cell.reltime.text = self.newReleaseEpisodes[indexPath.row].duration
                 cell.layer.cornerRadius = 10
@@ -212,6 +208,11 @@ extension PodcastController: WebManagerDelegate {
                 self.present(alert, animated: true, completion: nil)
             } else {
                 let data = result.object(forKey: kdata) as! NSDictionary
+                podcastOfTheWeek.setPodcastData(data: data.object(forKey: kpodcast_of_the_week) as! NSDictionary)
+                if podcastOfTheWeek.podcastID != "" {
+                    textArr.insert("Pod \n of the \n week", at: 0)
+                }
+                self.uppercollectionview.reloadData()
                 var episodes = data.object(forKey: ktrending) as! NSArray
                 for i in 0 ..< episodes.count {
                     let episode = Episode()
