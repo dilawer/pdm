@@ -47,10 +47,11 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
        
         let layoutone = UICollectionViewFlowLayout()
         layoutone.scrollDirection = .horizontal
-        layoutone.itemSize = CGSize(width: itemSizebt + 40, height: itemSizebt + 40)
-        layoutone.minimumInteritemSpacing = 0
+        layoutone.itemSize = CGSize(width: itemSizebt + 30, height: itemSizebt + 30)
+        layoutone.minimumInteritemSpacing = 10
         layoutone.minimumLineSpacing = 0
         bottoncollectionview.collectionViewLayout = layoutone
+        
         getHomeData()
         
     }
@@ -82,8 +83,9 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
             }
            }
         else if collectionView == self.bottoncollectionview{
-               let vctwo = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
-               self.navigationController?.pushViewController(vctwo!, animated: true)
+               let selectedPodcastViewController = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
+                selectedPodcastViewController?.podcast = featuredPodcasts[indexPath.row]
+               self.navigationController?.pushViewController(selectedPodcastViewController!, animated: true)
            }
         
     }
@@ -105,10 +107,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
             }
         else if collectionView == self.bottoncollectionview {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bottomcell", for: indexPath) as! BottomCollectionViewCell
-            
-            cell.bottomimage.image = btimageArr[indexPath.row]
-           
-            
+            WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: featuredPodcasts[indexPath.row].podcast_icon, imageView: cell.bottomimage)
             return cell
             }
            

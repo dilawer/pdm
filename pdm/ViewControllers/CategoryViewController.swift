@@ -84,8 +84,7 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
             }
        else if collectionView == self.catdowncollectionview {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "celldown", for: indexPath) as! CatDownCollectionViewCell
-            
-            cell.celldownimage.image = catimageArr[indexPath.row]
+            WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: self.categories[indexPath.row].category_icon, imageView: cell.celldownimage)
             cell.celldownlabel.text = self.categories[indexPath.row].category_name
             
             return cell

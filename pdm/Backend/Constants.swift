@@ -15,6 +15,7 @@ let kGMS_APIKEY = "AIzaSyCFispDflTAC3cJCZHJHiKA9ESeVOLaUNI"
 
 //MARK: api methods
 let klogin = "auth/login"
+let kregister = "auth/register"
 let khome = "home/"
 let khome_mic = "home/mic"
 let kpodcast_selected = "podcast/selected/"
@@ -27,6 +28,7 @@ let kforgot_username = "/auth/forgotUsername"
 //MARK: API KEYS
 let kusername = "username"
 let kpassword = "password"
+let kconfirmPassword = "confirmPassword"
 let kis_email = "is_email"
 let kdata = "data"
 let krecentlyPlayed = "recentlyPlayed"

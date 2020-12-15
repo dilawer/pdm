@@ -13,11 +13,19 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var loginSignUpStackView: UIStackView!
     @IBOutlet weak var loginButtonOutlet: UIButton!
     @IBOutlet weak var userNameTF: UITextField!
+    @IBOutlet weak var usernameSignupTF: UITextField!
+    @IBOutlet weak var passwordSignupTF: UITextField!
+    @IBOutlet weak var confirmPassSignupTF: UITextField!
+    @IBOutlet weak var nameTF: UITextField!
+    @IBOutlet weak var dobTF: UITextField!
     @IBOutlet weak var forgotUserNameOutlet: UIButton!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var continueBtnOutlet: UIButton!
     @IBOutlet weak var continueWithFbOutlet: UIButton!
+    @IBOutlet weak var signupView: UIView!
+    @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var continueWithGoogleOutlet: UIButton!
+    @IBOutlet weak var continueSignup: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customization()
@@ -50,13 +58,18 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         signupButtonOutlet.backgroundColor = UIColor.clear
         
         continueBtnOutlet.layer.cornerRadius = 0.2 * continueBtnOutlet.bounds.size.height
-//        continueBtnOutlet.clipsToBounds = true
-        
         continueBtnOutlet.layer.borderColor = UIColor.white.cgColor
         continueBtnOutlet.layer.shadowOpacity = 1
         continueBtnOutlet.layer.shadowRadius = 3.0
         continueBtnOutlet.layer.shadowOffset = CGSize.zero // Use any CGSize
         continueBtnOutlet.layer.shadowColor = UIColor.lightGray.cgColor
+        
+        continueSignup.layer.cornerRadius = 0.2 * continueBtnOutlet.bounds.size.height
+        continueSignup.layer.borderColor = UIColor.white.cgColor
+        continueSignup.layer.shadowOpacity = 1
+        continueSignup.layer.shadowRadius = 3.0
+        continueSignup.layer.shadowOffset = CGSize.zero // Use any CGSize
+        continueSignup.layer.shadowColor = UIColor.lightGray.cgColor
         
         continueWithFbOutlet.layer.cornerRadius = 0.2 * continueWithFbOutlet.bounds.size.height
         continueWithFbOutlet.clipsToBounds = true
@@ -69,6 +82,11 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         
         userNameTF.attributedTextField()
         passwordTF.attributedTextField()
+        usernameSignupTF.attributedTextField()
+        passwordSignupTF.attributedTextField()
+        confirmPassSignupTF.attributedTextField()
+        nameTF.attributedTextField()
+        dobTF.attributedTextField()
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
@@ -78,6 +96,8 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
             loginButtonOutlet.backgroundColor = UIColor.orange
             signupButtonOutlet.backgroundColor = UIColor.clear
         }
+        self.loginView.isHidden = false
+        self.signupView.isHidden = true
     }
     @IBAction func signupButtonTapped(_ sender: Any) {
         if(signupButtonOutlet.backgroundColor == UIColor.orange) {
@@ -86,6 +106,8 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
             signupButtonOutlet.backgroundColor = UIColor.orange
             loginButtonOutlet.backgroundColor = UIColor.clear
         }
+        self.loginView.isHidden = true
+        self.signupView.isHidden = false
         
     }
     @IBAction func forgotUserName(_ sender: Any) {

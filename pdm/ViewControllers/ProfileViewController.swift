@@ -185,16 +185,10 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
 
 extension ProfileViewController: WebManagerDelegate {
     func failureResponse(response: AFDataResponse<Any>) {
-     //   activityIndicator.stopAnimating()
-//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
         Utility.showAlertWithSingleOption(controller: self, title: kEmpty, message: kCannotConnect, preferredStyle: .alert, buttonText: kok, buttonHandler: nil)
     }
     
     func networkFailureAction() {
-//        Utility.stopSpinner(activityIndicator: activityIndicator)
-//        activityIndicator.stopAnimating()
-//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
-
         let alert = UIAlertController(title: kEmpty, message: kInternetError, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: kOk, style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -205,7 +199,6 @@ extension ProfileViewController: WebManagerDelegate {
         
         switch(response.result) {
         case .success(let JSON):
-            //SVProgressHUD.dismiss()
             let result = JSON as! NSDictionary
             let successresponse = result.object(forKey: "success")!
             if(successresponse as! Bool == false) {
@@ -235,7 +228,6 @@ extension ProfileViewController: WebManagerDelegate {
             }
             break
         case .failure(_):
-            //SVProgressHUD.dismiss()
             let alert = UIAlertController(title: "Error", message: "Please enter correct username and password.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)

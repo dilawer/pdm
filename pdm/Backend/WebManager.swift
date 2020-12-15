@@ -96,6 +96,11 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(klogin)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
+    func signUp(email: String, pass: String, confirmPass: String, fullName: String, dob: String) {
+        let params = [kemail: email, kpassword: pass, kconfirmPassword: confirmPass, kfullName: fullName, kdob: dob] as [String : Any]
+        let url = "\(kbaseURL)\(kregister)"
+        makeRequest(requestUrl: url, method: .post, parameters: params)
+    }
     func forgotUsername(email: String) {
         let params = [kemail: email] as [String : Any]
         let url = "\(kbaseURL)\(kforgot_username)"
