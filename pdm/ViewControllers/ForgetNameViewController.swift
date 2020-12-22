@@ -12,6 +12,7 @@ class ForgetNameViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var emailTFoutlet: UITextField!
     @IBOutlet weak var submitBtnOutlet: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customization()
@@ -31,7 +32,9 @@ class ForgetNameViewController: UIViewController, UIGestureRecognizerDelegate {
 
 //    forgetNameDoneVC
     @IBAction func submitBtnTapped(_ sender: Any) {
-        WebManager.getInstance(delegate: self)?.forgotUsername(email:emailTFoutlet.text!)
+        if isValid(){
+            WebManager.getInstance(delegate: self)?.forgotUsername(email:emailTFoutlet.text ?? "")
+        }
     }
     
 }
@@ -74,5 +77,19 @@ extension ForgetNameViewController: WebManagerDelegate {
             self.present(alert, animated: true, completion: nil)
             break
         }
+    }
+}
+//MARK:- Validation
+extension ForgetNameViewController{
+    func isValid() -> Bool{
+        if emailTFoutlet.text?.isEmpty ?? true{
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Email is Required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if !(emailTFoutlet.text ?? "").isValidEmail(){
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Email is not Valid", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        return true
     }
 }

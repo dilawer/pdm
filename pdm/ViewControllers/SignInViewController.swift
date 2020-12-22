@@ -7,8 +7,13 @@
 
 import UIKit
 import Alamofire
+import GoogleSignIn
+import FBSDKLoginKit
+import AuthenticationServices
 
 class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
+    
+    //MARK:- Outlets
     @IBOutlet weak var signupButtonOutlet: UIButton!
     @IBOutlet weak var loginSignUpStackView: UIStackView!
     @IBOutlet weak var loginButtonOutlet: UIButton!
@@ -26,11 +31,27 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var continueWithGoogleOutlet: UIButton!
     @IBOutlet weak var continueSignup: UIButton!
+    
+    @IBOutlet weak var tfUserName: UITextField!
+    @IBOutlet weak var tfEmail: UITextField!
+    @IBOutlet weak var tfPassword: UITextField!
+    @IBOutlet weak var tfConfirmPassword: UITextField!
+    @IBOutlet weak var tfFullName: UITextField!
+    @IBOutlet weak var tfDOB: UITextField!
+    
+    //MARK:- Veriables
+    var loginType:LoginType = .userName
+    var datePicker:UIDatePicker = UIDatePicker()
+    let loginButton = FBLoginButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customization()
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+        datePicker.datePickerMode = .date
+        tfDOB.inputView = datePicker
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +61,13 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         if user?.isLogin == true{
             let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
             self.navigationController?.pushViewController(vcone!, animated: false)
+        }
+    }
+    @objc func dateChanged(_ sender: UIDatePicker) {
+        let components = Calendar.current.dateComponents([.year, .month, .day], from: sender.date)
+        if let day = components.day, let month = components.month, let year = components.year {
+            tfDOB.text = "\(day)-\(String(format: "%02d", month))-\(year)"
+            print("\(day) \(month) \(year)")
         }
     }
     
@@ -83,6 +111,8 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         confirmPassSignupTF.attributedTextField()
         nameTF.attributedTextField()
         dobTF.attributedTextField()
+        tfEmail.attributedTextField()
+        
         
         setLoginSeleted()
     }
@@ -103,28 +133,31 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func continueButtonTapped(_ sender: Any) {
-        
+        if isValid(){
             let userName = userNameTF.text
             let password = passwordTF.text
-                WebManager.getInstance(delegate: self)?.signInWithEmail(email: userName!, pass: password!)
+            WebManager.getInstance(delegate: self)?.signInWithEmail(email: userName!, pass: password!, type: loginType)
+        }
     }
+    @IBAction func continueSignup(_ sender: Any) {
+        if isSignupValid(){
+            WebManager.getInstance(delegate: self)?.signUp(name: tfUserName.text ?? "", email: tfEmail.text ?? "", pass: tfPassword.text ?? "", confirmPass: tfConfirmPassword.text ?? "", fullName: tfFullName.text ?? "", dob: tfDOB.text ?? "")
+        }
+    }
+    
     @IBAction func continueWithFBTapped(_ sender: Any) {
-        let vcone = storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
-        self.navigationController?.pushViewController(vcone!, animated: true)
+        goFacebook()
     }
     @IBAction func continueWithGoogleTapped(_ sender: Any) {
-        let vcone = storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
-        self.navigationController?.pushViewController(vcone!, animated: true)
+        signIngoogle()
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    @IBAction func continueWithAppleTapped(_ sender: Any) {
+        if #available(iOS 13.0, *) {
+            requestApple()
+        } else {
+            Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Only Available on iOS 13 Above", preferredStyle: .alert, buttonText: "OK")
+        }
+    }
     
 }
 extension SignInViewController: WebManagerDelegate {
@@ -146,7 +179,6 @@ extension SignInViewController: WebManagerDelegate {
     }
     
     func successResponse(response: AFDataResponse<Any> ,webManager: WebManager) {
-        
         switch(response.result) {
         case .success(let JSON):
             let result = JSON as! NSDictionary
@@ -217,5 +249,184 @@ extension SignInViewController{
         loginButtonOutlet.setTitleColor(.black, for: .normal)
         self.loginView.isHidden = true
         self.signupView.isHidden = false
+    }
+}
+//MARK:- Validation
+extension SignInViewController{
+    func isValid() -> Bool{
+        if userNameTF.text?.isEmpty ?? true {
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Username OR Email is Required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if passwordTF.text?.isEmpty ?? true {
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Password is Required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if (userNameTF.text ?? "").contains("@"){
+            if !(userNameTF.text ?? "").isValidEmail(){
+                Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Email is Not Valid", preferredStyle: .alert, buttonText: "OK")
+                return false
+            }
+            loginType = .email
+        }
+        return true
+    }
+    func isSignupValid() -> Bool{
+        if tfUserName.text?.isEmpty ?? true {
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Username is Required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if tfEmail.text?.isEmpty ?? true {
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Email is Required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if !(tfEmail.text ?? "").isValidEmail(){
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Email is Not Valid", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if tfPassword.text?.isEmpty ?? true {
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Password is Required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if (tfPassword.text?.count ?? 0) < 6{
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Password Must Be At Least 6 Digit Long", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if tfConfirmPassword.text?.isEmpty ?? true{
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Confirm Password is Required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if (tfPassword.text ?? "") != (tfConfirmPassword.text ?? ""){
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Password Does Not Matched", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if tfFullName.text?.isEmpty ?? true{
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Full Name is required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if tfDOB.text?.isEmpty ?? true{
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Date of Birth is required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        return true
+    }
+}
+//MARK:- Google
+extension SignInViewController: GIDSignInDelegate{
+    func signIngoogle(){
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.clientID = Global.shared.clientID
+        GIDSignIn.sharedInstance().delegate = self
+        if GIDSignIn.sharedInstance()?.hasPreviousSignIn() ?? false {
+            GIDSignIn.sharedInstance()?.restorePreviousSignIn()
+        } else {
+            GIDSignIn.sharedInstance()?.signIn()
+        }
+    }
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Error While Google Signin Please Try later", preferredStyle: .alert, buttonText: "OK")
+        } else {
+            let userId = user.userID
+            let idToken = user.authentication.idToken
+            let fullName = user.profile.name
+            let givenName = user.profile.givenName
+            let familyName = user.profile.familyName
+            let email = user.profile.email
+            print(idToken)
+            WebManager.getInstance(delegate: self)?.socialLogin(provider: "google", access_token: idToken ?? "", email: email ?? "")
+       }
+    }
+}
+//MARK:- Facebook
+extension SignInViewController{
+    func goFacebook(){
+        let loginManager: LoginManager = LoginManager()
+        loginManager.logIn(permissions: ["public_profile", "email"], from: self, handler: {
+            result,error  in
+            if let error = error{
+                Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Error With Facebook Login", preferredStyle: .alert, buttonText: "OK")
+            }
+            if let result = result{
+                if result.isCancelled {
+                    Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "User Cancel Login", preferredStyle: .alert, buttonText: "OK")
+                }
+                if let tokken = result.token{
+                    print(tokken)
+                    self.fetchFacebookProfileInfo(token: tokken)
+                }
+            } else{
+                Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Error With Facebook Login", preferredStyle: .alert, buttonText: "OK")
+            }
+        })
+    }
+    func fetchFacebookProfileInfo(token:AccessToken){
+        let connection = GraphRequestConnection()
+        connection.add(GraphRequest(graphPath: "me", parameters: ["fields": "id, email, first_name, gender, last_name, location, hometown, picture.type(large)"]))
+        {
+            httpResponse, result, error in
+            if let res = result as? [String:Any]{
+                let firstName = res["first_name"] as? String ?? ""
+                let lastName = res["last_name"] as? String ?? ""
+                let email = res["email"] as? String ?? ""
+                WebManager.getInstance(delegate: self)?.socialLogin(provider: "facebook", access_token: token.tokenString, email: email ?? "")
+            }
+        }
+        connection.start()
+    }
+}
+//MARK:- Apple Signin
+@available(iOS 13.0, *)
+extension SignInViewController:ASAuthorizationControllerDelegate,ASAuthorizationControllerPresentationContextProviding{
+    
+    func requestApple() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    @objc
+    func handleAuthorizationAppleIDButtonPress() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            
+            print(appleIDCredential)
+            /*
+            Global.shared.signup = SignupViewModel()
+            Global.shared.signup?.firstName = appleIDCredential.fullName?.givenName ?? ""
+            Global.shared.signup?.lastName = appleIDCredential.fullName?.familyName ?? ""
+            Global.shared.signup?.imageUrl = ""
+            Global.shared.signup?.appId = String(data: appleIDCredential.identityToken ?? Data(), encoding: .utf8) ?? ""
+            Global.shared.signup?.accountType = "apple"
+            Global.shared.signup?.email = appleIDCredential.email ?? ""
+            */
+            
+            
+        case let passwordCredential as ASPasswordCredential:
+        
+            let username = passwordCredential.user
+            let password = passwordCredential.password
+            
+        default:
+            break
+        }
     }
 }

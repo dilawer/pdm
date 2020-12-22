@@ -91,18 +91,28 @@ class WebManager: NSObject {
     
     
     //MARK: authentication
-    func signInWithEmail(email: String, pass: String) {
-        let params = [kusername: email, kpassword: pass, kis_email: "2"] as [String : Any]
+    func signInWithEmail(email: String, pass: String, type: LoginType) {
+        let params = [kusername: email, kpassword: pass, kis_email: type.rawValue] as [String : Any]
         let url = "\(kbaseURL)\(klogin)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
-    func signUp(email: String, pass: String, confirmPass: String, fullName: String, dob: String) {
-        let params = [kemail: email, kpassword: pass, kconfirmPassword: confirmPass, kfullName: fullName, kdob: dob] as [String : Any]
+    func signUp(name: String, email: String, pass: String, confirmPass: String, fullName: String, dob: String) {
+        let params = [kUserName: name, kemail: email, kpassword: pass, kconfirmPassword: confirmPass, kfullName: fullName, kdob: dob] as [String : Any]
         let url = "\(kbaseURL)\(kregister)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
     func forgotUsername(email: String) {
         let params = [kemail: email] as [String : Any]
+        let url = "\(kbaseURL)\(kforgot_username)"
+        makeRequest(requestUrl: url, method: .post, parameters: params)
+    }
+    func forgotPassword(email: String){
+        let params = [kemail: email] as [String : Any]
+        let url = "\(kbaseURL)\(kforgot_username)"
+        makeRequest(requestUrl: url, method: .post, parameters: params)
+    }
+    func socialLogin(provider:String,access_token:String,email:String){
+        let params = ["provider": provider, "access_token":access_token,"email":email] as [String : Any]
         let url = "\(kbaseURL)\(kforgot_username)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
@@ -129,6 +139,7 @@ class WebManager: NSObject {
     func makeRequest(requestUrl: String, method: HTTPMethod = .get, parameters: Parameters? = nil) {
         let retryCount = 3
         if Utility.isInternetConnected() {
+            SVProgressHUD.setDefaultMaskType(.black)
             SVProgressHUD.show()
             var headers: HTTPHeaders = []
             if User.getInstance()?.isLogin == true {

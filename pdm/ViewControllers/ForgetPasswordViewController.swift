@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import Alamofire
 
 class ForgetPasswordViewController: UIViewController, UIGestureRecognizerDelegate {
 
+    //MARK:- Outlets
     @IBOutlet weak var emailTFoutlet: UITextField!
     @IBOutlet weak var submitBtnOutlet: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customization()
@@ -28,8 +31,59 @@ class ForgetPasswordViewController: UIViewController, UIGestureRecognizerDelegat
     }
 
     @IBAction func submitBtnTapped(_ sender: Any) {
-        let vctwo = storyboard?.instantiateViewController(withIdentifier: "otpVC") as? OTPresetPasswordViewController;
-        self.navigationController?.pushViewController(vctwo!, animated: true)
+        if isValid(){
+            WebManager.getInstance(delegate: self)?.forgotPassword(email: emailTFoutlet.text ?? "")
+        }
+    }
+}
+//MARK:- Api
+extension ForgetPasswordViewController: WebManagerDelegate {
+    func failureResponse(response: AFDataResponse<Any>) {
+        Utility.showAlertWithSingleOption(controller: self, title: kEmpty, message: kCannotConnect, preferredStyle: .alert, buttonText: kok, buttonHandler: nil)
+    }
+    
+    func networkFailureAction() {
+        let alert = UIAlertController(title: kEmpty, message: kInternetError, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: kOk, style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        return
+    }
+    
+    func successResponse(response: AFDataResponse<Any> ,webManager: WebManager) {
         
+        switch(response.result) {
+        case .success(let JSON):
+            let result = JSON as! NSDictionary
+            let successresponse = result.object(forKey: "success")!
+            if(successresponse as! Bool == false) {
+                let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                let vctwo = storyboard?.instantiateViewController(withIdentifier: "otpVC") as? OTPresetPasswordViewController;
+                self.navigationController?.pushViewController(vctwo!, animated: true)
+            }
+            
+            break
+        case .failure(_):
+            let alert = UIAlertController(title: "Error", message: "Please enter email", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            break
+        }
+    }
+}
+//MARK:- Validation
+extension ForgetPasswordViewController{
+    func isValid() -> Bool{
+        if emailTFoutlet.text?.isEmpty ?? true{
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Email is Required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if !(emailTFoutlet.text ?? "").isValidEmail(){
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Email is not Valid", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        return true
     }
 }

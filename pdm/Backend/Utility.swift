@@ -45,6 +45,7 @@ class Utility: NSObject{
         controller.present(alert, animated: true, completion: nil)
     }
     
+    
     class func showAlertWithSingleOption(controller: UIViewController, title: String, message: String, preferredStyle: UIAlertController.Style, buttonText: String, buttonHandler: ((UIAlertAction) -> Swift.Void)? = nil) {
         // create the alert
         let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)

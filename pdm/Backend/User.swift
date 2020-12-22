@@ -15,7 +15,7 @@ let kprofile = "profile"
 let kcover = "cover"
 
 //
-let kfullName = "fullName"
+let kfullName = "fullname"
 let kemail = "email"
 let kdob = "dob"
 let kcreatedAt = "createdAt"
@@ -29,6 +29,7 @@ let ktotalListens = "totalListens"
 let ktotalMinutes = "totalMinutes"
 let kuploadedPods = "uploadedPods"
 let ktotalLiked = "totalLiked"
+let kUserName = "name"
 
 
 let k_user = "user"
@@ -45,10 +46,10 @@ var email: String
     var autoplay: Bool
     var isLogin: Bool
     var dob : String
-var createdAt : String
-var updatedAt : String
-var profile_image : String
-var cover_image : String
+    var createdAt : String
+    var updatedAt : String
+    var profile_image : String
+    var cover_image : String
     var access_token : String
     var totalListens : String
     var totalMins : String

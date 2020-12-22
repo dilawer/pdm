@@ -9,7 +9,9 @@ target 'pdm' do
   pod 'Alamofire'
   pod 'FacebookCore'
   pod 'FacebookLogin'
+  pod 'FBSDKLoginKit'
   pod 'SVProgressHUD'
+  pod 'GoogleSignIn'
   target 'pdmTests' do
     # inherit! :search_paths
     # Pods for testing
