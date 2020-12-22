@@ -31,10 +31,6 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         self.customization()
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,28 +83,15 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         confirmPassSignupTF.attributedTextField()
         nameTF.attributedTextField()
         dobTF.attributedTextField()
+        
+        setLoginSeleted()
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
-        if(loginButtonOutlet.backgroundColor == UIColor.orange) {
-            signupButtonOutlet.backgroundColor = UIColor.clear
-        } else {
-            loginButtonOutlet.backgroundColor = UIColor.orange
-            signupButtonOutlet.backgroundColor = UIColor.clear
-        }
-        self.loginView.isHidden = false
-        self.signupView.isHidden = true
+        setLoginSeleted()
     }
     @IBAction func signupButtonTapped(_ sender: Any) {
-        if(signupButtonOutlet.backgroundColor == UIColor.orange) {
-            loginButtonOutlet.backgroundColor = UIColor.clear
-        } else {
-            signupButtonOutlet.backgroundColor = UIColor.orange
-            loginButtonOutlet.backgroundColor = UIColor.clear
-        }
-        self.loginView.isHidden = true
-        self.signupView.isHidden = false
-        
+        setSignupSelected()
     }
     @IBAction func forgotUserName(_ sender: Any) {
         let vctwo = storyboard?.instantiateViewController(withIdentifier: "forgotNameVC") as? ForgetNameViewController;
@@ -207,5 +190,32 @@ extension UITextField {
         let paddingView : UIView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: self.frame.height))
         self.leftView = paddingView
         self.leftViewMode = UITextField.ViewMode.always
+    }
+}
+//MARK:- Signin
+extension SignInViewController{
+    func setLoginSeleted(){
+        if(loginButtonOutlet.backgroundColor == UIColor.orange) {
+            signupButtonOutlet.backgroundColor = UIColor.clear
+        } else {
+            loginButtonOutlet.backgroundColor = UIColor.orange
+            signupButtonOutlet.backgroundColor = UIColor.clear
+        }
+        signupButtonOutlet.setTitleColor(.black, for: .normal)
+        loginButtonOutlet.setTitleColor(.white, for: .normal)
+        self.loginView.isHidden = false
+        self.signupView.isHidden = true
+    }
+    func setSignupSelected(){
+        if(signupButtonOutlet.backgroundColor == UIColor.orange) {
+            loginButtonOutlet.backgroundColor = UIColor.clear
+        } else {
+            signupButtonOutlet.backgroundColor = UIColor.orange
+            loginButtonOutlet.backgroundColor = UIColor.clear
+        }
+        signupButtonOutlet.setTitleColor(.white, for: .normal)
+        loginButtonOutlet.setTitleColor(.black, for: .normal)
+        self.loginView.isHidden = true
+        self.signupView.isHidden = false
     }
 }
