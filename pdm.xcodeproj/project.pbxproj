@@ -33,6 +33,9 @@
 		A023127225931ABD00797347 /* PodcastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A023127025931ABD00797347 /* PodcastCell.xib */; };
 		A0231277259326A400797347 /* PodcastListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0231276259326A400797347 /* PodcastListViewController.swift */; };
 		A023127C25933B8D00797347 /* PodcastDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A023127B25933B8D00797347 /* PodcastDetailsResponse.swift */; };
+		A0231290259383E200797347 /* TrendingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A023128F259383E200797347 /* TrendingResponse.swift */; };
+		A023129625939B7800797347 /* NewReleaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A023129425939B7800797347 /* NewReleaseCell.swift */; };
+		A023129725939B7800797347 /* NewReleaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A023129525939B7800797347 /* NewReleaseCell.xib */; };
 		A06A50772591BD60008B4773 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06A50762591BD60008B4773 /* Extension.swift */; };
 		A06A507C2591C0DB008B4773 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06A507B2591C0DB008B4773 /* Enum.swift */; };
 		A06A50A62591F615008B4773 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06A50A52591F615008B4773 /* Global.swift */; };
@@ -120,6 +123,9 @@
 		A023127025931ABD00797347 /* PodcastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastCell.xib; sourceTree = "<group>"; };
 		A0231276259326A400797347 /* PodcastListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastListViewController.swift; sourceTree = "<group>"; };
 		A023127B25933B8D00797347 /* PodcastDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDetailsResponse.swift; sourceTree = "<group>"; };
+		A023128F259383E200797347 /* TrendingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingResponse.swift; sourceTree = "<group>"; };
+		A023129425939B7800797347 /* NewReleaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleaseCell.swift; sourceTree = "<group>"; };
+		A023129525939B7800797347 /* NewReleaseCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewReleaseCell.xib; sourceTree = "<group>"; };
 		A06A50762591BD60008B4773 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		A06A507B2591C0DB008B4773 /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		A06A50A52591F615008B4773 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
@@ -241,6 +247,7 @@
 			children = (
 				A023126A25930A1A00797347 /* SearchModel.swift */,
 				A023127B25933B8D00797347 /* PodcastDetailsResponse.swift */,
+				A023128F259383E200797347 /* TrendingResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -267,6 +274,8 @@
 				A06A50F225922E0D008B4773 /* CategoryCell.xib */,
 				A023126F25931ABD00797347 /* PodcastCell.swift */,
 				A023127025931ABD00797347 /* PodcastCell.xib */,
+				A023129425939B7800797347 /* NewReleaseCell.swift */,
+				A023129525939B7800797347 /* NewReleaseCell.xib */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -501,6 +510,7 @@
 			files = (
 				C6CDE2A72526F00300B8C411 /* LaunchScreen.storyboard in Resources */,
 				C6CDE2A42526F00300B8C411 /* Assets.xcassets in Resources */,
+				A023129725939B7800797347 /* NewReleaseCell.xib in Resources */,
 				C6CDE2A22526F00200B8C411 /* Main.storyboard in Resources */,
 				A06A50F425922E0E008B4773 /* CategoryCell.xib in Resources */,
 				A023127225931ABD00797347 /* PodcastCell.xib in Resources */,
@@ -717,6 +727,7 @@
 				A06A50F325922E0E008B4773 /* CategoryCell.swift in Sources */,
 				A0231277259326A400797347 /* PodcastListViewController.swift in Sources */,
 				1AEF537125324B4500968ED7 /* CatUpCollectionViewCell.swift in Sources */,
+				A023129625939B7800797347 /* NewReleaseCell.swift in Sources */,
 				A023126B25930A1A00797347 /* SearchModel.swift in Sources */,
 				1AEF537625324B5D00968ED7 /* CatDownCollectionViewCell.swift in Sources */,
 				A023127C25933B8D00797347 /* PodcastDetailsResponse.swift in Sources */,
@@ -726,6 +737,7 @@
 				C6EEC7F525765E1300AC6D1B /* WebManager.swift in Sources */,
 				1AEF53642532409C00968ED7 /* ProfileCollectionViewCell.swift in Sources */,
 				C6CDE29B2526F00200B8C411 /* AppDelegate.swift in Sources */,
+				A0231290259383E200797347 /* TrendingResponse.swift in Sources */,
 				1873A6A5258297D600CD607D /* Podcast.swift in Sources */,
 				A06A507C2591C0DB008B4773 /* Enum.swift in Sources */,
 				A06A50EC25921D83008B4773 /* UIButtonX.swift in Sources */,

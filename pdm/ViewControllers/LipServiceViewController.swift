@@ -112,7 +112,7 @@ extension LipServiceViewController:WebManagerDelegate{
                                     lblEpisode.text = "Episode \(first.episodeID)"
                                     lblDuration.text = first.episodeDuration
                                 }
-                                if data.pods.count >= 1{
+                                if data.pods.count > 1{
                                     let next = data.pods[1]
                                     ImageLoader.loadImage(imageView: ivNextEpisode, url: data.podcastIcon)
                                     lblNextName.text = next.episodeName

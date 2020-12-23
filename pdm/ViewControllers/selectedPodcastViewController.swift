@@ -54,6 +54,9 @@ class selectedPodcastViewController: UIViewController,UICollectionViewDelegate,U
         if podcast.podcastID != ""{
             WebManager.getInstance(delegate: self)?.getSelectedPodcast(selected: self.podcast.podcastID)
         }
+        if episode.episodeID != ""{
+            WebManager.getInstance(delegate: self)?.getSelectedPodcast(selected: self.episode.episodeID)
+        }
         
     }
     

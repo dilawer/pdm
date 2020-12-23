@@ -46,7 +46,7 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
         
         let itemSize = UIScreen.main.bounds.width/5 - 3
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: itemSize + 35, height: itemSize + 35)
+        layout.itemSize = CGSize(width: itemSize + 35, height: itemSize )
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         catupcollectionview.collectionViewLayout = layout
@@ -91,6 +91,11 @@ extension CategoryViewController{
             let vc = storyboard?.instantiateViewController(withIdentifier: "PodcastListViewController") as! PodcastListViewController
             vc.catID = categories[indexPath.row].categoryId
             self.navigationController?.pushViewController(vc, animated: true)
+        }
+        if collectionView == catupcollectionview{
+            if indexPath.row == 1{
+                self.tabBarController?.selectedIndex = 1
+            }
         }
     }
     
