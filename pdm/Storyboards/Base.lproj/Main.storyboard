@@ -1914,6 +1914,56 @@
             </objects>
             <point key="canvasLocation" x="5657.971014492754" y="1052.6785714285713"/>
         </scene>
+        <!--Podcast List View Controller-->
+        <scene sceneID="MVn-SR-0vn">
+            <objects>
+                <viewController storyboardIdentifier="PodcastListViewController" id="cbX-eD-RUn" customClass="PodcastListViewController" customModule="pdm" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dib-2w-mGA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="t3F-nA-hEu">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KrU-zi-Mnw">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="r8l-pT-p85">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="8GF-zm-3Wa">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="cbX-eD-RUn" id="FmM-QP-Rbv"/>
+                                    <outlet property="delegate" destination="cbX-eD-RUn" id="bqi-Cw-XY6"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="XqW-0h-t3b"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="t3F-nA-hEu" firstAttribute="top" secondItem="XqW-0h-t3b" secondAttribute="top" id="Fi5-L4-cSU"/>
+                            <constraint firstItem="XqW-0h-t3b" firstAttribute="bottom" secondItem="t3F-nA-hEu" secondAttribute="bottom" id="Zi0-qa-WOv"/>
+                            <constraint firstItem="t3F-nA-hEu" firstAttribute="leading" secondItem="XqW-0h-t3b" secondAttribute="leading" id="sOR-vY-txz"/>
+                            <constraint firstItem="XqW-0h-t3b" firstAttribute="trailing" secondItem="t3F-nA-hEu" secondAttribute="trailing" id="xRF-1f-Xho"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionPodscasts" destination="t3F-nA-hEu" id="7gh-j4-vFP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xCw-8u-Gk5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6452" y="1053"/>
+        </scene>
         <!--Podcast Controller-->
         <scene sceneID="gWd-iL-LHS">
             <objects>

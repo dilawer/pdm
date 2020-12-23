@@ -86,8 +86,12 @@ extension CategoryViewController{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vctwo = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
-//        self.navigationController?.pushViewController(vctwo!, animated: true)
+        if collectionView == collectionCatgory{
+            //PodcastListViewController
+            let vc = storyboard?.instantiateViewController(withIdentifier: "PodcastListViewController") as! PodcastListViewController
+            vc.catID = categories[indexPath.row].categoryId
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -147,14 +151,18 @@ extension CategoryViewController: WebManagerDelegate {
                     if let searchResult:SearchModel = self.handleResponse(data: jsonData){
                         print(searchResult.data)
                         self.categories.removeAll()
-                        for category in searchResult.data.categories{
-                            let cat = Category()
-                            cat.categoryId = String(category.categoryID)
-                            cat.category_icon = category.categoryIcon
-                            cat.category_name = category.categoryName
-                            self.categories.append(cat)
+                        if let listCat = searchResult.data.categories{
+                            for category in listCat{
+                                let cat = Category()
+                                cat.categoryId = String(category.categoryID)
+                                cat.category_icon = category.categoryIcon
+                                cat.category_name = category.categoryName
+                                self.categories.append(cat)
+                            }
                         }
-                        self.podcats = searchResult.data.podcasts
+                        if let listPodcasts = searchResult.data.podcasts{
+                            self.podcats = listPodcasts
+                        }
                     }
                 } catch {
                     print(error.localizedDescription)

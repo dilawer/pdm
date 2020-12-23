@@ -88,7 +88,10 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(khome_categories)"
         makeRequest(requestUrl: url, method: .get, parameters: params)
     }
-    
+    func getPodcastsForCategory(cat_id:String){
+        let url = "\(kbaseURL)\(kPodcastsForCat)\(cat_id)"
+        makeRequest(requestUrl: url, method: .get, parameters: nil)
+    }
     
     //MARK: authentication
     func signInWithEmail(email: String, pass: String, type: LoginType) {

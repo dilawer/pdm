@@ -12,8 +12,8 @@ struct SearchModel: Codable {
 
 // MARK: - DataClass
 struct DataClass: Codable {
-    let categories: [Categorys]
-    let podcasts: [Podcasts]
+    let categories: [Categorys]?
+    let podcasts: [Podcasts]?
 }
 
 // MARK: - Category
