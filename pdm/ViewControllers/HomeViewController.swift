@@ -77,15 +77,17 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
                 self.tabBarController?.selectedIndex = 2
             }else{
                 
-                let selectedPodcastViewController = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
-                selectedPodcastViewController?.podcast = podcastOfTheWeek
-                self.navigationController?.pushViewController(selectedPodcastViewController!, animated: true)
+                let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController;
+//                selectedPodcastViewController?.podcast = podcastOfTheWeek
+                vc?.podCastID = podcastOfTheWeek.podcastID
+                self.navigationController?.pushViewController(vc!, animated: true)
             }
            }
-        else if collectionView == self.bottoncollectionview{
-               let selectedPodcastViewController = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
-                selectedPodcastViewController?.podcast = featuredPodcasts[indexPath.row]
-               self.navigationController?.pushViewController(selectedPodcastViewController!, animated: true)
+            else if collectionView == self.bottoncollectionview{
+                let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
+//                selectedPodcastViewController?.podcast = featuredPodcasts[indexPath.row]
+                vc?.podCastID = featuredPodcasts[indexPath.row].podcastID
+                self.navigationController?.pushViewController(vc!, animated: true)
            }
         
     }
