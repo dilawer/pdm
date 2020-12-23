@@ -117,6 +117,12 @@ class WebManager: NSObject {
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
     
+    //MARK:- Search
+    func search(query:String){
+        let url = "\(kbaseURL)\(kSearch)\(query)"
+        makeRequest(requestUrl: url, method: .get, parameters: nil)
+    }
+    
     func downloadImage(imageUrl: String, imageView: UIImageView) {
         let destination: DownloadRequest.Destination = { _, _ in
             let documentsURL = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask)[0]

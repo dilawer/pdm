@@ -10,5 +10,6 @@ import UIKit
 class CatDownCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var celldownimage: UIImageView!
     @IBOutlet weak var celldownlabel: UILabel!
+    @IBOutlet weak var width: NSLayoutConstraint!
     
 }

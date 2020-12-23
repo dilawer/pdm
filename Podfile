@@ -12,6 +12,7 @@ target 'pdm' do
   pod 'FBSDKLoginKit'
   pod 'SVProgressHUD'
   pod 'GoogleSignIn'
+  pod 'Kingfisher'
   target 'pdmTests' do
     # inherit! :search_paths
     # Pods for testing

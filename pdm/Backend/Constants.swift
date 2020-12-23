@@ -24,7 +24,7 @@ let kprofile_detail = "home/profile/detail"
 let kforgot_username = "auth/forgotUsername"
 let kforgot_password = "auth/forgotPassword"
 let kSocialLogin = "auth/socialLogin"
-
+let kSearch = "home/search/"
 
 
 //MARK: API KEYS

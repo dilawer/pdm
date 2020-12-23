@@ -33,6 +33,9 @@ PODS:
   - GTMSessionFetcher/Core (1.5.0)
   - GTMSessionFetcher/Full (1.5.0):
     - GTMSessionFetcher/Core (= 1.5.0)
+  - Kingfisher (5.15.8):
+    - Kingfisher/Core (= 5.15.8)
+  - Kingfisher/Core (5.15.8)
   - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
@@ -41,6 +44,7 @@ DEPENDENCIES:
   - FacebookLogin
   - FBSDKLoginKit
   - GoogleSignIn
+  - Kingfisher
   - SVProgressHUD
 
 SPEC REPOS:
@@ -54,6 +58,7 @@ SPEC REPOS:
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
+    - Kingfisher
     - SVProgressHUD
 
 SPEC CHECKSUMS:
@@ -66,8 +71,9 @@ SPEC CHECKSUMS:
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: c15b81c5755261f9f0ad357ad0076cdbf6308b16
+PODFILE CHECKSUM: 2ee2d758e9cc6ef564029f4c3b52627d5f1e5b9d
 
 COCOAPODS: 1.8.4
