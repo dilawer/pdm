@@ -26,6 +26,7 @@ let kforgot_password = "auth/forgotPassword"
 let kSocialLogin = "auth/socialLogin"
 let kSearch = "home/search/"
 let kPodcastsForCat = "home/category/podcasts/"
+let kPodCastDetails = "podcast/detail/"
 
 
 //MARK: API KEYS

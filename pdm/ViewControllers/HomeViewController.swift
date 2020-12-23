@@ -43,12 +43,12 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
         layout.minimumLineSpacing = 0
         uppercollectionview.collectionViewLayout = layout
         
-        let itemSizebt = UIScreen.main.bounds.width/5 - 3
+        let itemSizebt = UIScreen.main.bounds.width/5 - 10
        
         let layoutone = UICollectionViewFlowLayout()
         layoutone.scrollDirection = .horizontal
         layoutone.itemSize = CGSize(width: itemSizebt + 30, height: itemSizebt + 30)
-        layoutone.minimumInteritemSpacing = 10
+        layoutone.minimumInteritemSpacing = 20
         layoutone.minimumLineSpacing = 0
         bottoncollectionview.collectionViewLayout = layoutone
         

@@ -24,7 +24,7 @@ class PodcastCell: UICollectionViewCell {
         ImageLoader.loadImage(imageView: ivImage, url: podcast.podcastIcon)
         lblPodcastName.text = podcast.podcastName
         lblDuration.text = podcast.podcastDuration
-        lblEpisodeName.text = podcast.podcastDuration
+        lblEpisodeName.text = podcast.episodeName
         self.width.constant = width
     }
 }

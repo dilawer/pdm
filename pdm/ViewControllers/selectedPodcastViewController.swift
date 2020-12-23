@@ -35,6 +35,13 @@ class selectedPodcastViewController: UIViewController,UICollectionViewDelegate,U
         UIImage(named: "trendingone")!,
     ]
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let itemSize = UIScreen.main.bounds.width/3 - 2
@@ -95,28 +102,29 @@ extension selectedPodcastViewController: WebManagerDelegate {
         case .success(let JSON):
             //SVProgressHUD.dismiss()
             let result = JSON as! NSDictionary
-            let successresponse = result.object(forKey: "success")!
-            if(successresponse as! Bool == false) {
-                let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            } else {
-                let data = result.object(forKey: kdata) as! NSDictionary
-                self.latestEpisode.setEpisodeData(data: data.object(forKey: klatest_episode) as! NSDictionary)
-                self.eName.text = self.latestEpisode.eposide_name
-                self.podcastname.text = data.object(forKey: kpodcast_name) as? String
-                self.episodeName.text = self.latestEpisode.eposide_name
-                self.lblDescription.text = data.object(forKey: kdescription) as? String
-                
-                let episodes = data.object(forKey: kmore_episodes) as! NSArray
-                self.moreEpisodes.removeAll()
-                for i in 0 ..< episodes.count {
-                    let episode = Episode()
-                    episode.setEpisodeData(data: episodes[i] as! NSDictionary)
-                    self.moreEpisodes.append(episode)
+            if let successresponse = result.object(forKey: "success"){
+                if(successresponse as! Bool == false) {
+                    let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                } else {
+                    let data = result.object(forKey: kdata) as! NSDictionary
+                    self.latestEpisode.setEpisodeData(data: data.object(forKey: klatest_episode) as! NSDictionary)
+                    self.eName.text = self.latestEpisode.eposide_name
+                    self.podcastname.text = data.object(forKey: kpodcast_name) as? String
+                    self.episodeName.text = self.latestEpisode.eposide_name
+                    self.lblDescription.text = data.object(forKey: kdescription) as? String
+                    
+                    let episodes = data.object(forKey: kmore_episodes) as! NSArray
+                    self.moreEpisodes.removeAll()
+                    for i in 0 ..< episodes.count {
+                        let episode = Episode()
+                        episode.setEpisodeData(data: episodes[i] as! NSDictionary)
+                        self.moreEpisodes.append(episode)
+                    }
+                    self.selectedCollectionView.reloadData()
+    //                self.newReleasesCollectionView.reloadData()
                 }
-                self.selectedCollectionView.reloadData()
-//                self.newReleasesCollectionView.reloadData()
             }
             break
         case .failure(_):

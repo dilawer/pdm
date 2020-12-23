@@ -92,6 +92,11 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(kPodcastsForCat)\(cat_id)"
         makeRequest(requestUrl: url, method: .get, parameters: nil)
     }
+    func getPodcastDetails(podCast_id:String){
+        //detail/1
+        let url = "\(kbaseURL)\(kPodCastDetails)\(podCast_id)"
+        makeRequest(requestUrl: url, method: .get, parameters: nil)
+    }
     
     //MARK: authentication
     func signInWithEmail(email: String, pass: String, type: LoginType) {
@@ -116,7 +121,7 @@ class WebManager: NSObject {
     }
     func socialLogin(provider:String,access_token:String,email:String){
         let params = ["provider": provider, "access_token":access_token,"email":email] as [String : Any]
-        let url = "\(kbaseURL)\(kforgot_username)"
+        let url = "\(kbaseURL)\(kSocialLogin)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
     
