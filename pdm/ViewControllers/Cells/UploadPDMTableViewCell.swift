@@ -9,6 +9,14 @@ import UIKit
 
 class UploadPDMTableViewCell: UITableViewCell {
 
+    //MARK:- Outlets
+    @IBOutlet weak var lblProductName: UILabel!
+    @IBOutlet weak var lblEpisodeName: UILabel!
+    @IBOutlet weak var lblAuthor: UILabel!
+    @IBOutlet weak var lblDuration: UILabel!
+    @IBOutlet weak var ivImage: UIImageView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

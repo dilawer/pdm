@@ -124,6 +124,10 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(kSocialLogin)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
+    func getPdmHistory(){
+        let url = "\(kbaseURL)\(kUploadHistory)"
+        makeRequest(requestUrl: url, method: .get, parameters: nil)
+    }
     
     //MARK:- Search
     func search(query:String){

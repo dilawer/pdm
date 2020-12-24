@@ -21,12 +21,36 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     @IBOutlet weak var ivNextEpisode: UIImageView!
     @IBOutlet weak var lblNextName: UILabel!
     
+    //MARK:- Actions
+    @IBAction func actionPlayPause(_ sender: Any) {
+        if shouldPlay{
+            if let active = activePod{
+                MusicPlayer.instance.initPlayer(url: active.episodeFileLink)
+                MusicPlayer.instance.play()
+                MusicPlayer.instance.progressBar = lblProgressView
+                shouldPlay = false
+            }
+        }
+        else {
+            let music = MusicPlayer.instance
+            let isPlaying = music.player.isPlaying
+            if isPlaying{
+                music.pause()
+            }else{
+                music.play()
+            }
+        }
+    }
+    
+    
     //MARK:- Variables
     var profiletitleArr = [String]()
     var profilesubtitleArr = [String]()
     var profiletimeArr = [String]()
     var profileimageArr = [String]()
     var moreArray = [Podcasts]()
+    var activePod:Pod?
+    var shouldPlay = true
     
     var podCastID = "1"
     
@@ -111,6 +135,7 @@ extension LipServiceViewController:WebManagerDelegate{
                                     lblName.text = first.episodeName
                                     lblEpisode.text = "Episode \(first.episodeID)"
                                     lblDuration.text = first.episodeDuration
+                                    activePod = first
                                 }
                                 if data.pods.count > 1{
                                     let next = data.pods[1]

@@ -44,6 +44,7 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
     var isShowing = false
     var recentPlayedEpisodes: [Episode]=[]
     var settingsHeightConstant:CGFloat = 0.0
+    var arrayHistory = [Pod]()
     
     let profiletitleArr = ["In the Mix","the friend Zone","Shots Film","Kind Advise","Good Advise"]
     let profilesubtitleArr = ["Episode Name","Episode Name","Episode Name","Episode Name","Episode Name"]
@@ -90,6 +91,7 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
         WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: user!.profile_image, imageView: self.profileImageView)
         WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: user!.cover_image, imageView: self.coverImageView)
         WebManager.getInstance(delegate: self)?.getProfileDetail()
+        WebManager.getInstance(delegate: self)?.getPdmHistory()
     }
     override func viewDidAppear(_ animated: Bool) {
         settingsHeightConstant = self.view.frame.height / 2
@@ -216,12 +218,18 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
         return 60
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return arrayHistory.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == uploadTableView,
            let cell = tableView.dequeueReusableCell(withIdentifier: "uploadCell") as? UploadPDMTableViewCell {
+            let pod = arrayHistory[indexPath.row]
+            cell.lblAuthor.text = pod.episodeAuthor
+            cell.lblDuration.text = pod.episodeDuration
+            cell.lblProductName.text = pod.podcast_name
+            cell.lblEpisodeName.text = pod.episodeName
+            ImageLoader.loadImage(imageView: cell.ivImage, url: pod.podcast_icon ?? "")
             cell.layer.cornerRadius = 10
             return cell
         }
@@ -263,13 +271,25 @@ extension ProfileViewController: WebManagerDelegate {
                 self.uploadedPods.text = user?.totalUploads
                 user?.saveUser()
                 
-                let episodes = data.object(forKey: krecentlyPlayed) as! NSArray
-                self.recentPlayedEpisodes.removeAll()
-                for i in 0 ..< episodes.count {
-                    let episode = Episode()
-                    episode.setEpisodeData(data: episodes[i] as! NSDictionary)
-                    self.recentPlayedEpisodes.append(episode)
+                if let episodes = data.object(forKey: krecentlyPlayed) as? NSArray{
+                    self.recentPlayedEpisodes.removeAll()
+                    for i in 0 ..< episodes.count {
+                        let episode = Episode()
+                        episode.setEpisodeData(data: episodes[i] as! NSDictionary)
+                        self.recentPlayedEpisodes.append(episode)
+                    }
                 }
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+                    if let historyArray:PDMHistory = self.handleResponse(data: jsonData){
+                        self.arrayHistory = historyArray.pods
+                        uploadTableView.reloadData()
+                    }
+                    
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
                 self.profilecollectionview.reloadData()
             }
             break

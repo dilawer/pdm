@@ -47,6 +47,8 @@ struct Pod: Codable {
     let episodeAuthor: String?
     let episodeFileLink: String
     let episodeDuration: String
+    let podcast_name:String?
+    let podcast_icon:String?
 
     enum CodingKeys: String, CodingKey {
         case episodeID = "episode_id"
@@ -54,5 +56,11 @@ struct Pod: Codable {
         case episodeAuthor = "episode_author"
         case episodeFileLink = "episode_file_link"
         case episodeDuration = "episode_duration"
+        case podcast_name = "podcast_name"
+        case podcast_icon = "podcast_icon"
     }
+}
+
+struct PDMHistory:Codable {
+    var pods: [Pod]
 }

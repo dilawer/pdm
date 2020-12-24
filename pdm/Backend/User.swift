@@ -108,27 +108,28 @@ var email: String
     }
     func setUserData(data : NSDictionary) {
         
-        let user = data.object(forKey: k_user)! as! NSDictionary
-        if data.object(forKey: ktoken) != nil {
-            let token = data.object(forKey: ktoken)! as! NSDictionary
-            self.access_token = token[kaccess_token] as? String ?? ""
+        if let user = data.object(forKey: k_user) as? NSDictionary{
+            if data.object(forKey: ktoken) != nil {
+                let token = data.object(forKey: ktoken)! as! NSDictionary
+                self.access_token = token[kaccess_token] as? String ?? ""
+            }
+            self.userid = "\(user[kId] ?? "")"
+            self.userName = user[kuserName] as? String ?? ""
+            self.fullName = user[kfullName] as? String ?? ""
+            self.email = user[kemail] as? String ?? ""
+            self.dob = user[kdob] as? String ?? ""
+            self.createdAt = user[kcreatedAt] as? String ?? ""
+            self.updatedAt = user[kupdatedAt] as? String ?? ""
+            self.profile_image = user[kprofile_image] as? String ?? ""
+            self.autoplay = user[kautoplay] as! Bool
+            self.cover_image = user[kcover_image] as? String ?? ""
+            
+            self.isLogin = true
+    //        self.totalListens = token[ktotalListens] as? String ?? ""
+    //        self.totalMins = token[ktotalMinutes] as? String ?? ""
+    //        self.totalUploads = token[ktotalListens] as? String ?? ""
+            self.saveUser()
         }
-        self.userid = "\(user[kId] ?? "")"
-        self.userName = user[kuserName] as? String ?? ""
-        self.fullName = user[kfullName] as? String ?? ""
-        self.email = user[kemail] as? String ?? ""
-        self.dob = user[kdob] as? String ?? ""
-        self.createdAt = user[kcreatedAt] as? String ?? ""
-        self.updatedAt = user[kupdatedAt] as? String ?? ""
-        self.profile_image = user[kprofile_image] as? String ?? ""
-        self.autoplay = user[kautoplay] as! Bool
-        self.cover_image = user[kcover_image] as? String ?? ""
-        
-        self.isLogin = true
-//        self.totalListens = token[ktotalListens] as? String ?? ""
-//        self.totalMins = token[ktotalMinutes] as? String ?? ""
-//        self.totalUploads = token[ktotalListens] as? String ?? ""
-        self.saveUser()
     }
     
     func removeUser() {

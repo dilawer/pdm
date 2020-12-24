@@ -27,6 +27,7 @@ let kSocialLogin = "auth/socialLogin"
 let kSearch = "home/search/"
 let kPodcastsForCat = "home/category/podcasts/"
 let kPodCastDetails = "podcast/detail/"
+let kUploadHistory = "home/profile/pdmUploadHistory"
 
 
 //MARK: API KEYS
