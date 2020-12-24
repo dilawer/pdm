@@ -9,6 +9,7 @@ import UIKit
 
 class recordServiceViewController: UIViewController {
 
+    //MARK:- Outltes
     @IBOutlet weak var bottomView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +20,7 @@ class recordServiceViewController: UIViewController {
     }
     
     @IBAction func uploadFileAction(_ sender: Any) {
+//        self.view.center.y = centerY
         bottomView.animShow()
     }
     
@@ -48,13 +50,13 @@ extension UIView{
         self.isHidden = false
     }
     func animHide(){
-        UIView.animate(withDuration: 2, delay: 0, options: [.curveLinear],
+        UIView.animate(withDuration: 1, delay: 0, options: [.curveLinear],
                        animations: {
                         self.center.y += self.bounds.height
                         self.layoutIfNeeded()
 
         },  completion: {(_ completed: Bool) -> Void in
         self.isHidden = true
-            })
+        })
     }
 }

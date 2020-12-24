@@ -26,11 +26,24 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
     @IBOutlet weak var totalListens: UILabel!
     @IBOutlet weak var totalMins: UILabel!
     @IBOutlet weak var uploadedPods: UILabel!
+    @IBOutlet weak var bottomConstant: NSLayoutConstraint!
+    @IBOutlet weak var heightConstant: NSLayoutConstraint!
     
     @IBOutlet weak var tfName: UITextField!
     @IBOutlet weak var tfEmail: UITextField!
     @IBOutlet weak var tfAge: UITextField!
+    
+    //MARK:- Action
+    @IBAction func actionLiked(_ sender: Any) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "LikedViewController") as! LikedViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    //MARK:- Veriables
+    var centerY:CGFloat = 0.0
+    var isShowing = false
     var recentPlayedEpisodes: [Episode]=[]
+    var settingsHeightConstant:CGFloat = 0.0
     
     let profiletitleArr = ["In the Mix","the friend Zone","Shots Film","Kind Advise","Good Advise"]
     let profilesubtitleArr = ["Episode Name","Episode Name","Episode Name","Episode Name","Episode Name"]
@@ -55,7 +68,8 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
         profilecollectionview.collectionViewLayout = layout
         settingsView.layer.masksToBounds = true
         settingsView.roundCorners(corners: [.topLeft,.topRight], radius: 10)
-        settingsView.isHidden = true
+//        settingsView.isHidden = true
+        hideBottom()
         self.uploadHistoryView.isHidden = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         uploadPostsTapped.isUserInteractionEnabled = true
@@ -77,14 +91,21 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
         WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: user!.cover_image, imageView: self.coverImageView)
         WebManager.getInstance(delegate: self)?.getProfileDetail()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        settingsHeightConstant = self.view.frame.height / 2
+        let user = User.getInstance()
+        tfEmail.text = user?.email
+        tfAge.text = user?.dob
+        tfName.text = user?.fullName
+    }
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         self.userNameLabel.isHidden = true
         self.profileSettingButton.isHidden = true
         self.podView.alpha = 0
         self.totalRecordView.alpha = 0
         self.songsMainView.alpha = 0
-        self.settingsView.isHidden = true
+//        self.settingsView.isHidden = true
+        hideBottom()
         self.uploadHistoryView.isHidden = false
     }
     
@@ -94,7 +115,8 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
         self.podView.alpha = 1
         self.totalRecordView.alpha = 1
         self.songsMainView.alpha = 1
-        self.settingsView.isHidden = true
+//        self.settingsView.isHidden = true
+        hideBottom()
         self.uploadHistoryView.isHidden = true
     }
     @IBAction func logoutAction(_ sender: Any) {
@@ -139,7 +161,8 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
         self.podView.alpha = 1
         self.totalRecordView.alpha = 1
         self.songsMainView.alpha = 1
-        self.settingsView.isHidden = true
+//        self.settingsView.isHidden = true
+        hideBottom()
         self.uploadHistoryView.isHidden = true
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -152,7 +175,30 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
     }
     
     @IBAction func settingsBtnTapped(_ sender: Any) {
-        settingsView.animShow()
+        if self.settingsView.isHidden{
+            showBottom()
+        } else {
+            hideBottom()
+        }
+        
+ 
+    }
+    func showBottom(){
+        self.settingsView.isHidden = false
+        UIView.animate(withDuration: 1, animations: {
+            self.bottomConstant.constant = 0
+            self.view.layoutIfNeeded()
+        })
+    }
+    func hideBottom(){
+        UIView.animate(withDuration: 1, animations: {
+            self.view.layoutIfNeeded()
+            self.bottomConstant.constant = self.settingsHeightConstant
+            self.view.layoutIfNeeded()
+        },completion: {
+            _ in
+            self.settingsView.isHidden = true
+        })
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "profilecell", for: indexPath) as! ProfileCollectionViewCell
