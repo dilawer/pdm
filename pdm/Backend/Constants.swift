@@ -30,6 +30,7 @@ let kPodcastsForCat = "home/category/podcasts/"
 let kPodCastDetails = "podcast/detail/"
 let kUploadHistory = "home/profile/pdmUploadHistory"
 let kUploadPodcast = "podcast/record"
+let kLikedPodcasts = "podcast/likedLists"
 
 
 //MARK: API KEYS

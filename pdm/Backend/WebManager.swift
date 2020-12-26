@@ -136,6 +136,10 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(kUploadPodcast)"
         makeRequest(requestUrl: url, isMultipart: true, fileArray: file, method: .post, parameters: parms)
     }
+    func getLikedPodcasts(){
+        let url = "\(kbaseURL)\(kLikedPodcasts)"
+        makeRequest(requestUrl: url)
+    }
     
     //MARK:- Search
     func search(query:String){

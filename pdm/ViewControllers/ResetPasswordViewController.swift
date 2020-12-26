@@ -115,10 +115,13 @@ extension ResetPasswordViewController:WebManagerDelegate{
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             } else {
+                openMain()
+                /*
                 let user = User.getInstance()
                 user?.setUserData(data: result.object(forKey: kdata)! as! NSDictionary)
                 let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
                 self.navigationController?.pushViewController(vcone!, animated: true)
+                */
             }
             
             break
