@@ -38,6 +38,10 @@
 		A023129725939B7800797347 /* NewReleaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A023129525939B7800797347 /* NewReleaseCell.xib */; };
 		A02C2E5F259457780031EDEE /* LikedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02C2E5E259457780031EDEE /* LikedViewController.swift */; };
 		A02C2E64259483FC0031EDEE /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02C2E63259483FC0031EDEE /* MusicPlayer.swift */; };
+		A0484DF72596DABD0070702A /* ActionSheetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0484DF62596DABD0070702A /* ActionSheetHelper.swift */; };
+		A0484DFD2596DD250070702A /* SmallCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0484DFB2596DD240070702A /* SmallCategoryCell.swift */; };
+		A0484DFE2596DD250070702A /* SmallCategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0484DFC2596DD240070702A /* SmallCategoryCell.xib */; };
+		A05FBBA22595A849005A94BF /* UIViewCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05FBBA12595A848005A94BF /* UIViewCircular.swift */; };
 		A06A50772591BD60008B4773 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06A50762591BD60008B4773 /* Extension.swift */; };
 		A06A507C2591C0DB008B4773 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06A507B2591C0DB008B4773 /* Enum.swift */; };
 		A06A50A62591F615008B4773 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06A50A52591F615008B4773 /* Global.swift */; };
@@ -48,6 +52,11 @@
 		A06A50F325922E0E008B4773 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06A50F125922E0D008B4773 /* CategoryCell.swift */; };
 		A06A50F425922E0E008B4773 /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A06A50F225922E0D008B4773 /* CategoryCell.xib */; };
 		A06A510D2592303D008B4773 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06A510C2592303D008B4773 /* ImageLoader.swift */; };
+		A0FD85D12595C5AE0051EFC2 /* CustomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD85D02595C5AE0051EFC2 /* CustomNavigation.swift */; };
+		A0FD85EF2595ECE10051EFC2 /* AudioRecorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD85EE2595ECE10051EFC2 /* AudioRecorderManager.swift */; };
+		A0FD85F42595EF340051EFC2 /* SoundRecorderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD85F32595EF340051EFC2 /* SoundRecorderModel.swift */; };
+		A0FD85F92595EFC90051EFC2 /* AudioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD85F82595EFC90051EFC2 /* AudioPlayerManager.swift */; };
+		A0FD8601259623C80051EFC2 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD8600259623C80051EFC2 /* UploadViewController.swift */; };
 		C614895425489A7C00DDCA2C /* recordServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C614895325489A7C00DDCA2C /* recordServiceViewController.swift */; };
 		C61489592548A02200DDCA2C /* podcastRecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61489582548A02200DDCA2C /* podcastRecordingViewController.swift */; };
 		C642A751253C805000F48EC2 /* UploadPDMTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C642A750253C805000F48EC2 /* UploadPDMTableViewCell.swift */; };
@@ -130,6 +139,10 @@
 		A023129525939B7800797347 /* NewReleaseCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewReleaseCell.xib; sourceTree = "<group>"; };
 		A02C2E5E259457780031EDEE /* LikedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedViewController.swift; sourceTree = "<group>"; };
 		A02C2E63259483FC0031EDEE /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
+		A0484DF62596DABD0070702A /* ActionSheetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetHelper.swift; sourceTree = "<group>"; };
+		A0484DFB2596DD240070702A /* SmallCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCategoryCell.swift; sourceTree = "<group>"; };
+		A0484DFC2596DD240070702A /* SmallCategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmallCategoryCell.xib; sourceTree = "<group>"; };
+		A05FBBA12595A848005A94BF /* UIViewCircular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewCircular.swift; sourceTree = "<group>"; };
 		A06A50762591BD60008B4773 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		A06A507B2591C0DB008B4773 /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		A06A50A52591F615008B4773 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
@@ -141,6 +154,11 @@
 		A06A50F125922E0D008B4773 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		A06A50F225922E0D008B4773 /* CategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
 		A06A510C2592303D008B4773 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		A0FD85D02595C5AE0051EFC2 /* CustomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigation.swift; sourceTree = "<group>"; };
+		A0FD85EE2595ECE10051EFC2 /* AudioRecorderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderManager.swift; sourceTree = "<group>"; };
+		A0FD85F32595EF340051EFC2 /* SoundRecorderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundRecorderModel.swift; sourceTree = "<group>"; };
+		A0FD85F82595EFC90051EFC2 /* AudioPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerManager.swift; sourceTree = "<group>"; };
+		A0FD8600259623C80051EFC2 /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		C614895325489A7C00DDCA2C /* recordServiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recordServiceViewController.swift; sourceTree = "<group>"; };
 		C61489582548A02200DDCA2C /* podcastRecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = podcastRecordingViewController.swift; sourceTree = "<group>"; };
 		C642A750253C805000F48EC2 /* UploadPDMTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPDMTableViewCell.swift; sourceTree = "<group>"; };
@@ -264,10 +282,15 @@
 				A06A50A52591F615008B4773 /* Global.swift */,
 				A06A50E525921D82008B4773 /* UIButtonX.swift */,
 				A06A50E825921D83008B4773 /* UIImageViewX.swift */,
+				A0FD85D02595C5AE0051EFC2 /* CustomNavigation.swift */,
 				A06A50E625921D82008B4773 /* UITextFieldX.swift */,
+				A05FBBA12595A848005A94BF /* UIViewCircular.swift */,
 				A06A50E725921D82008B4773 /* UIViewX.swift */,
 				A06A510C2592303D008B4773 /* ImageLoader.swift */,
 				A02C2E63259483FC0031EDEE /* MusicPlayer.swift */,
+				A0484DF62596DABD0070702A /* ActionSheetHelper.swift */,
+				A0FD85F82595EFC90051EFC2 /* AudioPlayerManager.swift */,
+				A0FD85EE2595ECE10051EFC2 /* AudioRecorderManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -281,6 +304,9 @@
 				A023127025931ABD00797347 /* PodcastCell.xib */,
 				A023129425939B7800797347 /* NewReleaseCell.swift */,
 				A023129525939B7800797347 /* NewReleaseCell.xib */,
+				A0FD85F32595EF340051EFC2 /* SoundRecorderModel.swift */,
+				A0484DFB2596DD240070702A /* SmallCategoryCell.swift */,
+				A0484DFC2596DD240070702A /* SmallCategoryCell.xib */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -366,6 +392,7 @@
 				C67B63D62549412500D9E4C4 /* selectedPodcastViewController.swift */,
 				A0231276259326A400797347 /* PodcastListViewController.swift */,
 				A02C2E5E259457780031EDEE /* LikedViewController.swift */,
+				A0FD8600259623C80051EFC2 /* UploadViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -517,6 +544,7 @@
 				C6CDE2A72526F00300B8C411 /* LaunchScreen.storyboard in Resources */,
 				C6CDE2A42526F00300B8C411 /* Assets.xcassets in Resources */,
 				A023129725939B7800797347 /* NewReleaseCell.xib in Resources */,
+				A0484DFE2596DD250070702A /* SmallCategoryCell.xib in Resources */,
 				C6CDE2A22526F00200B8C411 /* Main.storyboard in Resources */,
 				A06A50F425922E0E008B4773 /* CategoryCell.xib in Resources */,
 				A023127225931ABD00797347 /* PodcastCell.xib in Resources */,
@@ -716,7 +744,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A06A50E925921D83008B4773 /* UIViewX.swift in Sources */,
+				A0484DFD2596DD250070702A /* SmallCategoryCell.swift in Sources */,
+				A0FD8601259623C80051EFC2 /* UploadViewController.swift in Sources */,
 				C6967AAE252737E000FCD7A6 /* ForgetNameDoneViewController.swift in Sources */,
+				A0FD85F92595EFC90051EFC2 /* AudioPlayerManager.swift in Sources */,
 				C61489592548A02200DDCA2C /* podcastRecordingViewController.swift in Sources */,
 				C6CDE2D92526F09000B8C411 /* SignupViewController.swift in Sources */,
 				1AEF535B25322A6500968ED7 /* ProfileViewController.swift in Sources */,
@@ -728,6 +759,7 @@
 				A023127125931ABD00797347 /* PodcastCell.swift in Sources */,
 				A06A50A62591F615008B4773 /* Global.swift in Sources */,
 				1AEF5349253207C300968ED7 /* HomeViewController.swift in Sources */,
+				A0FD85F42595EF340051EFC2 /* SoundRecorderModel.swift in Sources */,
 				C6EEC7FA25765E8900AC6D1B /* Constants.swift in Sources */,
 				C6CDE29F2526F00200B8C411 /* ViewController.swift in Sources */,
 				A02C2E5F259457780031EDEE /* LikedViewController.swift in Sources */,
@@ -743,6 +775,7 @@
 				C6967AB8252751AA00FCD7A6 /* ResetPasswordViewController.swift in Sources */,
 				1AEF532625318F7C00968ED7 /* PodcastController.swift in Sources */,
 				C6EEC7F525765E1300AC6D1B /* WebManager.swift in Sources */,
+				A0FD85D12595C5AE0051EFC2 /* CustomNavigation.swift in Sources */,
 				1AEF53642532409C00968ED7 /* ProfileCollectionViewCell.swift in Sources */,
 				C6CDE29B2526F00200B8C411 /* AppDelegate.swift in Sources */,
 				A0231290259383E200797347 /* TrendingResponse.swift in Sources */,
@@ -763,10 +796,13 @@
 				C67B63D72549412500D9E4C4 /* selectedPodcastViewController.swift in Sources */,
 				A06A510D2592303D008B4773 /* ImageLoader.swift in Sources */,
 				1873A6A1258196D700CD607D /* Utility.swift in Sources */,
+				A0FD85EF2595ECE10051EFC2 /* AudioRecorderManager.swift in Sources */,
 				1AEF536C25324AF300968ED7 /* CategoryViewController.swift in Sources */,
 				1873A6AB2582CB0200CD607D /* Category.swift in Sources */,
 				C642A756253CC13C00F48EC2 /* LipServiceViewController.swift in Sources */,
+				A0484DF72596DABD0070702A /* ActionSheetHelper.swift in Sources */,
 				A06A50EA25921D83008B4773 /* UIImageViewX.swift in Sources */,
+				A05FBBA22595A849005A94BF /* UIViewCircular.swift in Sources */,
 				C6967AB32527482200FCD7A6 /* OTPresetPasswordViewController.swift in Sources */,
 				1873A6A325819C8700CD607D /* User.swift in Sources */,
 			);
@@ -948,6 +984,7 @@
 				CODE_SIGN_ENTITLEMENTS = pdm/pdm.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Q5ZXDW6NC6;
 				INFOPLIST_FILE = pdm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -972,6 +1009,7 @@
 				CODE_SIGN_ENTITLEMENTS = pdm/pdm.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Q5ZXDW6NC6;
 				INFOPLIST_FILE = pdm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

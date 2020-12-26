@@ -128,6 +128,10 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(kUploadHistory)"
         makeRequest(requestUrl: url, method: .get, parameters: nil)
     }
+    func uploadPodcast(parms:[String : Any],file:[String : Data]){
+        let url = "\(kbaseURL)\(kUploadPodcast)"
+        makeRequest(requestUrl: url, isMultipart: true, fileArray: file, method: .post, parameters: parms)
+    }
     
     //MARK:- Search
     func search(query:String){
@@ -154,7 +158,7 @@ class WebManager: NSObject {
     
 
     //MARK: helper method
-    func makeRequest(requestUrl: String, method: HTTPMethod = .get, parameters: Parameters? = nil) {
+    func makeRequest(requestUrl: String,isMultipart:Bool = false,fileArray:[String:Data]? = nil , method: HTTPMethod = .get, parameters: Parameters? = nil) {
         let retryCount = 3
         if Utility.isInternetConnected() {
             SVProgressHUD.setDefaultMaskType(.black)
@@ -166,6 +170,41 @@ class WebManager: NSObject {
                     "Content-Type": "application/json",
                     "Accept": "application/json"
                 ]
+            }
+            
+            if isMultipart{
+                AF.upload(multipartFormData: { multipartFormData in
+                    if let _ = parameters{
+                        for (key,value) in parameters.unsafelyUnwrapped{
+                            multipartFormData.append((value as? String ?? "").data(using: .utf8) ?? Data(), withName: key)
+                        }
+                    }
+                    if let files = fileArray{
+                        for(key,value) in files{
+                            var value = value
+                            if let img = UIImage(data: value){
+                                value = img.jpegData(compressionQuality: 0.7) ?? Data()
+                                multipartFormData.append(value, withName: key, fileName: "\(Date().timeIntervalSince1970).png", mimeType: "image/jpeg")
+                            }else {
+                                multipartFormData.append(value, withName: key, fileName: "\(Date().timeIntervalSince1970).mp3", mimeType: "audio/mp3")
+                            }
+                        }
+                    }
+                }, to: requestUrl,headers: headers).responseJSON{ response in
+                    switch (response.result) {
+                    case .success(_):
+                        SVProgressHUD.dismiss()
+                        self.delegate.successResponse(response: response,webManager: self)
+                        break
+                    case .failure(_):
+                        SVProgressHUD.dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                            self.retryRequest(requestUrl: requestUrl, retryCount:retryCount)
+                        })
+                        break
+                    }
+                }
+                return
             }
             
             AF.request(requestUrl, method: method, parameters: parameters, headers: headers)
@@ -187,6 +226,7 @@ class WebManager: NSObject {
             self.delegate.networkFailureAction()
         }
     }
+    
     
     func retryRequest(requestUrl: String, retryCount: Int)
     {

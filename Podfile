@@ -13,6 +13,8 @@ target 'pdm' do
   pod 'SVProgressHUD'
   pod 'GoogleSignIn'
   pod 'Kingfisher'
+  pod "SoundWave"
+  pod 'IQKeyboardManager'
   target 'pdmTests' do
     # inherit! :search_paths
     # Pods for testing

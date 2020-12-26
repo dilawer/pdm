@@ -159,7 +159,7 @@ extension CategoryViewController: WebManagerDelegate {
                         if let listCat = searchResult.data.categories{
                             for category in listCat{
                                 let cat = Category()
-                                cat.categoryId = String(category.categoryID)
+                                cat.categoryId = String(category.categoryID ?? 0)
                                 cat.category_icon = category.categoryIcon
                                 cat.category_name = category.categoryName
                                 self.categories.append(cat)

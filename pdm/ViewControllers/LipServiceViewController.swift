@@ -20,11 +20,17 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     @IBOutlet weak var lblPlayPause: UIButton!
     @IBOutlet weak var ivNextEpisode: UIImageView!
     @IBOutlet weak var lblNextName: UILabel!
+    @IBOutlet weak var btnRepeat: UIButton!
+    @IBOutlet weak var btnBackward: UIButton!
+    @IBOutlet weak var btnShufffle: UIButton!
+    @IBOutlet weak var btnFastForward: UIButton!
+    @IBOutlet weak var ivPlayPause: UIImageView!
     
     //MARK:- Actions
     @IBAction func actionPlayPause(_ sender: Any) {
         if shouldPlay{
             if let active = activePod{
+                ivPlayPause.image = UIImage(named: "ic_ipause")
                 MusicPlayer.instance.initPlayer(url: active.episodeFileLink)
                 MusicPlayer.instance.play()
                 MusicPlayer.instance.progressBar = lblProgressView
@@ -36,11 +42,22 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
             let isPlaying = music.player.isPlaying
             if isPlaying{
                 music.pause()
+                ivPlayPause.image = UIImage(named: "ic_iplay")
             }else{
                 music.play()
+                ivPlayPause.image = UIImage(named: "ic_ipause")
             }
         }
     }
+    @IBAction func actionRepeat(_ sender: Any) {
+    }
+    @IBAction func actionBack(_ sender: Any) {
+    }
+    @IBAction func actionShuffle(_ sender: Any) {
+    }
+    @IBAction func actionFastForward(_ sender: Any) {
+    }
+    
     
     
     //MARK:- Variables
@@ -64,6 +81,15 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
         lipServiceCollectionView.collectionViewLayout = layout
         WebManager.getInstance(delegate: self)?.getPodcastDetails(podCast_id: podCastID)
         register()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        let music = MusicPlayer.instance
+        let isPlaying = music.player.isPlaying
+        if isPlaying{
+            MusicPlayer.instance.progressBar = lblProgressView
+            ivPlayPause.image = UIImage(named: "ic_ipause")
+            shouldPlay = false
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false

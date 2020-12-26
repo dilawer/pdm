@@ -28,6 +28,7 @@ let kSearch = "home/search/"
 let kPodcastsForCat = "home/category/podcasts/"
 let kPodCastDetails = "podcast/detail/"
 let kUploadHistory = "home/profile/pdmUploadHistory"
+let kUploadPodcast = "podcast/record"
 
 
 //MARK: API KEYS

@@ -6,24 +6,146 @@
 //
 
 import UIKit
+import SoundWave
 
 class podcastRecordingViewController: UIViewController, UIGestureRecognizerDelegate {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        // Do any additional setup after loading the view.
+    //MARK:- Outlets
+    @IBOutlet weak var viewRecording: UIViewCircular!
+    @IBOutlet weak var lblRecordingTime: UILabel!
+    @IBOutlet weak var recordingView: AudioVisualizationView!
+    @IBOutlet weak var lblTime: UILabel!
+    
+    //MARK:- Veriables
+    private let viewModel = ViewModel()
+    private var chronometer: Chronometer?
+    var totalSec:Double = 0.0
+    var timer = Timer()
+    var array = [Float]()
+    
+    private var currentState: AudioRecodingState = .ready {
+        didSet {
+            /*
+            self.recordButton.setImage(self.currentState.buttonImage, for: .normal)
+            self.audioVisualizationView.audioVisualizationMode = self.currentState.audioVisualizationMode
+            self.clearButton.isHidden = self.currentState == .ready || self.currentState == .playing || self.currentState == .recording
+            */
+        }
+    }
+
+    
+    //MARK:- Actions
+    @IBAction func actionRecording(_ sender: Any) {
+        if self.currentState == .recording{
+            self.chronometer?.stop()
+            self.chronometer = nil
+            self.recordingView.audioVisualizationMode = .read
+            do {
+                try self.viewModel.stopRecording()
+                self.timer.invalidate()
+                self.currentState = .recorded
+                self.recordingView.audioVisualizationMode = .read
+                self.recordingView.meteringLevels = array
+                DispatchQueue.main.asyncAfter(deadline: .now()+2.0, execute: {
+                    let vc = self.storyboard?.instantiateViewController(identifier: "UploadViewController") as! UploadViewController
+                    vc.array = self.array
+                    vc.length = self.lblTime.text ?? "00:00"
+                    do{
+                        let path = "file://\(self.viewModel.currentAudioRecord?.audioFilePathLocal?.absoluteURL.absoluteString ?? "")"
+                        if let data = URL(string: path){
+                            let mp3 = podcastRecordingViewController.getURL()
+                            AudioRecorderManager.convertAudio(data, outputURL: mp3)
+                            let audio = try Data(contentsOf: mp3)
+                            vc.audio = audio
+                        }
+                    }catch{
+                        
+                    }
+                    vc.sceonds = Int(self.totalSec)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                })
+            } catch {
+                self.currentState = .ready
+            }
+        } else if self.currentState == .ready {
+            self.viewModel.startRecording { [weak self] soundRecord, error in
+                if let error = error {
+//                    self?.showAlert(with: error)
+                    return
+                }
+                self?.recordingView.audioVisualizationMode = .write
+                self?.currentState = .recording
+                self?.chronometer = Chronometer()
+                self?.chronometer?.start()
+                self?.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self?.updateCounting), userInfo: nil, repeats: true)
+            }
+        }
+    }
+    @IBAction func actionBack(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        config()
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
-    */
+    class func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
 
+    class func getURL() -> URL {
+        return getDocumentsDirectory().appendingPathComponent("file.mp3")
+    }
+    func config(){
+        self.viewModel.askAudioRecordingPermission()
+        self.recordingView.gradientStartColor = .greenColor
+        self.recordingView.gradientEndColor = .greenColor
+        self.recordingView.meteringLevelBarWidth = 2.0
+        self.viewModel.audioMeteringLevelUpdate = { [weak self] meteringLevel in
+            self?.recordingView.add(meteringLevel: meteringLevel)
+            self?.array.append(meteringLevel)
+            guard let self = self, self.recordingView.audioVisualizationMode == .write else {
+                return
+            }
+        }
+        self.viewModel.audioDidFinish = { [weak self] in
+            self?.currentState = .recorded
+            self?.recordingView.stop()
+        }
+        
+    }
+    @objc func updateCounting(){
+        totalSec += 1
+        lblTime.text = totalSec.stringFromTimeInterval()
+    }
+}
+enum AudioRecodingState {
+    case ready
+    case recording
+    case recorded
+    case playing
+    case paused
+
+    var buttonImage: UIImage {
+        switch self {
+        case .ready, .recording:
+            return #imageLiteral(resourceName: "Record-Button")
+        case .recorded, .paused:
+            return #imageLiteral(resourceName: "Play-Button")
+        case .playing:
+            return #imageLiteral(resourceName: "Pause-Button")
+        }
+    }
+
+    var audioVisualizationMode: AudioVisualizationView.AudioVisualizationMode {
+        switch self {
+        case .ready, .recording:
+            return .write
+        case .paused, .playing, .recorded:
+            return .read
+        }
+    }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class recordServiceViewController: UIViewController {
 
@@ -16,28 +17,37 @@ class recordServiceViewController: UIViewController {
         bottomView.layer.masksToBounds = true
         bottomView.roundCorners(corners: [.topLeft,.topRight], radius: 15)
         bottomView.isHidden = true
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func uploadFileAction(_ sender: Any) {
-//        self.view.center.y = centerY
         bottomView.animShow()
     }
+    
+    @IBAction func actionFile(_ sender: Any) {
+        bottomView.animHide()
+        let picker = MPMediaPickerController(mediaTypes: .music)
+        picker.allowsPickingMultipleItems = false
+        picker.popoverPresentationController?.sourceView = view
+        picker.showsCloudItems = true
+        picker.delegate = self
+        self.present(picker, animated: true, completion: nil)
+        print(picker.view.frame )
+    }
+    @IBAction func actionRSS(_ sender: Any) {
+    }
+    @IBAction func actionDropBox(_ sender: Any) {
+    }
+    @IBAction func actionDrive(_ sender: Any) {
+    }
+    
     
     @IBAction func startRecording(_ sender: Any) {
         let vctwo = storyboard?.instantiateViewController(withIdentifier: "podcastRecordingViewController") as? podcastRecordingViewController;
         self.navigationController?.pushViewController(vctwo!, animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
-    */
-
 }
 
 extension UIView{
@@ -58,5 +68,15 @@ extension UIView{
         },  completion: {(_ completed: Bool) -> Void in
         self.isHidden = true
         })
+    }
+}
+
+//MARK:- MediaPicker
+extension recordServiceViewController:MPMediaPickerControllerDelegate{
+    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

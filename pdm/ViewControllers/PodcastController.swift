@@ -17,6 +17,12 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
     @IBOutlet weak var recordAction: UIImageView!
     
     
+    //MARK:- Action
+    @IBAction func actionRecord(_ sender: Any) {
+        let vctwo = storyboard?.instantiateViewController(withIdentifier: "recordServiceViewController") as? recordServiceViewController;
+        self.navigationController?.pushViewController(vctwo!, animated: true)
+    }
+    
 //    var trendingEpisodes: [Episode]=[]
 //    var newReleaseEpisodes: [Episode]=[]
 //    var recommendedEpisodes: [Episode]=[]

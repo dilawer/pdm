@@ -13,3 +13,17 @@ enum LoginType:String {
 enum DecodeError: Error {
     case ErrorWhileDecoding
 }
+enum AudioErrorType: Error {
+    case alreadyRecording
+    case alreadyPlaying
+    case notCurrentlyPlaying
+    case audioFileWrongPath
+    case recordFailed
+    case playFailed
+    case recordPermissionNotGranted
+    case internalError
+}
+enum PhotoMediaType {
+    case camera
+    case gallery
+}
