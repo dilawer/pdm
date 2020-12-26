@@ -11,11 +11,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else {return}
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
+        
+        for userActivity in connectionOptions.userActivities {
+            if let _ = userActivity.webpageURL {
+                guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+                let url = userActivity.webpageURL,
+                let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {return}
+                if components.path.contains("forget"){
+                    presentDetailViewController(compunents: components)
+                    return
+                }
+                break
+            }
+        }
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let rootVC = storyboard.instantiateViewController(identifier: "mainViewController") as? UINavigationController else {
@@ -36,6 +48,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+    }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+        let url = userActivity.webpageURL,
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {return}
+        if components.path.contains("forget"){
+            presentDetailViewController(compunents: components)
+        }
+    }
+    
+    func presentDetailViewController(compunents:URLComponents) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let detailVC = storyboard.instantiateViewController(withIdentifier: "resetVC") as? ResetPasswordViewController else { return }
+        detailVC.compunents = compunents
+        detailVC.modalPresentationStyle = .automatic
+        self.window?.rootViewController = detailVC
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

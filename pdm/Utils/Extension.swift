@@ -21,6 +21,10 @@ extension String{
         let result =  phoneTest.evaluate(with: self)
         return result
     }
+    func isValidPassword() -> Bool {
+        let passwordRegex = "^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,}$"
+        return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: self)
+    }
 }
 extension UIColor {
     @objc class var greenColor:UIColor{

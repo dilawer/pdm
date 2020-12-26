@@ -1139,14 +1139,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a new Password, must contain ! Capital, 1 Lower Case, &amp; ! Special Character " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nyT-Ev-RtF">
-                                <rect key="frame" x="50" y="244" width="314" height="36"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a new Password, must contain ! Capital, 1 Number ,1 Lower Case, &amp; ! Special Character " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nyT-Ev-RtF">
+                                <rect key="frame" x="50" y="244" width="314" height="54"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hTQ-p4-jzU">
-                                <rect key="frame" x="50" y="300" width="314" height="60"/>
+                                <rect key="frame" x="50" y="318" width="314" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="dww-ru-4tg"/>
                                 </constraints>
@@ -1154,7 +1154,7 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yTW-hb-XEd">
-                                <rect key="frame" x="50" y="380" width="314" height="60"/>
+                                <rect key="frame" x="50" y="398" width="314" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="pgm-1I-T9A"/>
                                 </constraints>
@@ -1162,7 +1162,7 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncJ-yO-6Eq">
-                                <rect key="frame" x="127" y="480" width="160" height="40"/>
+                                <rect key="frame" x="127" y="498" width="160" height="40"/>
                                 <color key="backgroundColor" red="0.43137254899999999" green="0.58431372550000005" blue="0.2233694494" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="160" id="0Tz-XS-HRB"/>
@@ -1177,6 +1177,15 @@
                                     <action selector="SubmitButtonTapped:" destination="KTG-DT-vTj" eventType="touchUpInside" id="s9I-UB-502"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v6b-qf-fvk">
+                                <rect key="frame" x="20" y="44" width="48" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" systemColor="labelColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancel:" destination="KTG-DT-vTj" eventType="touchUpInside" id="YjS-rG-Vmh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fEf-XB-VCs"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1185,6 +1194,7 @@
                             <constraint firstItem="ncJ-yO-6Eq" firstAttribute="centerX" secondItem="fEf-XB-VCs" secondAttribute="centerX" id="5q2-Va-VJW"/>
                             <constraint firstItem="hTQ-p4-jzU" firstAttribute="leading" secondItem="nyT-Ev-RtF" secondAttribute="leading" id="6kR-br-o7b"/>
                             <constraint firstItem="rVF-fS-gd4" firstAttribute="centerX" secondItem="fEf-XB-VCs" secondAttribute="centerX" id="95r-OO-3wY"/>
+                            <constraint firstItem="v6b-qf-fvk" firstAttribute="leading" secondItem="fEf-XB-VCs" secondAttribute="leading" constant="20" id="Dc1-ho-yqX"/>
                             <constraint firstItem="nyT-Ev-RtF" firstAttribute="leading" secondItem="LFV-vJ-Q0W" secondAttribute="leading" constant="20" id="JWw-Is-dcW"/>
                             <constraint firstItem="fEf-XB-VCs" firstAttribute="trailing" secondItem="LFV-vJ-Q0W" secondAttribute="trailing" constant="30" id="KEs-Dw-82z"/>
                             <constraint firstItem="nyT-Ev-RtF" firstAttribute="trailing" secondItem="LFV-vJ-Q0W" secondAttribute="trailing" constant="-20" id="P3D-0q-for"/>
@@ -1195,6 +1205,7 @@
                             <constraint firstItem="yTW-hb-XEd" firstAttribute="trailing" secondItem="hTQ-p4-jzU" secondAttribute="trailing" id="b08-vf-6Z8"/>
                             <constraint firstItem="LFV-vJ-Q0W" firstAttribute="leading" secondItem="fEf-XB-VCs" secondAttribute="leading" constant="30" id="dVZ-lH-TwF"/>
                             <constraint firstItem="hTQ-p4-jzU" firstAttribute="centerX" secondItem="fEf-XB-VCs" secondAttribute="centerX" id="h6K-lE-Vk8"/>
+                            <constraint firstItem="v6b-qf-fvk" firstAttribute="top" secondItem="fEf-XB-VCs" secondAttribute="top" id="hJw-fL-yfN"/>
                             <constraint firstItem="nyT-Ev-RtF" firstAttribute="top" secondItem="LFV-vJ-Q0W" secondAttribute="bottom" constant="30" id="jlq-WU-eH7"/>
                             <constraint firstItem="nyT-Ev-RtF" firstAttribute="centerX" secondItem="fEf-XB-VCs" secondAttribute="centerX" id="ljv-3j-EEp"/>
                             <constraint firstItem="yTW-hb-XEd" firstAttribute="top" secondItem="hTQ-p4-jzU" secondAttribute="bottom" constant="20" id="tyo-LV-6q1"/>

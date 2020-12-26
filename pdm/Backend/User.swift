@@ -121,7 +121,7 @@ var email: String
             self.createdAt = user[kcreatedAt] as? String ?? ""
             self.updatedAt = user[kupdatedAt] as? String ?? ""
             self.profile_image = user[kprofile_image] as? String ?? ""
-            self.autoplay = user[kautoplay] as! Bool
+            self.autoplay = (user[kautoplay] as? Bool) ?? false
             self.cover_image = user[kcover_image] as? String ?? ""
             
             self.isLogin = true

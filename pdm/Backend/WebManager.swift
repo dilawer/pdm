@@ -119,8 +119,12 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(kforgot_username)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
-    func socialLogin(provider:String,access_token:String,email:String){
-        let params = ["provider": provider, "access_token":access_token,"email":email] as [String : Any]
+    func resetPassword(parms:[String:Any]){
+        let url = "\(kbaseURL)\(kResetPassword)"
+        makeRequest(requestUrl: url, method: .post, parameters: parms)
+    }
+    func socialLogin(provider:String,email:String,id:String,given_name:String,family_name:String){
+        let params = ["provider": provider,"email":email, "id":id,"given_name":given_name,"family_name":family_name] as [String : Any]
         let url = "\(kbaseURL)\(kSocialLogin)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }

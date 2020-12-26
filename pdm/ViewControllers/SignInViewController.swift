@@ -327,14 +327,13 @@ extension SignInViewController: GIDSignInDelegate{
         if let error = error {
             Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Error While Google Signin Please Try later", preferredStyle: .alert, buttonText: "OK")
         } else {
-            let userId = user.userID
+            let userId = user.userID ?? ""
             let idToken = user.authentication.idToken
-            let fullName = user.profile.name
-            let givenName = user.profile.givenName
-            let familyName = user.profile.familyName
-            let email = user.profile.email
-            print(idToken)
-            WebManager.getInstance(delegate: self)?.socialLogin(provider: "google", access_token: idToken ?? "", email: email ?? "")
+            let fullName = user.profile.name ?? ""
+            let givenName = user.profile.givenName ?? ""
+            let familyName = user.profile.familyName ?? ""
+            let email = user.profile.email ?? ""
+            WebManager.getInstance(delegate: self)?.socialLogin(provider: "google", email: email, id: userId, given_name: givenName, family_name: familyName)
        }
     }
 }
@@ -369,7 +368,8 @@ extension SignInViewController{
                 let firstName = res["first_name"] as? String ?? ""
                 let lastName = res["last_name"] as? String ?? ""
                 let email = res["email"] as? String ?? ""
-                WebManager.getInstance(delegate: self)?.socialLogin(provider: "facebook", access_token: token.tokenString, email: email ?? "")
+                let id = res["id"] as? String ?? ""
+                WebManager.getInstance(delegate: self)?.socialLogin(provider: "facebook", email: email, id: id, given_name: firstName, family_name: lastName)
             }
         }
         connection.start()
@@ -409,19 +409,16 @@ extension SignInViewController:ASAuthorizationControllerDelegate,ASAuthorization
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             
             print(appleIDCredential)
-            /*
-            Global.shared.signup = SignupViewModel()
-            Global.shared.signup?.firstName = appleIDCredential.fullName?.givenName ?? ""
-            Global.shared.signup?.lastName = appleIDCredential.fullName?.familyName ?? ""
-            Global.shared.signup?.imageUrl = ""
-            Global.shared.signup?.appId = String(data: appleIDCredential.identityToken ?? Data(), encoding: .utf8) ?? ""
-            Global.shared.signup?.accountType = "apple"
-            Global.shared.signup?.email = appleIDCredential.email ?? ""
-            */
-            
-            
+            guard let _ = appleIDCredential.fullName?.givenName else {
+                Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "There is an error while reterving your id please go to \niPhone Settings > Apple Id > Password & Security > Apple ID logins > PDM App > Stop using Apple ID", preferredStyle: .alert, buttonText: "OK")
+                return
+            }
+            let firstName = appleIDCredential.fullName?.givenName ?? ""
+            let lastName = appleIDCredential.fullName?.familyName ?? ""
+            let email = appleIDCredential.email ?? ""
+            let id = appleIDCredential.user
+            WebManager.getInstance(delegate: self)?.socialLogin(provider: "apple", email: email, id: id, given_name: firstName, family_name: lastName)
         case let passwordCredential as ASPasswordCredential:
-        
             let username = passwordCredential.user
             let password = passwordCredential.password
             

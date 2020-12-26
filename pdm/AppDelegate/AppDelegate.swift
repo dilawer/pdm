@@ -23,9 +23,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Setting category to AVAudioSessionCategoryPlayback failed: \(error)")
         }
         // Override point for customization after application launch.
+        return false
+    }
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+          guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+            let url = userActivity.webpageURL,
+            let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+              return false
+        }
+        
+        presentDetailViewController(compunents: components)
         return true
     }
-    
+    func presentDetailViewController(compunents:URLComponents) {
+      let storyboard = UIStoryboard(name: "Main", bundle: nil)
+      
+      guard
+        let detailVC = storyboard
+          .instantiateViewController(withIdentifier: "resetVC")
+            as? ResetPasswordViewController,
+        let navigationVC = storyboard
+          .instantiateViewController(withIdentifier: "NavigationController")
+            as? UINavigationController
+      else { return }
+      
+        detailVC.compunents = compunents
+      navigationVC.modalPresentationStyle = .formSheet
+      navigationVC.pushViewController(detailVC, animated: true)
+    }
+
+
     func application(_ app: UIApplication, open url: URL,
                      options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         if let scheme = url.scheme,
