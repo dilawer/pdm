@@ -9,19 +9,17 @@ import UIKit
 import Alamofire
 class HomeViewController: UIViewController , UICollectionViewDelegate , UICollectionViewDataSource {
    
+    //MARK:- Outlets
     @IBOutlet weak var viewimage: UIView!
     @IBOutlet weak var videomage: UIImageView!
-    
     @IBOutlet weak var bottoncollectionview: UICollectionView!
-    
     @IBOutlet weak var uppercollectionview: UICollectionView!
     
-    
-    
+    //MARK:- Veriable
     var textArr = [kCATEGORIES]
     var imageArr: [UIImage] = [
 //        UIImage(named: "upperone")!,
-        UIImage(named: "uppertwo")!,
+        UIImage(named: "ic_category")!,
     ]
     var featuredPodcasts: [Podcast]=[]
     var video = Video()
@@ -34,6 +32,8 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /*
         view.layer.cornerRadius = 10
         videomage.layer.cornerRadius = 10
         let itemSize = UIScreen.main.bounds.width/5 - 3
@@ -51,7 +51,9 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
         layoutone.minimumInteritemSpacing = 20
         layoutone.minimumLineSpacing = 0
         bottoncollectionview.collectionViewLayout = layoutone
-        
+        */
+        uppercollectionview.register(UINib(nibName: "TopCell", bundle: nil), forCellWithReuseIdentifier: "TopCell")
+        bottoncollectionview.register(UINib(nibName: "FeaturedCell", bundle: nil), forCellWithReuseIdentifier: "FeaturedCell")
         getHomeData()
         
     }
@@ -73,45 +75,38 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
         if collectionView == self.uppercollectionview {
             let text = textArr[indexPath.row]
             if text == kCATEGORIES {
-                // open categories
                 self.tabBarController?.selectedIndex = 2
             }else{
-                
-                let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController;
-//                selectedPodcastViewController?.podcast = podcastOfTheWeek
+                let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
                 vc?.podCastID = podcastOfTheWeek.podcastID
                 self.navigationController?.pushViewController(vc!, animated: true)
             }
            }
             else if collectionView == self.bottoncollectionview{
                 let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
-//                selectedPodcastViewController?.podcast = featuredPodcasts[indexPath.row]
                 vc?.podCastID = featuredPodcasts[indexPath.row].podcastID
                 self.navigationController?.pushViewController(vc!, animated: true)
            }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.uppercollectionview {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "homeupper", for: indexPath) as! HomeUpperCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCell", for: indexPath) as! TopCell
             let text = textArr[indexPath.row]
             if text == kCATEGORIES {
-                cell.mainimage.image = imageArr[indexPath.row]
+                cell.ivImage.image = imageArr[indexPath.row]
             }else{
-                WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: podcastOfTheWeek.podcast_name, imageView: cell.mainimage)
+                ImageLoader.loadImage(imageView: cell.ivImage, url: podcastOfTheWeek.podcast_icon)
             }
-            
-            cell.mainlabel.text = textArr[indexPath.row]
-            
+            cell.lblName.text = textArr[indexPath.row]
             return cell
-            }
+        }
         else if collectionView == self.bottoncollectionview {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bottomcell", for: indexPath) as! BottomCollectionViewCell
-            WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: featuredPodcasts[indexPath.row].podcast_icon, imageView: cell.bottomimage)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FeaturedCell", for: indexPath) as! FeaturedCell
+            cell.height.constant = bottoncollectionview.frame.height - 20
+            ImageLoader.loadImage(imageView: cell.ivImage, url: featuredPodcasts[indexPath.row].podcast_icon)
             return cell
-            }
+        }
            
         return UICollectionViewCell()
     }
@@ -119,16 +114,10 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
 
 extension HomeViewController: WebManagerDelegate {
     func failureResponse(response: AFDataResponse<Any>) {
-     //   activityIndicator.stopAnimating()
-//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
         Utility.showAlertWithSingleOption(controller: self, title: kEmpty, message: kCannotConnect, preferredStyle: .alert, buttonText: kok, buttonHandler: nil)
     }
     
     func networkFailureAction() {
-//        Utility.stopSpinner(activityIndicator: activityIndicator)
-//        activityIndicator.stopAnimating()
-//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
-
         let alert = UIAlertController(title: kEmpty, message: kInternetError, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: kOk, style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -136,10 +125,8 @@ extension HomeViewController: WebManagerDelegate {
     }
     
     func successResponse(response: AFDataResponse<Any> ,webManager: WebManager) {
-        
         switch(response.result) {
         case .success(let JSON):
-            //SVProgressHUD.dismiss()
             let result = JSON as! NSDictionary
             let successresponse = result.object(forKey: "success")!
             if(successresponse as! Bool == false) {
@@ -158,19 +145,15 @@ extension HomeViewController: WebManagerDelegate {
                     featuredPodcasts.append(podcast)
                 }
                 if podcastOfTheWeek.podcastID != ""  {
-                    textArr.insert("Pod \n of the \n week", at: 0)
-                    imageArr.insert(UIImage(named: "upperone")!, at: 0)
+                    textArr.insert("Pod of the week", at: 0)
+                    imageArr.insert(UIImage(named: "ic_category")!, at: 0)
                 }
                 self.uppercollectionview.reloadData()
                 self.bottoncollectionview.reloadData()
-                //reload array
-                
-                
             }
             
             break
         case .failure(_):
-            //SVProgressHUD.dismiss()
             let alert = UIAlertController(title: "Error", message: "Please enter correct username and password.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)

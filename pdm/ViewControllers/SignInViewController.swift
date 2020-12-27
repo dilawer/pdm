@@ -46,7 +46,8 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.customization()
+//        self.customization()
+        setLoginSeleted()
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)

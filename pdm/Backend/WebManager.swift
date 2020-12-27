@@ -140,6 +140,11 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(kLikedPodcasts)"
         makeRequest(requestUrl: url)
     }
+    func LikePodcast(parms:[String:Any]){
+        let url = "\(kbaseURL)\(kLikePodcast)"
+        makeRequest(requestUrl: url, method: .post, parameters: parms)
+    }
+    
     
     //MARK:- Search
     func search(query:String){

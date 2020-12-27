@@ -15,7 +15,7 @@ class ForgetNameViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.customization()
+//        self.customization()
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         // Do any additional setup after loading the view.
