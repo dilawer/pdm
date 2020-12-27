@@ -59,6 +59,7 @@
 		A076C75125985CBD00FEAA19 /* TopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A076C74F25985CBD00FEAA19 /* TopCell.xib */; };
 		A076C757259862FD00FEAA19 /* FeaturedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076C755259862FD00FEAA19 /* FeaturedCell.swift */; };
 		A076C758259862FD00FEAA19 /* FeaturedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A076C756259862FD00FEAA19 /* FeaturedCell.xib */; };
+		A076C75D2598B76A00FEAA19 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A076C75C2598B76A00FEAA19 /* SearchViewController.swift */; };
 		A0FD85D12595C5AE0051EFC2 /* CustomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD85D02595C5AE0051EFC2 /* CustomNavigation.swift */; };
 		A0FD85EF2595ECE10051EFC2 /* AudioRecorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD85EE2595ECE10051EFC2 /* AudioRecorderManager.swift */; };
 		A0FD85F42595EF340051EFC2 /* SoundRecorderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD85F32595EF340051EFC2 /* SoundRecorderModel.swift */; };
@@ -168,6 +169,7 @@
 		A076C74F25985CBD00FEAA19 /* TopCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopCell.xib; sourceTree = "<group>"; };
 		A076C755259862FD00FEAA19 /* FeaturedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedCell.swift; sourceTree = "<group>"; };
 		A076C756259862FD00FEAA19 /* FeaturedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeaturedCell.xib; sourceTree = "<group>"; };
+		A076C75C2598B76A00FEAA19 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A0FD85D02595C5AE0051EFC2 /* CustomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigation.swift; sourceTree = "<group>"; };
 		A0FD85EE2595ECE10051EFC2 /* AudioRecorderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderManager.swift; sourceTree = "<group>"; };
 		A0FD85F32595EF340051EFC2 /* SoundRecorderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundRecorderModel.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 				A0231276259326A400797347 /* PodcastListViewController.swift */,
 				A02C2E5E259457780031EDEE /* LikedViewController.swift */,
 				A0FD8600259623C80051EFC2 /* UploadViewController.swift */,
+				A076C75C2598B76A00FEAA19 /* SearchViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -837,6 +840,7 @@
 				1873A6AB2582CB0200CD607D /* Category.swift in Sources */,
 				C642A756253CC13C00F48EC2 /* LipServiceViewController.swift in Sources */,
 				A0484DF72596DABD0070702A /* ActionSheetHelper.swift in Sources */,
+				A076C75D2598B76A00FEAA19 /* SearchViewController.swift in Sources */,
 				A06A50EA25921D83008B4773 /* UIImageViewX.swift in Sources */,
 				A05FBBA22595A849005A94BF /* UIViewCircular.swift in Sources */,
 				C6967AB32527482200FCD7A6 /* OTPresetPasswordViewController.swift in Sources */,

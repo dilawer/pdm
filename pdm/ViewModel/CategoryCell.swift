@@ -13,6 +13,7 @@ class CategoryCell: UICollectionViewCell {
     @IBOutlet weak var ivImage: UIImageViewX!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var cellWidth: NSLayoutConstraint!
+    @IBOutlet weak var cellHeight: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()

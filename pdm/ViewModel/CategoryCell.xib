@@ -72,6 +72,7 @@
             </constraints>
             <size key="customSize" width="276" height="149"/>
             <connections>
+                <outlet property="cellHeight" destination="Psa-4V-bP4" id="eFL-hg-jNO"/>
                 <outlet property="cellWidth" destination="K1O-R4-eCI" id="XHG-Xw-l1F"/>
                 <outlet property="ivImage" destination="QEN-ek-IBJ" id="4JO-Oe-3Dg"/>
                 <outlet property="lblName" destination="u1h-ba-gg0" id="vpm-9z-bbt"/>

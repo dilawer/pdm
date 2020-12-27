@@ -1,117 +1,76 @@
 //
-//  CategoryViewController.swift
+//  SearchViewController.swift
 //  pdm
 //
-//  Created by Mac 2014 on 11/10/2020.
+//  Created by Muhammad Aqeel on 27/12/2020.
 //
 
 import UIKit
 import Alamofire
 
-class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource {
-    
+class SearchViewController: UIViewController {
+
     //MARK:- Outlets
-    @IBOutlet weak var catdowncollectionview: UICollectionView!
-    @IBOutlet weak var catupcollectionview: UICollectionView!
     @IBOutlet weak var tfSearch: UITextField!
     @IBOutlet weak var collectionCatgory: UICollectionView!
+    @IBOutlet weak var collectionPodcasts: UICollectionView!
     
-    //MARK:- Action
+    //MARK:- Actions
     @IBAction func actionSearch(_ sender: Any) {
         if let text = tfSearch.text{
-            let vc = storyboard?.instantiateViewController(identifier: "SearchViewController") as! SearchViewController
-            vc.searchText = text
-            self.navigationController?.pushViewController(vc, animated: true)
+            WebManager.getInstance(delegate: self)?.search(query: text)
         }
+    }
+    @IBAction func actionBack(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     //MARK:- Veriables
-    let textArr = ["Pod of the week","Trending"]
-    let cattextArr = ["News","Sports","Mental Health","Music","Health","Mental Health"]
-    let imageArr: [UIImage] = [
-        UIImage(named: "ic_week")!,
-        UIImage(named: "ic_trending")!,
-    ]
-    let catimageArr: [UIImage] = [
-        UIImage(named: "Rectangle 1502")!,
-        UIImage(named: "Rectangle -4")!,
-        UIImage(named: "Rectangle -2")!,
-        UIImage(named: "Rectangle -3")!,
-        UIImage(named: "Rectangle -6")!,
-        UIImage(named: "Rectangle -5")!,
-    ]
-    var categories: [Category]=[]
+    var categories = [Category]()
     var podcats = [Podcasts]()
+    var searchText:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        config()
-        WebManager.getInstance(delegate: self)?.getCategoriesData()
         register()
-    }
-    
-    func config(){
-        let itemSizec = UIScreen.main.bounds.width/3 - 2
-        let layoutc = UICollectionViewFlowLayout()
-        layoutc.itemSize = CGSize(width: itemSizec + 40, height: itemSizec + 40)
-        layoutc.minimumInteritemSpacing = 2
-        layoutc.minimumLineSpacing = 15
-    }
-    
-    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        let vctwo = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController;
-        self.navigationController?.pushViewController(vctwo!, animated: true)
+        if let text = searchText {
+            WebManager.getInstance(delegate: self)?.search(query: text)
+        }
     }
 }
-//MARK:- Colelltion View
-extension CategoryViewController{
-    func register(){
-        catdowncollectionview.register(UINib(nibName: "CategoryCell", bundle: nil), forCellWithReuseIdentifier: "CategoryCell")
-        catupcollectionview.register(UINib(nibName: "TopCell", bundle: nil), forCellWithReuseIdentifier: "TopCell")
-    }
+
+//MARK:- Collection
+extension SearchViewController:UICollectionViewDataSource,UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.catupcollectionview {
-               return textArr.count
-        }
-        else if collectionView == self.catdowncollectionview {
+        if collectionView == collectionCatgory{
             return categories.count
         }
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == catdowncollectionview{
-            let vc = storyboard?.instantiateViewController(withIdentifier: "PodcastListViewController") as! PodcastListViewController
-            vc.catID = categories[indexPath.row].categoryId
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-        if collectionView == catupcollectionview{
-            if indexPath.row == 1{
-                self.tabBarController?.selectedIndex = 1
-            }
+        else {
+            return podcats.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == self.catupcollectionview {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCell", for: indexPath) as! TopCell
-            cell.ivImage.image = imageArr[indexPath.row]
-            cell.lblName.text = textArr[indexPath.row]
-            return cell
-        }
-        else if collectionView == self.catdowncollectionview {
-            let cell = catdowncollectionview.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
-            let width = self.catdowncollectionview.frame.width/2 - 30
+        if collectionView == collectionCatgory{
+            let cell = collectionCatgory.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
+            let width = self.collectionCatgory.frame.width - 10
             cell.config(category: self.categories[indexPath.row], width: width)
-            cell.cellHeight.constant = width
+            return cell
+        } else {
+            let cell = collectionPodcasts.dequeueReusableCell(withReuseIdentifier: "PodcastCell", for: indexPath) as! PodcastCell
+            cell.config(podcast: podcats[indexPath.row], width: (self.collectionPodcasts.frame.width / 2) - 30)
             return cell
         }
-        return UICollectionViewCell()
+    }
+    
+    func register(){
+        collectionCatgory.register(UINib(nibName: "CategoryCell", bundle: nil), forCellWithReuseIdentifier: "CategoryCell")
+        collectionPodcasts.register(UINib(nibName: "PodcastCell", bundle: nil), forCellWithReuseIdentifier: "PodcastCell")
     }
 }
 
-//MARK:- Api
-extension CategoryViewController: WebManagerDelegate {
+//MARK:- API
+extension SearchViewController: WebManagerDelegate {
     func failureResponse(response: AFDataResponse<Any>) {
         Utility.showAlertWithSingleOption(controller: self, title: kEmpty, message: kCannotConnect, preferredStyle: .alert, buttonText: kok, buttonHandler: nil)
     }
@@ -162,7 +121,8 @@ extension CategoryViewController: WebManagerDelegate {
                 } catch {
                     print(error.localizedDescription)
                 }
-                self.catdowncollectionview.reloadData()
+                self.collectionPodcasts.reloadData()
+                self.collectionCatgory.reloadData()
             }
             
             break
@@ -174,4 +134,3 @@ extension CategoryViewController: WebManagerDelegate {
         }
     }
 }
-
