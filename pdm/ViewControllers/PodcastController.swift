@@ -8,8 +8,9 @@
 import UIKit
 import Alamofire
 
-class PodcastController: UIViewController , UICollectionViewDelegate , UICollectionViewDataSource {
+class PodcastController: UIViewController{
     
+    //MARK:- Outlets
     @IBOutlet weak var uppercollectionview: UICollectionView!
     @IBOutlet weak var trendcollectionview: UICollectionView!
     @IBOutlet weak var recomcollectionview: UICollectionView!
@@ -23,47 +24,12 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
         self.navigationController?.pushViewController(vctwo!, animated: true)
     }
     
-//    var trendingEpisodes: [Episode]=[]
-//    var newReleaseEpisodes: [Episode]=[]
-//    var recommendedEpisodes: [Episode]=[]
-//    var podcastOfTheWeek = Podcast()
-    
+    //MARK:- Veriables
     var arrayTrending = [NewRelease]()
     var arrayRecommended = [NewRelease]()
     var arrayNewRelease = [NewRelease]()
     var podWeek:PodcastOfTheWeek?
-    
     var textArr : [String]=[]
-    /*
-    let trendtitleArr = ["Lip Service","Brilliant Idiots","Orphan Album"]
-    let trendsubtitleArr = ["Episode Name","Episode Name","Episode Name"]
-    let trendtimeArr = ["40.00","40.00","40.00"]
-    let recomtitleArr = ["In the Mix","Plz Advise","Shots Film"]
-    let recomsubtitleArr = ["Episode Name","Episode Name","Episode Name"]
-    let recomtimeArr = ["40.00","40.00","40.00"]
-    let reltitleArr = ["In the Mix","Plz Advise","Shots Film"]
-    let relsubtitleArr = ["Episode Name","Episode Name","Episode Name"]
-    let reltimeArr = ["40.00","40.00","40.00"]
-    let imageArr: [UIImage] = [
-        UIImage(named: "uppercardone")!,
-        UIImage(named: "uppercardtwo")!,
-    ]
-    let trendimageArr: [UIImage] = [
-        UIImage(named: "trendingone")!,
-        UIImage(named: "trendingtwo")!,
-        UIImage(named: "trendingthree")!,
-    ]
-    let recomimageArr: [UIImage] = [
-        UIImage(named: "recomone")!,
-        UIImage(named: "recomtwo")!,
-        UIImage(named: "recomtwo")!,
-    ]
-    let releaseimageArr: [UIImage] = [
-        UIImage(named: "releaseone")!,
-        UIImage(named: "trendingthree")!,
-        UIImage(named: "recomtwo")!,
-    ]
-     */
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let vctwo = storyboard?.instantiateViewController(withIdentifier: "recordServiceViewController") as? recordServiceViewController;
@@ -80,12 +46,7 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
         trendcollectionview.delegate = self
         trendcollectionview.dataSource = self
         
-        let itemSize = UIScreen.main.bounds.width/5 - 3
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: itemSize + 35, height: itemSize + 35)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        uppercollectionview.collectionViewLayout = layout
+        uppercollectionview.register(UINib(nibName: "TopCell", bundle: nil), forCellWithReuseIdentifier: "TopCell")
         
         let layoutone = UICollectionViewFlowLayout()
         let itemSizetrending = UIScreen.main.bounds.width/3 - 2
@@ -120,7 +81,9 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
     }
-    
+}
+//MARK:- CollectionView
+extension PodcastController: UICollectionViewDelegate , UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.uppercollectionview {
                return textArr.count
@@ -152,21 +115,18 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.uppercollectionview {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upperCell", for: indexPath) as! PodcastCollectionViewCell
-            WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: podWeek?.podcastIcon ?? "", imageView: cell.imageCell)
-            cell.LabelCell.text = textArr[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCell", for: indexPath) as! TopCell
+            ImageLoader.loadImage(imageView: cell.ivImage, url: podWeek?.podcastIcon ?? "")
+            cell.lblName.text = textArr[indexPath.row]
             
             return cell
             }
             else if collectionView == trendcollectionview{
                
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewReleaseCell", for: indexPath) as! NewReleaseCell
-                WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: self.arrayTrending[indexPath.row].podcastIcon, imageView: cell.ivImage)
+                ImageLoader.loadImage(imageView: cell.ivImage, url: self.arrayTrending[indexPath.row].podcastIcon)
                 cell.lblName.text = self.arrayTrending[indexPath.row].podcastName
-                var cat = self.arrayTrending[indexPath.row].episodeName
-                if (self.arrayTrending[indexPath.row].episodeName == "") {
-                    cat = "."
-                }
+                let cat = self.arrayTrending[indexPath.row].episodeName
                 cell.lblEpisode.text = cat
                 cell.lblDuration.text = self.arrayTrending[indexPath.row].episodeDuration
                 cell.layer.cornerRadius = 10
@@ -175,12 +135,9 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
             else if collectionView == recomcollectionview{
                
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewReleaseCell", for: indexPath) as! NewReleaseCell
-                WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: self.arrayRecommended[indexPath.row].podcastIcon, imageView: cell.ivImage)
+                ImageLoader.loadImage(imageView: cell.ivImage, url: self.arrayRecommended[indexPath.row].podcastIcon)
                 cell.lblName.text = self.arrayRecommended[indexPath.row].podcastName
-                var cat = self.arrayRecommended[indexPath.row].episodeName
-                if (self.arrayRecommended[indexPath.row].episodeName == "") {
-                    cat = "."
-                }
+                let cat = self.arrayRecommended[indexPath.row].episodeName
                 cell.lblEpisode.text = cat
                 cell.lblDuration.text = self.arrayRecommended[indexPath.row].episodeDuration
                 return cell
@@ -188,12 +145,9 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
             else if collectionView == newReleasesCollectionView{
                
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewReleaseCell", for: indexPath) as! NewReleaseCell
-                WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: self.arrayNewRelease[indexPath.row].podcastIcon, imageView: cell.ivImage)
+                ImageLoader.loadImage(imageView: cell.ivImage, url: self.arrayNewRelease[indexPath.row].podcastIcon)
                 cell.lblName.text = self.arrayNewRelease[indexPath.row].podcastName
-                var cat = self.arrayNewRelease[indexPath.row].episodeName
-                if (self.arrayNewRelease[indexPath.row].episodeName == "") {
-                    cat = "."
-                }
+                let cat = self.arrayNewRelease[indexPath.row].episodeName
                 cell.lblEpisode.text = cat
                 cell.lblDuration.text = self.arrayNewRelease[indexPath.row].episodeDuration
                 cell.layer.cornerRadius = 10
@@ -203,18 +157,14 @@ class PodcastController: UIViewController , UICollectionViewDelegate , UICollect
     }
 }
 
+
+//MARK:- API
 extension PodcastController: WebManagerDelegate {
     func failureResponse(response: AFDataResponse<Any>) {
-     //   activityIndicator.stopAnimating()
-//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
         Utility.showAlertWithSingleOption(controller: self, title: kEmpty, message: kCannotConnect, preferredStyle: .alert, buttonText: kok, buttonHandler: nil)
     }
     
     func networkFailureAction() {
-//        Utility.stopSpinner(activityIndicator: activityIndicator)
-//        activityIndicator.stopAnimating()
-//        Utilities.HelperFuntions.delegate.hideProgressBar(self.view)
-
         let alert = UIAlertController(title: kEmpty, message: kInternetError, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: kOk, style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -222,10 +172,8 @@ extension PodcastController: WebManagerDelegate {
     }
     
     func successResponse(response: AFDataResponse<Any> ,webManager: WebManager) {
-        
         switch(response.result) {
         case .success(let JSON):
-            //SVProgressHUD.dismiss()
             let result = JSON as! NSDictionary
             let successresponse = result.object(forKey: "success")!
             if(successresponse as! Bool == false) {
@@ -233,7 +181,6 @@ extension PodcastController: WebManagerDelegate {
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             } else {
-                
                 do{
                     let jsonData = try JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)
                     if let details:MicsResponse = self.handleResponse(data: jsonData){
@@ -242,42 +189,12 @@ extension PodcastController: WebManagerDelegate {
                             arrayTrending = data.trending
                             arrayRecommended = data.recommended
                             arrayNewRelease = data.newRelease
-                            textArr.append(podWeek?.podcastName ?? "Pod \n of the \n week")
+                            textArr.append(podWeek?.podcastName ?? "Pod of the week")
                         }
                     }
                 } catch {
                     
                 }
-                
-                
-                /*
-                let data = result.object(forKey: kdata) as! NSDictionary
-                podcastOfTheWeek.setPodcastData(data: data.object(forKey: kpodcast_of_the_week) as! NSDictionary)
-                if podcastOfTheWeek.podcastID != "" {
-                    textArr.insert("Pod \n of the \n week", at: 0)
-                }
-                
-                var episodes = data.object(forKey: ktrending) as! NSArray
-                for i in 0 ..< episodes.count {
-                    let episode = Episode()
-                    episode.setEpisodeData(data: episodes[i] as! NSDictionary)
-                    trendingEpisodes.append(episode)
-                }
-                
-                episodes = data.object(forKey: krecommended) as! NSArray
-                for i in 0 ..< episodes.count {
-                    let episode = Episode()
-                    episode.setEpisodeData(data: episodes[i] as! NSDictionary)
-                    recommendedEpisodes.append(episode)
-                }
-                
-                episodes = data.object(forKey: knewRelease) as! NSArray
-                for i in 0 ..< episodes.count {
-                    let episode = Episode()
-                    episode.setEpisodeData(data: episodes[i] as! NSDictionary)
-                    newReleaseEpisodes.append(episode)
-                }
-                */
                 self.uppercollectionview.reloadData()
                 self.trendcollectionview.reloadData()
                 self.recomcollectionview.reloadData()
@@ -285,7 +202,6 @@ extension PodcastController: WebManagerDelegate {
             }
             break
         case .failure(_):
-            //SVProgressHUD.dismiss()
             let alert = UIAlertController(title: "Error", message: "Please enter correct username and password.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
