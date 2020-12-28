@@ -37,6 +37,9 @@ class SearchViewController: UIViewController {
             WebManager.getInstance(delegate: self)?.search(query: text)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
 }
 
 //MARK:- Collection
@@ -61,6 +64,16 @@ extension SearchViewController:UICollectionViewDataSource,UICollectionViewDelega
             cell.config(podcast: podcats[indexPath.row], width: (self.collectionPodcasts.frame.width / 2) - 30)
             return cell
         }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(identifier: "selectedPodcastViewController") as! selectedPodcastViewController
+        let p = self.podcats[indexPath.row]
+        let podCast = Podcast()
+        podCast.podcastID = String(p.podcastID)
+        podCast.podcast_name = p.podcastName
+        podCast.podcast_icon = p.podcastIcon
+        vc.podcast = podCast
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func register(){
