@@ -12,6 +12,7 @@ class PodcastListViewController: UIViewController {
 
     //MARK:- Outlets
     @IBOutlet weak var collectionPodscasts: UICollectionView!
+    @IBOutlet weak var bottomConstant: NSLayoutConstraint!
     
     //MARK:- Veriables
     var arrayPodcasts = [Podcasts]()
@@ -27,6 +28,21 @@ class PodcastListViewController: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if let _ = Global.shared.podcaste{
+            guard let _ = Global.shared.universalPlayer else {
+                let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
+                let y = self.view.frame.maxY-tabHeight
+                bottomConstant.constant = -90
+                Global.shared.universalPlayer = Global.shared.showPlayer(frame: CGRect(x: 0, y: y, width: self.view.frame.width, height: 90))
+                return
+            }
+            bottomConstant.constant = 90
+        } else {
+            bottomConstant.constant = 0
+        }
+        Global.shared.universalPlayer?.refresh()
     }
 }
 

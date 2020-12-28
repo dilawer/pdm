@@ -14,11 +14,11 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     @IBOutlet weak var videomage: UIImageView!
     @IBOutlet weak var bottoncollectionview: UICollectionView!
     @IBOutlet weak var uppercollectionview: UICollectionView!
+    @IBOutlet weak var bottomConstant: NSLayoutConstraint!
     
     //MARK:- Veriable
     var textArr = [kCATEGORIES]
     var imageArr: [UIImage] = [
-//        UIImage(named: "upperone")!,
         UIImage(named: "ic_category")!,
     ]
     var featuredPodcasts: [Podcast]=[]
@@ -32,30 +32,28 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        /*
-        view.layer.cornerRadius = 10
-        videomage.layer.cornerRadius = 10
-        let itemSize = UIScreen.main.bounds.width/5 - 3
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: itemSize + 40, height: itemSize + 40)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        uppercollectionview.collectionViewLayout = layout
-        
-        let itemSizebt = UIScreen.main.bounds.width/5 - 10
-       
-        let layoutone = UICollectionViewFlowLayout()
-        layoutone.scrollDirection = .horizontal
-        layoutone.itemSize = CGSize(width: itemSizebt + 30, height: itemSizebt + 30)
-        layoutone.minimumInteritemSpacing = 20
-        layoutone.minimumLineSpacing = 0
-        bottoncollectionview.collectionViewLayout = layoutone
-        */
         uppercollectionview.register(UINib(nibName: "TopCell", bundle: nil), forCellWithReuseIdentifier: "TopCell")
         bottoncollectionview.register(UINib(nibName: "FeaturedCell", bundle: nil), forCellWithReuseIdentifier: "FeaturedCell")
         getHomeData()
-        
+        WebManager.getInstance(delegate: self)?.getLikedPodcasts()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        MusicPlayer.instance.delegate = self
+        if let _ = Global.shared.podcaste{
+            guard let _ = Global.shared.universalPlayer else {
+                let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
+                let y = self.view.frame.maxY-tabHeight
+                bottomConstant.constant = -90
+                Global.shared.universalPlayer = Global.shared.showPlayer(frame: CGRect(x: 0, y: y, width: self.view.frame.width, height: 90))
+                self.bottoncollectionview.reloadData()
+                return
+            }
+            self.bottoncollectionview.reloadData()
+            bottomConstant.constant = -90
+        }else {
+            bottomConstant.constant = 0
+        }
+        Global.shared.universalPlayer?.refresh()
     }
     func getHomeData(){
         WebManager.getInstance(delegate: self)?.getHomeData()
@@ -135,21 +133,36 @@ extension HomeViewController: WebManagerDelegate {
                 self.present(alert, animated: true, completion: nil)
             } else {
                 let data = result.object(forKey: kdata) as! NSDictionary
-                let podcasts = data.object(forKey: kfeatured) as! NSArray
-                video.setVideoData(data: data.object(forKey: kvideo) as! NSDictionary)
-                podcastOfTheWeek.setPodcastData(data: data.object(forKey: kpodcast_of_the_week) as! NSDictionary)
-                featuredPodcasts.removeAll()
-                for i in 0 ..< podcasts.count {
-                    let podcast = Podcast()
-                    podcast.setPodcastData(data: podcasts[i] as! NSDictionary)
-                    featuredPodcasts.append(podcast)
+                do{
+                    if let categories = data.object(forKey: "liked_podcasts") as? NSArray{
+                        let jsonData = try JSONSerialization.data(withJSONObject: categories, options: .prettyPrinted)
+                        if let liked:[Podcasts] = self.handleResponse(data: jsonData){
+                            for i in liked{
+                                Global.shared.likedPodcast.append(String(i.podcastID))
+                            }
+                            return
+                        }
+                    }
+                     else {
+                        let podcasts = data.object(forKey: kfeatured) as! NSArray
+                        video.setVideoData(data: data.object(forKey: kvideo) as! NSDictionary)
+                        podcastOfTheWeek.setPodcastData(data: data.object(forKey: kpodcast_of_the_week) as! NSDictionary)
+                        featuredPodcasts.removeAll()
+                        for i in 0 ..< podcasts.count {
+                            let podcast = Podcast()
+                            podcast.setPodcastData(data: podcasts[i] as! NSDictionary)
+                            featuredPodcasts.append(podcast)
+                        }
+                        if podcastOfTheWeek.podcastID != ""  {
+                            textArr.insert("Pod of the week", at: 0)
+                            imageArr.insert(UIImage(named: "ic_category")!, at: 0)
+                        }
+                        self.uppercollectionview.reloadData()
+                        self.bottoncollectionview.reloadData()
+                    }
+                }catch{
+                    
                 }
-                if podcastOfTheWeek.podcastID != ""  {
-                    textArr.insert("Pod of the week", at: 0)
-                    imageArr.insert(UIImage(named: "ic_category")!, at: 0)
-                }
-                self.uppercollectionview.reloadData()
-                self.bottoncollectionview.reloadData()
             }
             
             break
@@ -158,6 +171,31 @@ extension HomeViewController: WebManagerDelegate {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
+        }
+    }
+}
+//MARK:- Music Player
+extension HomeViewController:MusicDelgate{
+    func playerStausChanged(isPlaying: Bool) {
+        let player = Global.shared.universalPlayer
+        if isPlaying {
+            player?.ivPlay.image = UIImage(named: "ic_ipause")
+        } else {
+            player?.ivPlay.image = UIImage(named: "ic_iplay")
+        }
+    }
+    
+    func songChanged(pod: Pod) {
+        if let pod = Global.shared.podcaste{
+            let player = Global.shared.universalPlayer
+            ImageLoader.loadImage(imageView: (player?.ivImage) ?? UIImageView(), url: Global.shared.podDetails?.podcastIcon ?? "")
+            player?.lblName.text = Global.shared.podDetails?.podcastName
+            player?.lblEpisode.text = pod.episodeName
+            if MusicPlayer.instance.isPlaying {
+                player?.ivPlay.image = UIImage(named: "ic_ipause")
+            } else {
+                player?.ivPlay.image = UIImage(named: "ic_iplay")
+            }
         }
     }
 }

@@ -19,6 +19,7 @@ class selectedPodcastViewController: UIViewController, UIGestureRecognizerDelega
     @IBOutlet weak var podcastCoverImage: UIImageView!
     @IBOutlet weak var selectedCollectionView: UICollectionView!
     @IBOutlet weak var lblEpisodeDuration: UILabel!
+    @IBOutlet weak var bottomConstant: NSLayoutConstraint!
     
     //MARK:- Actions
     @IBAction func actionPlay(_ sender: Any) {
@@ -66,7 +67,21 @@ class selectedPodcastViewController: UIViewController, UIGestureRecognizerDelega
         if episode.episodeID != ""{
             WebManager.getInstance(delegate: self)?.getSelectedPodcast(selected: self.episode.episodeID)
         }
-        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if let _ = Global.shared.podcaste{
+            guard let _ = Global.shared.universalPlayer else {
+                let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
+                let y = self.view.frame.maxY-tabHeight
+                bottomConstant.constant = -90
+                Global.shared.universalPlayer = Global.shared.showPlayer(frame: CGRect(x: 0, y: y, width: self.view.frame.width, height: 90))
+                return
+            }
+            bottomConstant.constant = 90
+        } else {
+            bottomConstant.constant = 0
+        }
+        Global.shared.universalPlayer?.refresh()
     }
 }
 

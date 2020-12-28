@@ -16,6 +16,27 @@ class Global {
         return Static.instance
     }
     var clientID = "70556599340-smobq3k4nf9q187oh6pbar14fmji6ddd.apps.googleusercontent.com"
-//    var clientID = "432086961037-6g24qk7rln16meotmi3dt02i6mtc5s2b.apps.googleusercontent.com"
     var imageUrl = "https://pod-digital-media-bucket.s3.us-east-2.amazonaws.com/category_icon/"
+    var universalPlayer:UniversalPlayer?
+    var podcaste:Pod?
+    var podDetails:DetailsDataClass?
+    var curentPlayingID = ""
+    var currentPlayingIndex = 0
+    var likedPodcast = [String]()
+    
+    func showPlayer(frame:CGRect) -> UniversalPlayer{
+        let alert = UniversalPlayer.instanceFromNib()
+        let currentWindow: UIWindow? = UIApplication.shared.keyWindow
+        alert.frame = frame
+        currentWindow?.addSubview(alert)
+        return alert
+    }
+    func isLiked(id:String) -> Bool{
+        for i in likedPodcast{
+            if id == i{
+                return true
+            }
+        }
+        return false
+    }
 }

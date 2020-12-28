@@ -14,6 +14,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var tfSearch: UITextField!
     @IBOutlet weak var collectionCatgory: UICollectionView!
     @IBOutlet weak var collectionPodcasts: UICollectionView!
+    @IBOutlet weak var bottomConstant: NSLayoutConstraint!
     
     //MARK:- Actions
     @IBAction func actionSearch(_ sender: Any) {
@@ -39,6 +40,21 @@ class SearchViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if let _ = Global.shared.podcaste{
+            guard let _ = Global.shared.universalPlayer else {
+                let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
+                let y = self.view.frame.maxY-tabHeight
+                bottomConstant.constant = -90
+                Global.shared.universalPlayer = Global.shared.showPlayer(frame: CGRect(x: 0, y: y, width: self.view.frame.width, height: 90))
+                return
+            }
+            bottomConstant.constant = 90
+        } else {
+            bottomConstant.constant = 0
+        }
+        Global.shared.universalPlayer?.refresh()
     }
 }
 

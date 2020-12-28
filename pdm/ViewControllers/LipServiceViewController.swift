@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import AVFoundation
 
 class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICollectionViewDataSource {
     //MARK:- Outlets
@@ -25,11 +26,14 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     @IBOutlet weak var btnShufffle: UIButton!
     @IBOutlet weak var btnFastForward: UIButton!
     @IBOutlet weak var ivPlayPause: UIImageView!
+    @IBOutlet weak var ivLike: UIImageView!
     
     //MARK:- Actions
     @IBAction func actionPlayPause(_ sender: Any) {
         if shouldPlay{
             if let active = activePod{
+                Global.shared.podcaste = active
+                Global.shared.curentPlayingID = podCastID
                 ivPlayPause.image = UIImage(named: "ic_ipause")
                 MusicPlayer.instance.initPlayer(url: active.episodeFileLink)
                 MusicPlayer.instance.play()
@@ -52,13 +56,21 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     @IBAction func actionRepeat(_ sender: Any) {
     }
     @IBAction func actionBack(_ sender: Any) {
+        MusicPlayer.instance.slowForward()
     }
     @IBAction func actionShuffle(_ sender: Any) {
     }
     @IBAction func actionFastForward(_ sender: Any) {
+        MusicPlayer.instance.fastForward()
     }
-    
-    
+    @IBAction func actionLike(_ sender: Any) {
+        var status = "0"
+        isLiked = !isLiked
+        if isLiked{
+            status = "1"
+        }
+        WebManager.getInstance(delegate: self)?.LikePodcast(parms: ["podcast_id":podCastID,"liked_status":status])
+    }
     
     //MARK:- Variables
     var profiletitleArr = [String]()
@@ -68,7 +80,15 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     var moreArray = [Podcasts]()
     var activePod:Pod?
     var shouldPlay = true
-    
+    var isLiked = false{
+        didSet{
+            if isLiked{
+                ivLike.image = UIImage(named: "ic_liked")
+            } else {
+                ivLike.image = UIImage(named: "ic_unLiked")
+            }
+        }
+    }
     var podCastID = "1"
     
     override func viewDidLoad() {
@@ -79,23 +99,33 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
         layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 15
         lipServiceCollectionView.collectionViewLayout = layout
+        MusicPlayer.instance.delegate = self
         WebManager.getInstance(delegate: self)?.getPodcastDetails(podCast_id: podCastID)
         register()
     }
     override func viewDidAppear(_ animated: Bool) {
         let music = MusicPlayer.instance
         let isPlaying = music.player.isPlaying
-        if isPlaying{
-            MusicPlayer.instance.progressBar = lblProgressView
-            ivPlayPause.image = UIImage(named: "ic_ipause")
-            shouldPlay = false
+        if Global.shared.curentPlayingID == podCastID{
+            if isPlaying{
+                MusicPlayer.instance.progressBar = lblProgressView
+                ivPlayPause.image = UIImage(named: "ic_ipause")
+                shouldPlay = false
+            }
+        } else {
+            shouldPlay = true
+        }
+        if Global.shared.isLiked(id: podCastID){
+            isLiked = true
         }
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
+        Global.shared.universalPlayer?.alpha = 0
     }
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        Global.shared.universalPlayer?.alpha = 1
     }
 }
 
@@ -109,8 +139,11 @@ extension LipServiceViewController{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vctwo = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
-        self.navigationController?.pushViewController(vctwo!, animated: true)
+        shouldPlay = true
+        MusicPlayer.instance.stop()
+        lblProgressView.progress = 0.0
+        ivPlayPause.image = UIImage(named: "ic_iplay")
+        WebManager.getInstance(delegate: self)?.getPodcastDetails(podCast_id: String(moreArray[indexPath.row].podcastID))
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -118,12 +151,6 @@ extension LipServiceViewController{
         let cellIndex = indexPath.row
         
         cell.config(podcast: moreArray[cellIndex], width: (self.lipServiceCollectionView.frame.width / 2)-20)
-//        cell.lblPodcastName.text = profiletitleArr[cellIndex]
-//        cell.lblPodcastName.text = profilesubtitleArr[cellIndex]
-//        cell.lblDuration.text = profiletimeArr[cellIndex]
-//
-//        ImageLoader.loadImage(imageView: cell.ivImage, url: profileimageArr[cellIndex])
-//        cell.layer.cornerRadius = 10
         return cell
     }
 }
@@ -155,6 +182,7 @@ extension LipServiceViewController:WebManagerDelegate{
                         let jsonData = try JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)
                         if let details:PodcastDetailsResponse = self.handleResponse(data: jsonData){
                             if let data = details.data{
+                                Global.shared.podDetails = data
                                 lblName.text = data.podcastName
                                 ImageLoader.loadImage(imageView: ivPodcast, url: data.podcastIcon )
                                 if let first = data.pods.first{
@@ -162,6 +190,7 @@ extension LipServiceViewController:WebManagerDelegate{
                                     lblEpisode.text = "Episode \(first.episodeID)"
                                     lblDuration.text = first.episodeDuration
                                     activePod = first
+                                    MusicPlayer.instance.delegate?.songChanged(pod: first)
                                 }
                                 if data.pods.count > 1{
                                     let next = data.pods[1]
@@ -178,8 +207,29 @@ extension LipServiceViewController:WebManagerDelegate{
                                     }
                                     print(details.data?.podcastName)
                                 }
+                            } else {
+                                if let msg = result.object(forKey: "message") as? String{
+                                    if msg.contains("unliked successfully"){
+                                        for (index,i) in Global.shared.likedPodcast.enumerated().reversed(){
+                                            if i == podCastID{
+                                                Global.shared.likedPodcast.remove(at: index)
+                                            }
+                                        }
+                                    }else if msg.contains("liked successfully"){
+                                        Global.shared.likedPodcast.append(podCastID)
+                                    }
+                                }
                             }
-                            
+                        }
+                        else {
+                            if let msg = result.object(forKey: "message") as? String{
+                                if msg == "liked successfully"{
+                                    Global.shared.likedPodcast.append(podCastID)
+                                }
+                                if msg == "unliked successfully"{
+                                    Global.shared.likedPodcast.append(podCastID)
+                                }
+                            }
                         }
                     } catch {
                         print(error.localizedDescription)
@@ -194,5 +244,22 @@ extension LipServiceViewController:WebManagerDelegate{
             self.present(alert, animated: true, completion: nil)
             break
         }
+    }
+}
+
+//MARK:- Music Player
+extension LipServiceViewController:MusicDelgate{
+    func playerStausChanged(isPlaying: Bool) {
+        if !isPlaying{
+            ivPlayPause.image = UIImage(named: "ic_iplay")
+        }else{
+            ivPlayPause.image = UIImage(named: "ic_ipause")
+        }
+    }
+    func songChanged(pod: Pod) {
+        lblName.text = Global.shared.podDetails?.podcastName
+        lblEpisode.text = pod.episodeName
+        lblDuration.text = pod.episodeDuration
+        ImageLoader.loadImage(imageView: ivPodcast, url: Global.shared.podDetails?.podcastIcon ?? "")
     }
 }

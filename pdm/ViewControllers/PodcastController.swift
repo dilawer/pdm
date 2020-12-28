@@ -16,6 +16,7 @@ class PodcastController: UIViewController{
     @IBOutlet weak var recomcollectionview: UICollectionView!
     @IBOutlet weak var newReleasesCollectionView: UICollectionView!
     @IBOutlet weak var recordAction: UIImageView!
+    @IBOutlet weak var bottomConstant: NSLayoutConstraint!
     
     
     //MARK:- Action
@@ -80,6 +81,21 @@ class PodcastController: UIViewController{
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if let _ = Global.shared.podcaste{
+            guard let _ = Global.shared.universalPlayer else {
+                let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
+                let y = self.view.frame.maxY-tabHeight
+                bottomConstant.constant = -90
+                Global.shared.universalPlayer = Global.shared.showPlayer(frame: CGRect(x: 0, y: y, width: self.view.frame.width, height: 90))
+                return
+            }
+            bottomConstant.constant = 90
+        } else {
+            bottomConstant.constant = 0
+        }
+        Global.shared.universalPlayer?.refresh()
     }
 }
 //MARK:- CollectionView

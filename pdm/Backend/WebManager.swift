@@ -180,7 +180,7 @@ class WebManager: NSObject {
             if User.getInstance()?.isLogin == true {
                 headers = [
                     "Authorization": "Bearer \(User.getInstance()?.access_token ?? "")",
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/x-www-form-urlencoded",
                     "Accept": "application/json"
                 ]
             }
