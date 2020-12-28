@@ -90,6 +90,14 @@ class podcastRecordingViewController: UIViewController, UIGestureRecognizerDeleg
         config()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        Global.shared.universalPlayer?.alpha = 0
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        Global.shared.universalPlayer?.alpha = 1
+    }
+    
     class func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]

@@ -70,6 +70,12 @@ class UploadViewController: UIViewController {
         register()
         WebManager.getInstance(delegate: self)?.getCategoriesData()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        Global.shared.universalPlayer?.alpha = 0
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        Global.shared.universalPlayer?.alpha = 1
+    }
 }
 
 //MARK:- Collection
