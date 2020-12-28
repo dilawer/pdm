@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="FontsFree-Net-SF-Compact-Rounded-Semibold.ttf">
+        <array key="FontsFree-Net-SF-Compact-Rounded-Regular.ttf">
             <string>SFCompactRounded-Ultralight</string>
         </array>
     </customFonts>
@@ -156,8 +156,8 @@
                                                     <constraint firstItem="GbK-9B-89H" firstAttribute="centerY" secondItem="X6V-nk-NCf" secondAttribute="centerY" id="Ovy-MN-rXS"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" ambiguous="YES" id="jRX-T5-AsZ">
-                                                <rect key="frame" x="30" y="259" width="354" height="450"/>
+                                            <view contentMode="scaleToFill" id="jRX-T5-AsZ">
+                                                <rect key="frame" x="30" y="259" width="354" height="520"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DKZ-6W-Phg">
@@ -1027,12 +1027,12 @@
                                             <constraint firstAttribute="bottom" secondItem="Spg-Ce-UXC" secondAttribute="bottom" id="0I0-Sn-etT"/>
                                             <constraint firstItem="Ljc-Cn-CFf" firstAttribute="top" secondItem="X6V-nk-NCf" secondAttribute="bottom" constant="10" id="7LN-I6-O0y"/>
                                             <constraint firstAttribute="trailing" secondItem="Ljc-Cn-CFf" secondAttribute="trailing" constant="30" id="AJ8-DH-Tyy"/>
-                                            <constraint firstAttribute="bottom" secondItem="jRX-T5-AsZ" secondAttribute="bottom" constant="131.5" id="BRz-HF-hmR"/>
                                             <constraint firstItem="Ljc-Cn-CFf" firstAttribute="leading" secondItem="1ih-eb-iuL" secondAttribute="leading" constant="30" id="Ea8-ld-zKd"/>
                                             <constraint firstAttribute="height" constant="850" id="IMw-oy-P26"/>
                                             <constraint firstItem="jRX-T5-AsZ" firstAttribute="top" secondItem="X6V-nk-NCf" secondAttribute="bottom" constant="10" id="Ia1-rs-hOa"/>
                                             <constraint firstAttribute="trailing" secondItem="jRX-T5-AsZ" secondAttribute="trailing" constant="30" id="MPh-uj-n5d"/>
                                             <constraint firstItem="Spg-Ce-UXC" firstAttribute="centerX" secondItem="1ih-eb-iuL" secondAttribute="centerX" id="O5D-RI-F3Q"/>
+                                            <constraint firstItem="Spg-Ce-UXC" firstAttribute="top" secondItem="jRX-T5-AsZ" secondAttribute="bottom" constant="-11" id="Yau-2c-sVD"/>
                                             <constraint firstItem="Ljc-Cn-CFf" firstAttribute="centerX" secondItem="1ih-eb-iuL" secondAttribute="centerX" id="YcN-4s-cGc"/>
                                             <constraint firstItem="X6V-nk-NCf" firstAttribute="leading" secondItem="1ih-eb-iuL" secondAttribute="leading" constant="30" id="cec-0T-mDf"/>
                                             <constraint firstItem="jRX-T5-AsZ" firstAttribute="trailing" secondItem="X6V-nk-NCf" secondAttribute="trailing" id="d49-Qv-N6h"/>
@@ -4054,7 +4054,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SL6-Cg-aAu" customClass="UIViewX" customModule="pdm" customModuleProvider="target">
                                                 <rect key="frame" x="278" y="0.0" width="120" height="37"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Need Help With Your Password?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a43-T1-sFO">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join the family Submit your pod" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a43-T1-sFO">
                                                         <rect key="frame" x="10" y="7" width="100" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="SFProRounded-Bold" family="SF Pro Rounded" pointSize="10"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4062,6 +4062,9 @@
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DDG-zD-3Yi">
                                                         <rect key="frame" x="0.0" y="0.0" width="120" height="37"/>
+                                                        <connections>
+                                                            <action selector="actionRecording:" destination="hXY-dh-Seb" eventType="touchUpInside" id="Iva-f5-nTI"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.4823529411764706" green="0.6470588235294118" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
@@ -4116,6 +4119,9 @@
                                                         <size key="value" width="2" height="2"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="actionLiked:" destination="hXY-dh-Seb" eventType="touchUpInside" id="Uim-WA-PPU"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

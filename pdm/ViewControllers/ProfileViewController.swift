@@ -7,6 +7,9 @@
 
 import UIKit
 import Alamofire
+import GoogleSignIn
+import FacebookLogin
+import AuthenticationServices
 
 class ProfileViewController: UIViewController {
     
@@ -48,6 +51,8 @@ class ProfileViewController: UIViewController {
                 let user = User.getInstance()
                 user?.removeUser()
                 user?.saveUser()
+                GIDSignIn.sharedInstance().signOut()
+                LoginManager().logOut()
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 let navVC = appDelegate.window?.rootViewController as? UINavigationController
                 navVC?.popViewController(animated: true)
@@ -120,6 +125,12 @@ class ProfileViewController: UIViewController {
         tfEmail.text = user?.email
         tfAge.text = user?.dob
         tfName.text = user?.fullName
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        Global.shared.universalPlayer?.alpha = 0
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        Global.shared.universalPlayer?.alpha = 1
     }
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         self.userNameLabel.isHidden = true
@@ -278,17 +289,16 @@ extension ProfileViewController: WebManagerDelegate {
                 self.present(alert, animated: true, completion: nil)
             } else {
                 let data = result.object(forKey: kdata) as! NSDictionary
-                let user = User.getInstance()
-                user?.setUserData(data: data)
-                user?.totalListens = "\(data.object(forKey: ktotalListens) ?? "")"
-                self.totalListens.text = user?.totalListens
-                user?.totalMins = "\(data.object(forKey: ktotalMinutes) ?? "")"
-                self.totalMins.text = user?.totalMins
-                user?.totalUploads = "\(data.object(forKey: kuploadedPods) ?? "")"
-                self.uploadedPods.text = user?.totalUploads
-                user?.saveUser()
-                
                 if let episodes = data.object(forKey: krecentlyPlayed) as? NSArray{
+                    let user = User.getInstance()
+                    user?.setUserData(data: data)
+                    user?.totalListens = "\(data.object(forKey: ktotalListens) ?? "")"
+                    self.totalListens.text = user?.totalListens
+                    user?.totalMins = "\(data.object(forKey: ktotalMinutes) ?? "")"
+                    self.totalMins.text = user?.totalMins
+                    user?.totalUploads = "\(data.object(forKey: kuploadedPods) ?? "")"
+                    self.uploadedPods.text = user?.totalUploads
+                    user?.saveUser()
                     self.recentPlayedEpisodes.removeAll()
                     for i in 0 ..< episodes.count {
                         let episode = Episode()

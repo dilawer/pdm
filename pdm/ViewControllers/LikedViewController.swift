@@ -59,7 +59,7 @@ extension LikedViewController:UICollectionViewDelegate,UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionLiked.dequeueReusableCell(withReuseIdentifier: "PodcastCell", for: indexPath) as! PodcastCell
-        cell.config(podcast: liked[indexPath.row], width: (self.collectionLiked.frame.width / 2)-20)
+        cell.config(podcast: liked[indexPath.row], width: (self.collectionLiked.frame.width / 2)-30)
         return cell
     }
     

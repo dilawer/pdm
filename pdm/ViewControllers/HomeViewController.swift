@@ -16,6 +16,16 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     @IBOutlet weak var uppercollectionview: UICollectionView!
     @IBOutlet weak var bottomConstant: NSLayoutConstraint!
     
+    //MARK:- Actions
+    @IBAction func actionRecording(_ sender: Any) {
+        self.tabBarController?.selectedIndex = 1
+    }
+    @IBAction func actionLiked(_ sender: Any) {
+        let vc = storyboard?.instantiateViewController(identifier: "LikedViewController") as! LikedViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
     //MARK:- Veriable
     var textArr = [kCATEGORIES]
     var imageArr: [UIImage] = [
