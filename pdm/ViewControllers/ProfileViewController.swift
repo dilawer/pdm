@@ -21,6 +21,7 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
     @IBOutlet weak var uploadTableView: UITableView!
     @IBOutlet weak var settingsView: UIView!
     @IBOutlet weak var profilecollectionview: UICollectionView!
+    @IBOutlet weak var profileDp: UIImageViewX!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var totalListens: UILabel!
@@ -69,8 +70,8 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
         profilecollectionview.collectionViewLayout = layout
         settingsView.layer.masksToBounds = true
         settingsView.roundCorners(corners: [.topLeft,.topRight], radius: 10)
-//        settingsView.isHidden = true
-        hideBottom()
+        settingsView.isHidden = true
+//        hideBottom()
         self.uploadHistoryView.isHidden = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         uploadPostsTapped.isUserInteractionEnabled = true
@@ -88,8 +89,9 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
         self.tfName.text = user?.fullName
         self.tfName.text = user?.fullName
         // Use Alamofire to download the image
-        WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: user!.profile_image, imageView: self.profileImageView)
-        WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: user!.cover_image, imageView: self.coverImageView)
+        ImageLoader.loadImage(imageView: profileDp, url: user?.profile_image ?? "")
+        ImageLoader.loadImage(imageView: profileImageView, url: user?.profile_image ?? "")
+        ImageLoader.loadImage(imageView: coverImageView, url: user?.cover_image ?? "")
         WebManager.getInstance(delegate: self)?.getProfileDetail()
         WebManager.getInstance(delegate: self)?.getPdmHistory()
     }
@@ -230,6 +232,18 @@ class ProfileViewController: UIViewController,UICollectionViewDelegate,UICollect
             cell.lblProductName.text = pod.podcast_name
             cell.lblEpisodeName.text = pod.episodeName
             ImageLoader.loadImage(imageView: cell.ivImage, url: pod.podcast_icon ?? "")
+            cell.playCallBack = {
+                let vc = self.storyboard?.instantiateViewController(identifier: "LipServiceViewController") as! LipServiceViewController
+                vc.podCastID = String(pod.episodeID)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            cell.playCallDelete = {
+                Utility.showAlertWithOptions(controller: self, title: "Are You Sure", message: "Are You Sure To Delete?", preferredStyle: .alert, rightBtnText: "No", leftBtnText: "Yes", leftBtnhandler: { _ in
+                    
+                }, rightBtnhandler: {_ in
+                    
+                })
+            }
             cell.layer.cornerRadius = 10
             return cell
         }

@@ -16,6 +16,21 @@ class UploadPDMTableViewCell: UITableViewCell {
     @IBOutlet weak var lblDuration: UILabel!
     @IBOutlet weak var ivImage: UIImageView!
     
+    //MARK:- Action
+    @IBAction func actionPlay(_ sender: Any) {
+        if let playCallBack = playCallBack{
+            playCallBack()
+        }
+    }
+    @IBAction func actionDelete(_ sender: Any) {
+        if let playCallDelete = playCallDelete{
+            playCallDelete()
+        }
+    }
+    
+    //MARK:- Veriables
+    var playCallBack:(()->Void)?
+    var playCallDelete:(()->Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
