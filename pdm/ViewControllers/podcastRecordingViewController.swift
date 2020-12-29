@@ -109,8 +109,8 @@ class podcastRecordingViewController: UIViewController, UIGestureRecognizerDeleg
     }
     func config(){
         self.viewModel.askAudioRecordingPermission()
-        self.recordingView.gradientStartColor = .greenColor
-        self.recordingView.gradientEndColor = .greenColor
+        self.recordingView.gradientStartColor = .geeniColor
+        self.recordingView.gradientEndColor = .geeniColor
         self.recordingView.meteringLevelBarWidth = 2.0
         self.viewModel.audioMeteringLevelUpdate = { [weak self] meteringLevel in
             self?.recordingView.add(meteringLevel: meteringLevel)

@@ -11,13 +11,10 @@ class ForgetNameDoneViewController: UIViewController {
 
     @IBOutlet weak var emailLabelOutlet: UILabel!
     @IBOutlet weak var returnBtnOutlet: UIButton!
+    var type = ""
     var email = String()
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*
-        returnBtnOutlet.layer.cornerRadius = 0.5 * returnBtnOutlet.bounds.size.height
-        returnBtnOutlet.clipsToBounds = true
-        */
         emailLabelOutlet.text = email
     }
     @IBAction func returnByttonTapped(_ sender: Any) {

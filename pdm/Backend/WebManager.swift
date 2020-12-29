@@ -116,7 +116,7 @@ class WebManager: NSObject {
     }
     func forgotPassword(email: String){
         let params = [kemail: email] as [String : Any]
-        let url = "\(kbaseURL)\(kforgot_username)"
+        let url = "\(kbaseURL)\(kforgot_password)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
     func resetPassword(parms:[String:Any]){

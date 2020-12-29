@@ -64,7 +64,9 @@ extension ForgetPasswordViewController: WebManagerDelegate {
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             } else {
-                let vctwo = storyboard?.instantiateViewController(withIdentifier: "otpVC") as? OTPresetPasswordViewController;
+                let vctwo = storyboard?.instantiateViewController(withIdentifier: "ForgetNameDoneViewController") as? ForgetNameDoneViewController;
+                vctwo?.email = emailTFoutlet.text!
+                vctwo?.type = "Password"
                 self.navigationController?.pushViewController(vctwo!, animated: true)
             }
             

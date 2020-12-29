@@ -68,6 +68,14 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Needed for image upload</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Needed for image upload</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow access to Microphone to Record Podcast.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Needed for image upload</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -108,8 +116,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Allow access to Microphone to Record Podcast.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -117,11 +123,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Needed for image upload</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Needed for image upload</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Needed for image upload</string>
 </dict>
 </plist>

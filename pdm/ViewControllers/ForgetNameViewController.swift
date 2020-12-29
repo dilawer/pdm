@@ -61,9 +61,10 @@ extension ForgetNameViewController: WebManagerDelegate {
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             } else {
-                 let vctwo = storyboard?.instantiateViewController(withIdentifier: "forgetNameDoneVC") as? ForgetNameDoneViewController;
+                let vctwo = storyboard?.instantiateViewController(withIdentifier: "ForgetNameDoneViewController") as? ForgetNameDoneViewController;
                 vctwo?.email = emailTFoutlet.text!
-                 self.navigationController?.pushViewController(vctwo!, animated: true)
+                vctwo?.type = "UserName"
+                self.navigationController?.pushViewController(vctwo!, animated: true)
 //                let user = User.getInstance()
 //                user?.setUserData(data: result.object(forKey: kdata)! as! NSDictionary)
 //                let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;

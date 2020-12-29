@@ -61,8 +61,8 @@ class UploadViewController: UIViewController {
         config()
     }
     func config(){
-        self.recordingView.gradientStartColor = .greenColor
-        self.recordingView.gradientEndColor = .greenColor
+        self.recordingView.gradientStartColor = .geeniColor
+        self.recordingView.gradientEndColor = .geeniColor
         self.recordingView.meteringLevelBarWidth = 2.0
         self.recordingView.audioVisualizationMode = .read
         self.recordingView.meteringLevels = array

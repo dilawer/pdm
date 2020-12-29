@@ -27,7 +27,7 @@ extension String{
     }
 }
 extension UIColor {
-    @objc class var greenColor:UIColor{
+    @objc class var geeniColor:UIColor{
         return hexStringToUIColor(hex: "#8DBF41")
     }
     func image(_ size: CGSize = CGSize(width: 1, height: 1)) -> UIImage {
