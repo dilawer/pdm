@@ -35,6 +35,7 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         register()
         if let text = searchText {
+            tfSearch.text = text
             WebManager.getInstance(delegate: self)?.search(query: text)
         }
     }
@@ -95,6 +96,7 @@ extension SearchViewController:UICollectionViewDataSource,UICollectionViewDelega
     func register(){
         collectionCatgory.register(UINib(nibName: "CategoryCell", bundle: nil), forCellWithReuseIdentifier: "CategoryCell")
         collectionPodcasts.register(UINib(nibName: "PodcastCell", bundle: nil), forCellWithReuseIdentifier: "PodcastCell")
+        self.tfSearch.delegate = self
     }
 }
 
@@ -114,45 +116,48 @@ extension SearchViewController: WebManagerDelegate {
     func successResponse(response: AFDataResponse<Any> ,webManager: WebManager) {
         switch(response.result) {
         case .success(let JSON):
-            let result = JSON as! NSDictionary
-            let successresponse = result.object(forKey: "success")!
-            if(successresponse as! Bool == false) {
-                let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            } else {
-                let data = result.object(forKey: kdata) as! NSDictionary
-                let categories = data.object(forKey: kcategories) as! NSArray
-                self.categories.removeAll()
-                for i in 0 ..< categories.count {
-                    let category = Category()
-                    category.setCategoryData(data:categories[i] as! NSDictionary)
-                    self.categories.append(category)
-                }
-                do {
-                    let jsonData = try JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)
-                    if let searchResult:SearchModel = self.handleResponse(data: jsonData){
-                        print(searchResult.data)
+            if let result = JSON as? NSDictionary{
+                if let successresponse = result.object(forKey: "success"){
+                    if(successresponse as! Bool == false) {
+                        let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        let data = result.object(forKey: kdata) as! NSDictionary
+                        let categories = data.object(forKey: kcategories) as! NSArray
                         self.categories.removeAll()
-                        if let listCat = searchResult.data.categories{
-                            for category in listCat{
-                                let cat = Category()
-                                cat.categoryId = String(category.categoryID ?? 0)
-                                cat.category_icon = category.categoryIcon
-                                cat.category_name = category.categoryName
-                                self.categories.append(cat)
+                        for i in 0 ..< categories.count {
+                            let category = Category()
+                            category.setCategoryData(data:categories[i] as! NSDictionary)
+                            self.categories.append(category)
+                        }
+                        do {
+                            let jsonData = try JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)
+                            if let searchResult:SearchModel = self.handleResponse(data: jsonData){
+                                print(searchResult.data)
+                                self.categories.removeAll()
+                                if let listCat = searchResult.data.categories{
+                                    for category in listCat{
+                                        let cat = Category()
+                                        cat.categoryId = String(category.id ?? 0)
+                                        cat.category_icon = category.categoryIcon
+                                        cat.category_name = category.categoryName
+                                        self.categories.append(cat)
+                                    }
+                                }
+                                if let listPodcasts = searchResult.data.podcasts{
+                                    self.podcats = listPodcasts
+                                }
                             }
+                        } catch {
+                            print(error.localizedDescription)
                         }
-                        if let listPodcasts = searchResult.data.podcasts{
-                            self.podcats = listPodcasts
-                        }
+                        self.collectionPodcasts.reloadData()
+                        self.collectionCatgory.reloadData()
                     }
-                } catch {
-                    print(error.localizedDescription)
                 }
-                self.collectionPodcasts.reloadData()
-                self.collectionCatgory.reloadData()
             }
+            
             
             break
         case .failure(_):
@@ -161,5 +166,16 @@ extension SearchViewController: WebManagerDelegate {
             self.present(alert, animated: true, completion: nil)
             break
         }
+    }
+}
+
+//MARK:- TextFiedld
+extension SearchViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.tfSearch.resignFirstResponder()
+        if let text = tfSearch.text{
+            WebManager.getInstance(delegate: self)?.search(query: text)
+        }
+        return true
     }
 }

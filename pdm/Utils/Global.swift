@@ -23,6 +23,9 @@ class Global {
     var curentPlayingID = ""
     var currentPlayingIndex = 0
     var likedPodcast = [String]()
+    var userPodcastID:String?
+    var Home:HomeViewController?
+    var podCastOfTheWeek:Podcast!
     
     func showPlayer(frame:CGRect) -> UniversalPlayer{
         let alert = UniversalPlayer.instanceFromNib()

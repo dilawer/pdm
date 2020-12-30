@@ -115,25 +115,26 @@ extension UniversalPlayer:WebManagerDelegate{
     func successResponse(response: AFDataResponse<Any> ,webManager: WebManager) {
         switch(response.result) {
         case .success(let JSON):
-            let result = JSON as! NSDictionary
-            if let successresponse = result.object(forKey: "success"){
-                if(successresponse as! Bool == false) {
-                } else {
-                    do {
-                        if let msg = result.object(forKey: "message") as? String{
-                            if msg.contains("unliked successfully"){
-                                for (index,i) in Global.shared.likedPodcast.enumerated().reversed(){
-                                    if i == Global.shared.curentPlayingID{
-                                        Global.shared.likedPodcast.remove(at: index)
+            if let result = JSON as? NSDictionary{
+                if let successresponse = result.object(forKey: "success"){
+                    if(successresponse as! Bool == false) {
+                    } else {
+                        do {
+                            if let msg = result.object(forKey: "message") as? String{
+                                if msg.contains("unliked successfully"){
+                                    for (index,i) in Global.shared.likedPodcast.enumerated().reversed(){
+                                        if i == Global.shared.curentPlayingID{
+                                            Global.shared.likedPodcast.remove(at: index)
+                                        }
                                     }
+                                }else if msg.contains("liked successfully"){
+                                    Global.shared.likedPodcast.append(Global.shared.curentPlayingID)
                                 }
-                            }else if msg.contains("liked successfully"){
-                                Global.shared.likedPodcast.append(Global.shared.curentPlayingID)
                             }
+                            Global.shared.universalPlayer?.refresh()
+                        } catch {
+                            print(error.localizedDescription)
                         }
-                        Global.shared.universalPlayer?.refresh()
-                    } catch {
-                        print(error.localizedDescription)
                     }
                 }
             }

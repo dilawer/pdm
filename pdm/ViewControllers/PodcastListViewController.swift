@@ -57,6 +57,11 @@ extension PodcastListViewController:UICollectionViewDelegate,UICollectionViewDat
         cell.config(podcast: arrayPodcasts[indexPath.row], width: (self.collectionPodscasts.frame.width/2) - 30)
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
+        vc?.podCastID = String(arrayPodcasts[indexPath.row].podcastID)
+        self.navigationController?.pushViewController(vc!, animated: true)
+    }
 }
 
 //MARK:- Api

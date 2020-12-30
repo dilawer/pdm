@@ -42,10 +42,15 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
+        Global.shared.Home = self
         uppercollectionview.register(UINib(nibName: "TopCell", bundle: nil), forCellWithReuseIdentifier: "TopCell")
         bottoncollectionview.register(UINib(nibName: "FeaturedCell", bundle: nil), forCellWithReuseIdentifier: "FeaturedCell")
         getHomeData()
+        refersh()
         WebManager.getInstance(delegate: self)?.getLikedPodcasts()
+    }
+    public func refersh(){
+        WebManager.getInstance(delegate: self)?.getProfileDetail()
     }
     override func viewDidAppear(_ animated: Bool) {
         MusicPlayer.instance.delegate = self
@@ -152,11 +157,17 @@ extension HomeViewController: WebManagerDelegate {
                             }
                             return
                         }
-                    }
-                     else {
+                    } else if let user  =  data.object(forKey: "user") as? NSDictionary{
+                        if let userPodcast = user["userPodcast"] as? NSDictionary{
+                            if let podCastID = userPodcast["id"] as? Int{
+                                Global.shared.userPodcastID = String(podCastID)
+                            }
+                        }
+                    } else {
                         let podcasts = data.object(forKey: kfeatured) as! NSArray
                         video.setVideoData(data: data.object(forKey: kvideo) as! NSDictionary)
                         podcastOfTheWeek.setPodcastData(data: data.object(forKey: kpodcast_of_the_week) as! NSDictionary)
+                        Global.shared.podCastOfTheWeek = podcastOfTheWeek
                         featuredPodcasts.removeAll()
                         for i in 0 ..< podcasts.count {
                             let podcast = Podcast()

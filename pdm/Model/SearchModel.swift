@@ -18,13 +18,11 @@ struct DataClass: Codable {
 
 // MARK: - Category
 struct Categorys: Codable {
-    let categoryID: Int?
     let id:Int?
     let categoryName: String
     let categoryIcon: String
 
     enum CodingKeys: String, CodingKey {
-        case categoryID = "category_id"
         case id = "id"
         case categoryName = "category_name"
         case categoryIcon = "category_icon"

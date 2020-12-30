@@ -38,6 +38,8 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
                 MusicPlayer.instance.initPlayer(url: active.episodeFileLink)
                 MusicPlayer.instance.play()
                 MusicPlayer.instance.progressBar = lblProgressView
+                WebManager.getInstance(delegate: self)?.PlayPodCast(parms: ["podcast_id":podCastID,
+                                                                            "episode_id":String(active.episodeID)])
                 shouldPlay = false
             }
         }
@@ -71,6 +73,27 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
         }
         WebManager.getInstance(delegate: self)?.LikePodcast(parms: ["podcast_id":podCastID,"liked_status":status])
     }
+    @IBAction func actionNext(_ sender: Any) {
+        if let globalList = Global.shared.podDetails{
+            if globalList.pods.count > Global.shared.currentPlayingIndex{
+                Global.shared.currentPlayingIndex += 1
+                let new = globalList.pods[Global.shared.currentPlayingIndex]
+                MusicPlayer.instance.pause()
+                MusicPlayer.instance.stop()
+                MusicPlayer.instance.initPlayer(url: new.episodeFileLink)
+                Global.shared.podcaste = new
+                MusicPlayer.instance.delegate?.songChanged(pod: new)
+                if globalList.pods.count > Global.shared.currentPlayingIndex+1{
+                    let next = globalList.pods[Global.shared.currentPlayingIndex+1]
+//                    ImageLoader.loadImage(imageView: ivNextEpisode, url: next.podcast_icon ?? "")
+                    lblNextName.text = next.episodeName
+                } else {
+                    ivNextEpisode.image = nil
+                    lblNextName.text = "-"
+                }
+            }
+        }
+    }
     
     //MARK:- Variables
     var profiletitleArr = [String]()
@@ -80,6 +103,7 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     var moreArray = [Podcasts]()
     var activePod:Pod?
     var shouldPlay = true
+    var found = false
     var isLiked = false{
         didSet{
             if isLiked{
@@ -90,6 +114,7 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
         }
     }
     var podCastID = "1"
+    var episodeID:Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -185,17 +210,37 @@ extension LipServiceViewController:WebManagerDelegate{
                                 Global.shared.podDetails = data
                                 lblName.text = data.podcastName
                                 ImageLoader.loadImage(imageView: ivPodcast, url: data.podcastIcon )
-                                if let first = data.pods.first{
+                                if let episodeID = episodeID{
+                                    for (index,i) in data.pods.enumerated(){
+                                        if i.episodeID == episodeID{
+                                            lblName.text = i.episodeName
+                                            lblEpisode.text = "Episode \(i.episodeID)"
+                                            lblDuration.text = i.episodeDuration
+                                            activePod = i
+                                            Global.shared.currentPlayingIndex = index
+                                            MusicPlayer.instance.delegate?.songChanged(pod: i)
+                                            found = true
+                                            if data.pods.count > index{
+                                                let next = data.pods[index+1]
+                                                ImageLoader.loadImage(imageView: ivNextEpisode, url: data.podcastIcon)
+                                                lblNextName.text = next.episodeName
+                                            }
+                                            break
+                                        }
+                                    }
+                                }
+                                if let first = data.pods.first, !found{
                                     lblName.text = first.episodeName
                                     lblEpisode.text = "Episode \(first.episodeID)"
                                     lblDuration.text = first.episodeDuration
                                     activePod = first
+                                    Global.shared.currentPlayingIndex = 0
                                     MusicPlayer.instance.delegate?.songChanged(pod: first)
-                                }
-                                if data.pods.count > 1{
-                                    let next = data.pods[1]
-                                    ImageLoader.loadImage(imageView: ivNextEpisode, url: data.podcastIcon)
-                                    lblNextName.text = next.episodeName
+                                    if data.pods.count > 1{
+                                        let next = data.pods[1]
+                                        ImageLoader.loadImage(imageView: ivNextEpisode, url: data.podcastIcon)
+                                        lblNextName.text = next.episodeName
+                                    }
                                 }
                                 if let morLikeThis = data.moreLikeThis{
                                     moreArray = morLikeThis

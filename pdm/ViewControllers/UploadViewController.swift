@@ -32,13 +32,14 @@ class UploadViewController: UIViewController {
     }
     @IBAction func actionUploadToPDM(_ sender: Any) {
         if isValid(){
+            let podcastID = Global.shared.userPodcastID
             let params:[String:Any] = [
                 "duration":String(sceonds),
                 "episode_name":tfEpisodeName.text ?? "",
                 "author":tfAuthor.text ?? "",
                 "episode_description":tfDescription.text ?? "",
-                "user_podcast_exist":"0",
-                "podcast":tfPodcastName.text ?? "",
+                "user_podcast_exist":podcastID == nil ? "0" : "1",
+                "podcast":podcastID == nil ? (tfPodcastName.text ?? "") : (podcastID ?? "0"),
                 "category":String(selectedCategory)
             ]
             let file:[String:Data] = ["podcast_icon":imageData!,"file":audio!]
@@ -136,6 +137,7 @@ extension UploadViewController: WebManagerDelegate{
                     } else if(successresponse as! Bool == true){
                         Utility.showAlertWithSingleOption(controller: self, title: "Success", message: (result.object(forKey: "message") as? String) ?? "Opertation Successfull", preferredStyle: .alert, buttonText: "OK", buttonHandler: {_ in
                             self.navigationController?.popToRootViewController(animated: true)
+                            Global.shared.Home?.refersh()
                         })
                     }
                 } catch {

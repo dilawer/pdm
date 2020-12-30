@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import SVProgressHUD
 
 class ResetPasswordViewController: UIViewController {
 
@@ -24,8 +25,9 @@ class ResetPasswordViewController: UIViewController {
             let parms:[String:Any] = [
                 "password":paswwordOutlet.text ?? "",
                 "confirmPassword":confirmPasswordOutlet.text ?? "",
-                "token":tokken!
+                "token":tokken ?? ""
             ]
+            SVProgressHUD.setDefaultMaskType(.black)
             WebManager.getInstance(delegate: self)?.resetPassword(parms: parms)
         }
     }
@@ -37,8 +39,8 @@ class ResetPasswordViewController: UIViewController {
         super.viewDidLoad()
         self.customization()
         let path = compunents.path
-        tokken = "asdhf aks dfajs dfj asdkj "
-        // Do any additional setup after loading the view.
+        let array = path.split(separator: "/")
+        tokken = String(array.last ?? "")
     }
     
     func customization() {
@@ -72,6 +74,10 @@ class ResetPasswordViewController: UIViewController {
 //MARK:- Valdation
 extension ResetPasswordViewController{
     func isValid() -> Bool{
+        guard let _ = tokken else {
+            Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "No tokken Found. Please Try a Valid Link", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
         if paswwordOutlet.text?.isEmpty ?? true{
             Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Password Field is Required", preferredStyle: .alert, buttonText: "OK")
             return false
@@ -115,7 +121,11 @@ extension ResetPasswordViewController:WebManagerDelegate{
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             } else {
-                openMain()
+                let alert = UIAlertController(title: "Success", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
+                    self.openMain()
+                }))
+                self.present(alert, animated: true, completion: nil)
                 /*
                 let user = User.getInstance()
                 user?.setUserData(data: result.object(forKey: kdata)! as! NSDictionary)

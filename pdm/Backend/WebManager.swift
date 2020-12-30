@@ -144,6 +144,14 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(kLikePodcast)"
         makeRequest(requestUrl: url, method: .post, parameters: parms)
     }
+    func PlayPodCast(parms:[String:Any]){
+        let url = "\(kbaseURL)\(kPlayPodcast)"
+        makeRequest(requestUrl: url, method: .post, parameters: parms)
+    }
+    func deletePodCast(_ id:String){
+        let url = "\(kbaseURL)\(kDeletePodcast)\(id)"
+        makeRequest(requestUrl: url, method: .delete, parameters: nil)
+    }
     
     
     //MARK:- Search

@@ -35,6 +35,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var tfName: UITextField!
     @IBOutlet weak var tfEmail: UITextField!
     @IBOutlet weak var tfAge: UITextField!
+    @IBOutlet weak var autoplay: UISwitch!
     
     //MARK:- Action
     @IBAction func actionLiked(_ sender: Any) {
@@ -53,6 +54,8 @@ class ProfileViewController: UIViewController {
                 user?.saveUser()
                 GIDSignIn.sharedInstance().signOut()
                 LoginManager().logOut()
+                MusicPlayer.instance.stop()
+                Global.shared.universalPlayer?.removeFromSuperview()
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 let navVC = appDelegate.window?.rootViewController as? UINavigationController
                 navVC?.popViewController(animated: true)
@@ -127,6 +130,8 @@ class ProfileViewController: UIViewController {
         tfName.text = user?.fullName
     }
     override func viewWillAppear(_ animated: Bool) {
+        WebManager.getInstance(delegate: self)?.getProfileDetail()
+        WebManager.getInstance(delegate: self)?.getPdmHistory()
         Global.shared.universalPlayer?.alpha = 0
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -149,7 +154,7 @@ class ProfileViewController: UIViewController {
         self.totalRecordView.alpha = 1
         self.songsMainView.alpha = 1
         hideBottom()
-        self.uploadHistoryView.isHidden = true
+//        self.uploadHistoryView.isHidden = true
     }
 }
 //MARK:- Methods
@@ -184,8 +189,8 @@ extension ProfileViewController{
         ImageLoader.loadImage(imageView: profileDp, url: user?.profile_image ?? "")
         ImageLoader.loadImage(imageView: profileImageView, url: user?.profile_image ?? "")
         ImageLoader.loadImage(imageView: coverImageView, url: user?.cover_image ?? "")
-        WebManager.getInstance(delegate: self)?.getProfileDetail()
-        WebManager.getInstance(delegate: self)?.getPdmHistory()
+        
+        profilecollectionview.register(UINib(nibName: "NewReleaseCell", bundle: nil), forCellWithReuseIdentifier: "NewReleaseCell")
     }
     func showBottom(){
         self.settingsView.isHidden = false
@@ -212,16 +217,19 @@ extension ProfileViewController: UICollectionViewDelegate,UICollectionViewDataSo
         return recentPlayedEpisodes.count
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vctwo = storyboard?.instantiateViewController(withIdentifier: "selectedPodcastViewController") as? selectedPodcastViewController;
-        self.navigationController?.pushViewController(vctwo!, animated: true)
+        /*
+        let vc = self.storyboard?.instantiateViewController(identifier: "LipServiceViewController") as! LipServiceViewController
+        vc.episodeID = pod.episodeID
+        self.navigationController?.pushViewController(vc, animated: true)
+ */
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "profilecell", for: indexPath) as! ProfileCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewReleaseCell", for: indexPath) as! NewReleaseCell
         let cellIndex = indexPath.item
-        cell.cellTitle.text = recentPlayedEpisodes[cellIndex].podcast_name
-        cell.cellsubtitle.text = recentPlayedEpisodes[cellIndex].eposide_name
-        cell.celltime.text = recentPlayedEpisodes[cellIndex].duration
-        WebManager.getInstance(delegate: self)?.downloadImage(imageUrl: recentPlayedEpisodes[cellIndex].icon, imageView: cell.profileimage)
+        cell.lblName.text = recentPlayedEpisodes[cellIndex].podcast_name
+        cell.lblEpisode.text = recentPlayedEpisodes[cellIndex].eposide_name
+        cell.lblDuration.text = recentPlayedEpisodes[cellIndex].duration
+        ImageLoader.loadImage(imageView: cell.ivImage, url: recentPlayedEpisodes[cellIndex].icon)
         cell.layer.cornerRadius = 10
         return cell
     }
@@ -246,13 +254,16 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource{
             cell.lblEpisodeName.text = pod.episodeName
             ImageLoader.loadImage(imageView: cell.ivImage, url: pod.podcast_icon ?? "")
             cell.playCallBack = {
-                let vc = self.storyboard?.instantiateViewController(identifier: "LipServiceViewController") as! LipServiceViewController
-                vc.podCastID = String(pod.episodeID)
-                self.navigationController?.pushViewController(vc, animated: true)
+                if let podCastID = Global.shared.userPodcastID{
+                    let vc = self.storyboard?.instantiateViewController(identifier: "LipServiceViewController") as! LipServiceViewController
+                    vc.podCastID = podCastID
+                    vc.episodeID = pod.episodeID
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }
             cell.playCallDelete = {
                 Utility.showAlertWithOptions(controller: self, title: "Are You Sure", message: "Are You Sure To Delete?", preferredStyle: .alert, rightBtnText: "No", leftBtnText: "Yes", leftBtnhandler: { _ in
-                    
+                    WebManager.getInstance(delegate: self)?.deletePodCast(String(pod.episodeID))
                 }, rightBtnhandler: {_ in
                     
                 })
@@ -282,33 +293,40 @@ extension ProfileViewController: WebManagerDelegate {
         switch(response.result) {
         case .success(let JSON):
             let result = JSON as! NSDictionary
-            let successresponse = result.object(forKey: "success")!
-            if(successresponse as! Bool == false) {
+            if let successresponse = result.object(forKey: "success"){
+                if(successresponse as! Bool == false) {
                 let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             } else {
-                let data = result.object(forKey: kdata) as! NSDictionary
-                if let episodes = data.object(forKey: krecentlyPlayed) as? NSArray{
-                    let user = User.getInstance()
-                    user?.setUserData(data: data)
-                    user?.totalListens = "\(data.object(forKey: ktotalListens) ?? "")"
-                    self.totalListens.text = user?.totalListens
-                    user?.totalMins = "\(data.object(forKey: ktotalMinutes) ?? "")"
-                    self.totalMins.text = user?.totalMins
-                    user?.totalUploads = "\(data.object(forKey: kuploadedPods) ?? "")"
-                    self.uploadedPods.text = user?.totalUploads
-                    user?.saveUser()
-                    self.recentPlayedEpisodes.removeAll()
-                    for i in 0 ..< episodes.count {
-                        let episode = Episode()
-                        episode.setEpisodeData(data: episodes[i] as! NSDictionary)
-                        self.recentPlayedEpisodes.append(episode)
-                    }
-                }
-                do {
+                if let data = result.object(forKey: kdata) as? NSDictionary{
+                    do {
                     let jsonData = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
-                    if let historyArray:PDMHistory = self.handleResponse(data: jsonData){
+                    if let episodes = data.object(forKey: krecentlyPlayed) as? NSArray{
+                        let user = User.getInstance()
+                        user?.setUserData(data: data)
+                        user?.totalListens = "\(data.object(forKey: ktotalListens) ?? "")"
+                        self.totalListens.text = user?.totalListens
+                        user?.totalMins = "\(data.object(forKey: ktotalMinutes) ?? "")"
+                        self.totalMins.text = user?.totalMins
+                        user?.totalUploads = "\(data.object(forKey: kuploadedPods) ?? "")"
+                        self.uploadedPods.text = user?.totalUploads
+                        user?.saveUser()
+                        if let user  =  data.object(forKey: "user") as? NSDictionary{
+                            if let userPodcast = user["userPodcast"] as? NSDictionary{
+                                if let podCastID = userPodcast["id"] as? Int{
+                                    Global.shared.userPodcastID = String(podCastID)
+                                }
+                            }
+                        }
+                        self.recentPlayedEpisodes.removeAll()
+                        for i in 0 ..< episodes.count {
+                            let episode = Episode()
+                            episode.setEpisodeData(data: episodes[i] as! NSDictionary)
+                            self.recentPlayedEpisodes.append(episode)
+                        }
+                    }
+                    else if let historyArray:PDMHistory = self.handleResponse(data: jsonData){
                         self.arrayHistory = historyArray.pods
                         uploadTableView.reloadData()
                     }
@@ -316,8 +334,15 @@ extension ProfileViewController: WebManagerDelegate {
                 } catch {
                     print(error.localizedDescription)
                 }
-                
+                } else {
+                    let alert = UIAlertController(title: "Success", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
+                        WebManager.getInstance(delegate: self)?.getPdmHistory()
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                }
                 self.profilecollectionview.reloadData()
+                }
             }
             break
         case .failure(_):

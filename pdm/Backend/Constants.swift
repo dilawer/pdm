@@ -32,6 +32,8 @@ let kUploadHistory = "home/profile/pdmUploadHistory"
 let kUploadPodcast = "podcast/record"
 let kLikedPodcasts = "podcast/likedLists"
 let kLikePodcast = "podcast/like"
+let kPlayPodcast = "podcast/play"
+let kDeletePodcast = "home/profile/deleteUploadedPod/"
 
 
 //MARK: API KEYS

@@ -19,6 +19,9 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
     
     //MARK:- Action
     @IBAction func actionSearch(_ sender: Any) {
+        guard !(tfSearch.text?.isEmpty ?? false) else {
+            return
+        }
         if let text = tfSearch.text{
             let vc = storyboard?.instantiateViewController(identifier: "SearchViewController") as! SearchViewController
             vc.searchText = text
@@ -84,6 +87,7 @@ extension CategoryViewController{
     func register(){
         catdowncollectionview.register(UINib(nibName: "CategoryCell", bundle: nil), forCellWithReuseIdentifier: "CategoryCell")
         catupcollectionview.register(UINib(nibName: "TopCell", bundle: nil), forCellWithReuseIdentifier: "TopCell")
+        self.tfSearch.delegate = self
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.catupcollectionview {
@@ -102,6 +106,11 @@ extension CategoryViewController{
             self.navigationController?.pushViewController(vc, animated: true)
         }
         if collectionView == catupcollectionview{
+            if indexPath.row == 0{
+                let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
+                vc?.podCastID = Global.shared.podCastOfTheWeek.podcastID
+                self.navigationController?.pushViewController(vc!, animated: true)
+            }
             if indexPath.row == 1{
                 self.tabBarController?.selectedIndex = 1
             }
@@ -165,7 +174,7 @@ extension CategoryViewController: WebManagerDelegate {
                         if let listCat = searchResult.data.categories{
                             for category in listCat{
                                 let cat = Category()
-                                cat.categoryId = String(category.categoryID ?? 0)
+                                cat.categoryId = String(category.id ?? 0)
                                 cat.category_icon = category.categoryIcon
                                 cat.category_name = category.categoryName
                                 self.categories.append(cat)
@@ -191,3 +200,18 @@ extension CategoryViewController: WebManagerDelegate {
     }
 }
 
+//MARK:- TextFiedld
+extension CategoryViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.tfSearch.resignFirstResponder()
+        guard !(tfSearch.text?.isEmpty ?? false) else {
+            return true
+        }
+        if let text = tfSearch.text{
+            let vc = storyboard?.instantiateViewController(identifier: "SearchViewController") as! SearchViewController
+            vc.searchText = text
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        return true
+    }
+}

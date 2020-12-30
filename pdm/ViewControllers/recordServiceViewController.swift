@@ -54,6 +54,10 @@ class recordServiceViewController: UIViewController {
         let vctwo = storyboard?.instantiateViewController(withIdentifier: "podcastRecordingViewController") as? podcastRecordingViewController
         self.navigationController?.pushViewController(vctwo!, animated: true)
     }
+    @IBAction func actionBack(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         Global.shared.universalPlayer?.alpha = 0
         MusicPlayer.instance.pause()

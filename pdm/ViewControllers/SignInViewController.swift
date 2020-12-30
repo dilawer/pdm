@@ -52,7 +52,9 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
         datePicker.datePickerMode = .date
+        datePicker.maximumDate = Date()
         tfDOB.inputView = datePicker
+        dobTF.text = Date().getString(format: "dd-MM-yyyy")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +71,7 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         if let day = components.day, let month = components.month, let year = components.year {
             tfDOB.text = "\(day)-\(String(format: "%02d", month))-\(year)"
             print("\(day) \(month) \(year)")
+//            tfDOB.resignFirstResponder()
         }
     }
     
@@ -259,16 +262,20 @@ extension SignInViewController{
             Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Username OR Email is Required", preferredStyle: .alert, buttonText: "OK")
             return false
         }
-        if passwordTF.text?.isEmpty ?? true {
-            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Password is Required", preferredStyle: .alert, buttonText: "OK")
-            return false
-        }
         if (userNameTF.text ?? "").contains("@"){
             if !(userNameTF.text ?? "").isValidEmail(){
                 Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Email is Not Valid", preferredStyle: .alert, buttonText: "OK")
                 return false
             }
             loginType = .email
+        }
+        if passwordTF.text?.isEmpty ?? true {
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Password is Required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if (passwordTF.text?.count ?? 0) < 6{
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Password Must Be At Least 6 Digit Long", preferredStyle: .alert, buttonText: "OK")
+            return false
         }
         return true
     }
