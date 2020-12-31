@@ -45,14 +45,17 @@ class MusicPlayer {
         }
     }
     @objc func playerDidFinishPlaying(note: NSNotification){
+        MusicPlayer.instance.stop()
+        guard UserDefaults.standard.bool(forKey: kAutoPlay) else {
+            return
+        }
         delegate?.playerStausChanged(isPlaying: false)
         if let progressBar = progressBar{
             progressBar.progress = 0
         }
         if let globalList = Global.shared.podDetails{
-            if globalList.pods.count > Global.shared.currentPlayingIndex{
-                let new = globalList.pods[Global.shared.currentPlayingIndex]
-                MusicPlayer.instance.stop()
+            if globalList.pods.count > Global.shared.currentPlayingIndex+1{
+                let new = globalList.pods[Global.shared.currentPlayingIndex+1]
                 MusicPlayer.instance.initPlayer(url: new.episodeFileLink)
                 Global.shared.currentPlayingIndex += 1
                 Global.shared.podcaste = new

@@ -46,7 +46,7 @@ class podcastRecordingViewController: UIViewController, UIGestureRecognizerDeleg
                 self.currentState = .recorded
                 self.recordingView.audioVisualizationMode = .read
                 self.recordingView.meteringLevels = array
-                DispatchQueue.main.asyncAfter(deadline: .now()+2.0, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now()+1.0, execute: {
                     let vc = self.storyboard?.instantiateViewController(identifier: "UploadViewController") as! UploadViewController
                     vc.array = self.array
                     vc.length = self.lblTime.text ?? "00:00"
@@ -112,12 +112,12 @@ class podcastRecordingViewController: UIViewController, UIGestureRecognizerDeleg
         self.recordingView.gradientStartColor = .geeniColor
         self.recordingView.gradientEndColor = .geeniColor
         self.recordingView.meteringLevelBarWidth = 2.0
-        self.viewModel.audioMeteringLevelUpdate = { [weak self] meteringLevel in
-            self?.recordingView.add(meteringLevel: meteringLevel)
-            self?.array.append(meteringLevel)
-            guard let self = self, self.recordingView.audioVisualizationMode == .write else {
+        self.viewModel.audioMeteringLevelUpdate = { meteringLevel in
+            guard self.recordingView.audioVisualizationMode == .write else {
                 return
             }
+            self.recordingView.add(meteringLevel: meteringLevel)
+            self.array.append(meteringLevel)
         }
         self.viewModel.audioDidFinish = { [weak self] in
             self?.currentState = .recorded

@@ -28,6 +28,9 @@ class UploadViewController: UIViewController {
     
     //MARK:- Action
     @IBAction func actionPickImage(_ sender: Any) {
+        guard !isPodcastUploaded else {
+            return
+        }
         getImage()
     }
     @IBAction func actionUploadToPDM(_ sender: Any) {
@@ -40,11 +43,24 @@ class UploadViewController: UIViewController {
                 "episode_description":tfDescription.text ?? "",
                 "user_podcast_exist":podcastID == nil ? "0" : "1",
                 "podcast":podcastID == nil ? (tfPodcastName.text ?? "") : (podcastID ?? "0"),
-                "category":String(selectedCategory)
+                "category":podcastID == nil ? (String(selectedCategory)) : (Global.shared.userPodcastCategory)
             ]
-            let file:[String:Data] = ["podcast_icon":imageData!,"file":audio!]
+            var file = [String:Data]()
+            if !isPodcastUploaded{
+                file = ["podcast_icon":imageData ?? Data(),"file":audio ?? Data()]
+            } else {
+                file = ["file":audio!]
+            }
             WebManager.getInstance(delegate: self)?.uploadPodcast(parms: params, file: file)
         }
+    }
+    @IBAction func actionBack(_ sender: Any) {
+        Utility.showAlertWithOptions(controller: self, title: "Are You Sure To Go Back?", message: "Your Curent Recording Will Lost", preferredStyle: .alert, rightBtnText: "Yes", leftBtnText: "No",leftBtnhandler: {
+            _ in
+        },rightBtnhandler: {
+            _ in
+            self.navigationController?.popToRootViewController(animated: true)
+        })
     }
     
     //MARK:- Veriable
@@ -56,6 +72,7 @@ class UploadViewController: UIViewController {
     var imageData:Data?
     var selectdIndex = -1
     var selectedCategory = -1
+    var isPodcastUploaded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +87,22 @@ class UploadViewController: UIViewController {
         lblTime.text = length
         register()
         WebManager.getInstance(delegate: self)?.getCategoriesData()
+        if let _ = Global.shared.userPodcastID{
+            isPodcastUploaded = true
+            ImageLoader.loadImage(imageView: ivImage, url: Global.shared.userPodcastImageLink)
+            tfPodcastName.text = Global.shared.userPodcastName
+            tfPodcastName.alpha = 0.5
+            tfPodcastName.isUserInteractionEnabled = false
+            for (index,i) in categories.enumerated(){
+                if String(i.id ?? -1) == Global.shared.userPodcastCategory {
+                    selectdIndex = index
+                    collectionCat.reloadData()
+                    break
+                }
+            }
+            viewImage.alpha = 0
+            lblImage.alpha = 0
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         Global.shared.universalPlayer?.alpha = 0
@@ -132,7 +165,18 @@ extension UploadViewController: WebManagerDelegate{
                     let jsonData = try JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)
                     if let searchResult:SearchModel = self.handleResponse(data: jsonData){
                         if let listCat = searchResult.data.categories{
-                            categories = listCat
+                            if self.isPodcastUploaded{
+                                for (index,i) in listCat.enumerated(){
+                                    if String(i.id ?? -1) == Global.shared.userPodcastCategory {
+                                        selectdIndex = 0
+                                        categories.append(i)
+                                        collectionCat.reloadData()
+                                        break
+                                    }
+                                }
+                            }else {
+                                categories = listCat
+                            }
                         }
                     } else if(successresponse as! Bool == true){
                         Utility.showAlertWithSingleOption(controller: self, title: "Success", message: (result.object(forKey: "message") as? String) ?? "Opertation Successfull", preferredStyle: .alert, buttonText: "OK", buttonHandler: {_ in
@@ -245,9 +289,11 @@ extension UploadViewController:UIImagePickerControllerDelegate,UINavigationContr
 //MARK:- Validation
 extension UploadViewController{
     func isValid() -> Bool{
-        guard let _ = imageData else {
-            Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Image is Required", preferredStyle: .alert, buttonText: "OK")
-            return false
+        if !isPodcastUploaded{
+            guard let _ = imageData else {
+                Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Image is Required", preferredStyle: .alert, buttonText: "OK")
+                return false
+            }
         }
         if tfPodcastName.text?.isEmpty ?? true{
             Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Podcast Name is Required", preferredStyle: .alert, buttonText: "OK")

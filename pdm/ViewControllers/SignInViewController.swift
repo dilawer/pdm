@@ -274,7 +274,7 @@ extension SignInViewController{
             return false
         }
         if (passwordTF.text?.count ?? 0) < 6{
-            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Password Must Be At Least 6 Digit Long", preferredStyle: .alert, buttonText: "OK")
+            Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Invalid Password", preferredStyle: .alert, buttonText: "OK")
             return false
         }
         return true

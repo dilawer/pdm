@@ -161,6 +161,9 @@ extension HomeViewController: WebManagerDelegate {
                         if let userPodcast = user["userPodcast"] as? NSDictionary{
                             if let podCastID = userPodcast["id"] as? Int{
                                 Global.shared.userPodcastID = String(podCastID)
+                                Global.shared.userPodcastImageLink = userPodcast["podcast_icon"] as? String ?? ""
+                                Global.shared.userPodcastName = userPodcast["podcast_name"] as? String ?? ""
+                                Global.shared.userPodcastCategory = String(userPodcast["category_id"] as? Int ?? 0)
                             }
                         }
                     } else {

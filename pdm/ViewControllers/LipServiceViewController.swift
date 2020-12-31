@@ -75,7 +75,7 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     }
     @IBAction func actionNext(_ sender: Any) {
         if let globalList = Global.shared.podDetails{
-            if globalList.pods.count > Global.shared.currentPlayingIndex{
+            if globalList.pods.count > Global.shared.currentPlayingIndex+1{
                 Global.shared.currentPlayingIndex += 1
                 let new = globalList.pods[Global.shared.currentPlayingIndex]
                 MusicPlayer.instance.pause()
@@ -220,7 +220,7 @@ extension LipServiceViewController:WebManagerDelegate{
                                             Global.shared.currentPlayingIndex = index
                                             MusicPlayer.instance.delegate?.songChanged(pod: i)
                                             found = true
-                                            if data.pods.count > index{
+                                            if data.pods.count > index+1{
                                                 let next = data.pods[index+1]
                                                 ImageLoader.loadImage(imageView: ivNextEpisode, url: data.podcastIcon)
                                                 lblNextName.text = next.episodeName
@@ -306,5 +306,14 @@ extension LipServiceViewController:MusicDelgate{
         lblEpisode.text = pod.episodeName
         lblDuration.text = pod.episodeDuration
         ImageLoader.loadImage(imageView: ivPodcast, url: Global.shared.podDetails?.podcastIcon ?? "")
+        if let globalList = Global.shared.podDetails{
+            if globalList.pods.count > Global.shared.currentPlayingIndex+1{
+                let next = globalList.pods[Global.shared.currentPlayingIndex+1]
+                lblNextName.text = next.episodeName
+            } else {
+                ivNextEpisode.image = nil
+                lblNextName.text = "-"
+            }
+        }
     }
 }

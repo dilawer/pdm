@@ -97,6 +97,13 @@ class ProfileViewController: UIViewController {
             hideBottom()
         }
     }
+    @IBAction func actionSwitch(_ sender: Any) {
+        if autoplay.isOn{
+            UserDefaults.standard.setValue(true, forKey: kAutoPlay)
+        } else {
+            UserDefaults.standard.setValue(false, forKey: kAutoPlay)
+        }
+    }
     
     //MARK:- Veriables
     var centerY:CGFloat = 0.0
@@ -191,6 +198,12 @@ extension ProfileViewController{
         ImageLoader.loadImage(imageView: coverImageView, url: user?.cover_image ?? "")
         
         profilecollectionview.register(UINib(nibName: "NewReleaseCell", bundle: nil), forCellWithReuseIdentifier: "NewReleaseCell")
+        
+        if UserDefaults.standard.bool(forKey: kAutoPlay){
+            autoplay.setOn(true, animated: false)
+        } else {
+            autoplay.setOn(false, animated: false)
+        }
     }
     func showBottom(){
         self.settingsView.isHidden = false
@@ -316,6 +329,9 @@ extension ProfileViewController: WebManagerDelegate {
                             if let userPodcast = user["userPodcast"] as? NSDictionary{
                                 if let podCastID = userPodcast["id"] as? Int{
                                     Global.shared.userPodcastID = String(podCastID)
+                                    Global.shared.userPodcastImageLink = userPodcast["podcast_icon"] as? String ?? ""
+                                    Global.shared.userPodcastName = userPodcast["podcast_name"] as? String ?? ""
+                                    Global.shared.userPodcastCategory = String(userPodcast["category_id"] as? Int ?? 0)
                                 }
                             }
                         }

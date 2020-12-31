@@ -24,6 +24,10 @@ class Global {
     var currentPlayingIndex = 0
     var likedPodcast = [String]()
     var userPodcastID:String?
+    var userPodcastImageLink:String = ""
+    var userPodcastName = ""
+    var userPodcastCategory = ""
+    
     var Home:HomeViewController?
     var podCastOfTheWeek:Podcast!
     

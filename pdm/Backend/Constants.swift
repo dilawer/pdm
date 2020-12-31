@@ -56,6 +56,7 @@ let kvideo = "video"
 
 //MARK: App Constants
 let kCATEGORIES = "CATEGORIES"
+let kAutoPlay = "AUTOPLAYCONSTANT"
 
 //let kis_email = "id"
 //let kis_email = "userName"
