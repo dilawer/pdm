@@ -10,6 +10,8 @@ import Alamofire
 import GoogleSignIn
 import FacebookLogin
 import AuthenticationServices
+import Photos
+import AVFoundation
 
 class ProfileViewController: UIViewController {
     
@@ -36,6 +38,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var tfEmail: UITextField!
     @IBOutlet weak var tfAge: UITextField!
     @IBOutlet weak var autoplay: UISwitch!
+    @IBOutlet weak var lblUploadHistory: UILabel!
     
     //MARK:- Action
     @IBAction func actionLiked(_ sender: Any) {
@@ -56,9 +59,29 @@ class ProfileViewController: UIViewController {
                 LoginManager().logOut()
                 MusicPlayer.instance.stop()
                 Global.shared.universalPlayer?.removeFromSuperview()
+                Global.shared.curentPlayingID = ""
+                Global.shared.currentPlayingIndex = 0
+                Global.shared.likedPodcast = [String]()
+                Global.shared.podCastOfTheWeek = nil
+                Global.shared.universalPlayer = nil
+                Global.shared.podcaste = nil
+                Global.shared.podDetails = nil
+                Global.shared.userPodcastID = nil
+                Global.shared.userPodcastImageLink = ""
+                Global.shared.userPodcastName = ""
+                Global.shared.userPodcastCategory = ""
+                
+                /*
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 let navVC = appDelegate.window?.rootViewController as? UINavigationController
                 navVC?.popViewController(animated: true)
+                */
+                if let vc = self.storyboard?.instantiateViewController(identifier: "mainViewController"){
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true, completion: nil)
+                }
+                
+                
                 
               case .cancel:
                     print("cancel")
@@ -71,13 +94,18 @@ class ProfileViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    @IBAction func actionContactUs(_ sender: Any) {
+        if let url = URL(string: kContactUs) {
+            UIApplication.shared.open(url)
+        }
+    }
     @IBAction func actionPrivacyPolicy(_ sender: Any) {
-        if let url = URL(string: kTermsUrl) {
+        if let url = URL(string: kPrivacyURL) {
             UIApplication.shared.open(url)
         }
     }
     @IBAction func actionTremsandConditions(_ sender: Any) {
-        if let url = URL(string: kPrivacyURL) {
+        if let url = URL(string: kTermsUrl) {
             UIApplication.shared.open(url)
         }
     }
@@ -88,10 +116,12 @@ class ProfileViewController: UIViewController {
         self.totalRecordView.alpha = 1
         self.songsMainView.alpha = 1
         hideBottom()
-        self.uploadHistoryView.isHidden = true
+        self.uploadHistoryView.alpha = 0
+        self.uploadTableView.alpha = 0
     }
     @IBAction func settingsBtnTapped(_ sender: Any) {
-        if self.settingsView.isHidden{
+        Global.shared.universalPlayer?.alpha = 0
+        if self.settingsView.alpha == 0{
             showBottom()
         } else {
             hideBottom()
@@ -104,13 +134,43 @@ class ProfileViewController: UIViewController {
             UserDefaults.standard.setValue(false, forKey: kAutoPlay)
         }
     }
+    @IBAction func actionUpdateCover(_ sender: Any) {
+        isCoverSelected = true
+        getImage()
+    }
+    @IBAction func actionUpdateProfile(_ sender: Any) {
+        isCoverSelected = false
+        getImage()
+    }
+    @IBAction func actionUpdate(_ sender: Any) {
+        if isValid(){
+            var auto = "1"
+            if UserDefaults.standard.bool(forKey: kAutoPlay){
+                auto = "2"
+            }
+            let parms = ["full_name":tfName.text ?? "" ,"dob": tfAge.text ?? "","autoplay":auto]
+            WebManager.getInstance(delegate: self)?.editProfile(parms: parms)
+        }
+    }
     
     //MARK:- Veriables
     var centerY:CGFloat = 0.0
     var isShowing = false
     var recentPlayedEpisodes: [Episode]=[]
     var settingsHeightConstant:CGFloat = 0.0
-    var arrayHistory = [Pod]()
+    var arrayHistory = [Pod](){
+        didSet{
+            if arrayHistory.isEmpty{
+                lblUploadHistory.alpha = 1
+            } else {
+                lblUploadHistory.alpha = 0
+            }
+        }
+    }
+    var isCoverSelected = false
+    var imageData:Data?
+    var coverData:Data?
+    var datePicker:UIDatePicker = UIDatePicker()
     
     let profiletitleArr = ["In the Mix","the friend Zone","Shots Film","Kind Advise","Good Advise"]
     let profilesubtitleArr = ["Episode Name","Episode Name","Episode Name","Episode Name","Episode Name"]
@@ -135,6 +195,7 @@ class ProfileViewController: UIViewController {
         tfEmail.text = user?.email
         tfAge.text = user?.dob
         tfName.text = user?.fullName
+        Global.shared.universalPlayer?.alpha = 0
     }
     override func viewWillAppear(_ animated: Bool) {
         WebManager.getInstance(delegate: self)?.getProfileDetail()
@@ -151,7 +212,8 @@ class ProfileViewController: UIViewController {
         self.totalRecordView.alpha = 0
         self.songsMainView.alpha = 0
         hideBottom()
-        self.uploadHistoryView.isHidden = false
+        self.uploadHistoryView.alpha = 1
+        self.uploadTableView.alpha = 1
     }
     
     @objc func imageTapped1(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -175,8 +237,9 @@ extension ProfileViewController{
         profilecollectionview.collectionViewLayout = layout
         settingsView.layer.masksToBounds = true
         settingsView.roundCorners(corners: [.topLeft,.topRight], radius: 10)
-        settingsView.isHidden = true
-        self.uploadHistoryView.isHidden = true
+        settingsView.alpha = 0
+        self.uploadHistoryView.alpha = 0
+        self.uploadTableView.alpha = 0
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         uploadPostsTapped.isUserInteractionEnabled = true
         uploadPostsTapped.addGestureRecognizer(tapGestureRecognizer)
@@ -193,20 +256,38 @@ extension ProfileViewController{
         self.tfName.text = user?.fullName
         self.tfName.text = user?.fullName
         
-        ImageLoader.loadImage(imageView: profileDp, url: user?.profile_image ?? "")
-        ImageLoader.loadImage(imageView: profileImageView, url: user?.profile_image ?? "")
-        ImageLoader.loadImage(imageView: coverImageView, url: user?.cover_image ?? "")
+        if let profile = user?.profile_image,!profile.isEmpty,profile != "https://staging.oqh.obm.mybluehost.me/storage/profile_image/default.png"{
+            ImageLoader.loadImage(imageView: profileDp, url: profile)
+            ImageLoader.loadImage(imageView: profileImageView, url: profile)
+        }
+        if let cover = user?.cover_image,!cover.isEmpty,cover != "https://staging.oqh.obm.mybluehost.me/storage/cover_image/default.png"{
+            ImageLoader.loadImage(imageView: coverImageView, url: cover)
+        }
         
-        profilecollectionview.register(UINib(nibName: "NewReleaseCell", bundle: nil), forCellWithReuseIdentifier: "NewReleaseCell")
+        profilecollectionview.register(UINib(nibName: "RecentCell", bundle: nil), forCellWithReuseIdentifier: "RecentCell")
+        profilecollectionview.isUserInteractionEnabled = true
+        uploadTableView.register(UINib(nibName: "UploadedCell", bundle: nil), forCellReuseIdentifier: "UploadedCell")
         
         if UserDefaults.standard.bool(forKey: kAutoPlay){
             autoplay.setOn(true, animated: false)
         } else {
             autoplay.setOn(false, animated: false)
         }
+        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+        datePicker.datePickerMode = .date
+        datePicker.maximumDate = Date()
+        tfAge.inputView = datePicker
+    }
+    @objc func dateChanged(_ sender: UIDatePicker) {
+        let components = Calendar.current.dateComponents([.year, .month, .day], from: sender.date)
+        if let day = components.day, let month = components.month, let year = components.year {
+            tfAge.text = "\((String(format: "%02d", day)))-\(String(format: "%02d", month))-\(year)"
+            print("\(day) \(month) \(year)")
+//            tfDOB.resignFirstResponder()
+        }
     }
     func showBottom(){
-        self.settingsView.isHidden = false
+        self.settingsView.alpha = 1
         UIView.animate(withDuration: 1, animations: {
             self.bottomConstant.constant = 0
             self.view.layoutIfNeeded()
@@ -219,7 +300,7 @@ extension ProfileViewController{
             self.view.layoutIfNeeded()
         },completion: {
             _ in
-            self.settingsView.isHidden = true
+            self.settingsView.alpha = 0
         })
     }
 }
@@ -230,20 +311,27 @@ extension ProfileViewController: UICollectionViewDelegate,UICollectionViewDataSo
         return recentPlayedEpisodes.count
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        /*
         let vc = self.storyboard?.instantiateViewController(identifier: "LipServiceViewController") as! LipServiceViewController
-        vc.episodeID = pod.episodeID
+        let pod = recentPlayedEpisodes[indexPath.row]
+        vc.podCastID = String(pod.podcast_id)
+        vc.episodeID = Int(pod.episodeID)
         self.navigationController?.pushViewController(vc, animated: true)
- */
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewReleaseCell", for: indexPath) as! NewReleaseCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecentCell", for: indexPath) as! RecentCell
         let cellIndex = indexPath.item
         cell.lblName.text = recentPlayedEpisodes[cellIndex].podcast_name
         cell.lblEpisode.text = recentPlayedEpisodes[cellIndex].eposide_name
         cell.lblDuration.text = recentPlayedEpisodes[cellIndex].duration
         ImageLoader.loadImage(imageView: cell.ivImage, url: recentPlayedEpisodes[cellIndex].icon)
         cell.layer.cornerRadius = 10
+        cell.clicked = {
+            let vc = self.storyboard?.instantiateViewController(identifier: "LipServiceViewController") as! LipServiceViewController
+            let pod = self.recentPlayedEpisodes[indexPath.row]
+            vc.podCastID = String(pod.podcast_id)
+            vc.episodeID = Int(pod.episodeID)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
         return cell
     }
 }
@@ -259,7 +347,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == uploadTableView,
-           let cell = tableView.dequeueReusableCell(withIdentifier: "uploadCell") as? UploadPDMTableViewCell {
+           let cell = tableView.dequeueReusableCell(withIdentifier: "UploadedCell") as? UploadedCell {
             let pod = arrayHistory[indexPath.row]
             cell.lblAuthor.text = pod.episodeAuthor
             cell.lblDuration.text = pod.episodeDuration
@@ -375,5 +463,111 @@ extension UIView {
         let maskLayer = CAShapeLayer()
         maskLayer.path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius)).cgPath
         self.layer.mask = maskLayer
+    }
+}
+//MARK:- Camera
+extension ProfileViewController:UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+    func getImage(){
+        let bottomSheet = BotttomSheetHelper()
+        bottomSheet.showAttachmentActionSheet(vc: self)
+        bottomSheet.callBack = { type in
+            self.handlePicker(type: type)
+        }
+    }
+    func handlePicker(type:PhotoMediaType){
+        switch type {
+        case .camera:
+            handleCamera()
+        case .gallery:
+            handleGallery()
+        }
+    }
+    func handleCamera(){
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        switch status{
+        case .authorized:
+            self.openCamera()
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted {
+                    self.openCamera()
+                }
+            }
+        case .denied, .restricted:
+            //self.addAlertForSettings(attachmentTypeEnum)
+            return
+            
+        default:
+            break
+        }
+    }
+    func handleGallery(){
+        let status = PHPhotoLibrary.authorizationStatus()
+        switch status{
+        case .authorized:
+            photoLibrary()
+        case .denied, .restricted: break
+            //self.addAlertForSettings(attachmentTypeEnum)
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({ (status) in
+                if status == PHAuthorizationStatus.authorized{
+                    // photo library access given
+                    self.photoLibrary()
+                }
+            })
+        default:
+            return
+        }
+    }
+    func openCamera(){
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            DispatchQueue.main.async {
+                let myPickerController = UIImagePickerController()
+                myPickerController.delegate = self
+                myPickerController.sourceType = .camera
+                self.present(myPickerController, animated: true, completion: nil)
+            }
+        }
+    }
+    func photoLibrary(){
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            DispatchQueue.main.async {
+                let myPickerController = UIImagePickerController()
+                myPickerController.delegate = self
+                myPickerController.sourceType = .photoLibrary
+                self.present(myPickerController, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    //MARK:- Image Picker Delegate
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        self.dismiss(animated: true, completion: nil)
+        let chosenImage = info[UIImagePickerController.InfoKey(rawValue: UIImagePickerController.InfoKey.originalImage.rawValue)] as! UIImage
+        let data = chosenImage.jpegData(compressionQuality: 1)
+        if isCoverSelected{
+            coverImageView.image = UIImage(data: data ?? Data())
+            coverData = data
+            WebManager.getInstance(delegate: self)?.uploadImage(parms: ["type":"2"], file: ["image":coverData ?? Data()])
+        } else {
+            profileImageView.image = UIImage(data: data ?? Data())
+            profileDp.image = UIImage(data: data ?? Data())
+            imageData = data ?? Data()
+            WebManager.getInstance(delegate: self)?.uploadImage(parms: ["type":"1"], file: ["image":imageData ?? Data()])
+        }
+    }
+}
+//MARK:- Validate
+extension ProfileViewController{
+    func isValid() -> Bool{
+        if tfName.text?.isEmpty ?? true{
+            Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Name is Required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        if tfAge.text?.isEmpty ?? true{
+            Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Age is Required", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        return true
     }
 }

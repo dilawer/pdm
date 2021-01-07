@@ -56,11 +56,15 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
         }
     }
     @IBAction func actionRepeat(_ sender: Any) {
+        MusicPlayer.instance.didRepeat = !MusicPlayer.instance.didRepeat
+        refreshUI()
     }
     @IBAction func actionBack(_ sender: Any) {
         MusicPlayer.instance.slowForward()
     }
     @IBAction func actionShuffle(_ sender: Any) {
+        MusicPlayer.instance.didShuffle = !MusicPlayer.instance.didShuffle
+        refreshUI()
     }
     @IBAction func actionFastForward(_ sender: Any) {
         MusicPlayer.instance.fastForward()
@@ -91,6 +95,8 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
                     ivNextEpisode.image = nil
                     lblNextName.text = "-"
                 }
+            } else {
+                Utility.showAlertWithSingleOption(controller: self, title: "No More Episode", message: "This is Your Last Episode of \(globalList.podcastName)", preferredStyle: .alert, buttonText: "OK")
             }
         }
     }
@@ -147,10 +153,23 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
         Global.shared.universalPlayer?.alpha = 0
+        refreshUI()
     }
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
         Global.shared.universalPlayer?.alpha = 1
+    }
+    func refreshUI(){
+        if MusicPlayer.instance.didRepeat{
+            btnRepeat.setBackgroundImage(UIImage(named: "ic_loop_selected"), for: .normal)
+        } else {
+            btnRepeat.setBackgroundImage(UIImage(named: "ic_repeat"), for: .normal)
+        }
+        if MusicPlayer.instance.didShuffle{
+            btnShufffle.setBackgroundImage(UIImage(named: "ic_shuffle_selected"), for: .normal)
+        } else {
+            btnShufffle.setBackgroundImage(UIImage(named: "ic_shuffl"), for: .normal)
+        }
     }
 }
 
@@ -168,7 +187,9 @@ extension LipServiceViewController{
         MusicPlayer.instance.stop()
         lblProgressView.progress = 0.0
         ivPlayPause.image = UIImage(named: "ic_iplay")
-        WebManager.getInstance(delegate: self)?.getPodcastDetails(podCast_id: String(moreArray[indexPath.row].podcastID))
+        podCastID = String(moreArray[indexPath.row].podcastID)
+        Global.shared.curentPlayingID = podCastID
+        WebManager.getInstance(delegate: self)?.getPodcastDetails(podCast_id: podCastID)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -225,6 +246,11 @@ extension LipServiceViewController:WebManagerDelegate{
                                                 ImageLoader.loadImage(imageView: ivNextEpisode, url: data.podcastIcon)
                                                 lblNextName.text = next.episodeName
                                             }
+                                            if Global.shared.isLiked(id: podCastID){
+                                                isLiked = true
+                                            }else {
+                                                isLiked = false
+                                            }
                                             break
                                         }
                                     }
@@ -240,6 +266,11 @@ extension LipServiceViewController:WebManagerDelegate{
                                         let next = data.pods[1]
                                         ImageLoader.loadImage(imageView: ivNextEpisode, url: data.podcastIcon)
                                         lblNextName.text = next.episodeName
+                                    }
+                                    if Global.shared.isLiked(id: podCastID){
+                                        isLiked = true
+                                    }else {
+                                        isLiked = false
                                     }
                                 }
                                 if let morLikeThis = data.moreLikeThis{

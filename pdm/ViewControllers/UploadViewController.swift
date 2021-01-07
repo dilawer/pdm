@@ -179,10 +179,12 @@ extension UploadViewController: WebManagerDelegate{
                             }
                         }
                     } else if(successresponse as! Bool == true){
-                        Utility.showAlertWithSingleOption(controller: self, title: "Success", message: (result.object(forKey: "message") as? String) ?? "Opertation Successfull", preferredStyle: .alert, buttonText: "OK", buttonHandler: {_ in
-                            self.navigationController?.popToRootViewController(animated: true)
-                            Global.shared.Home?.refersh()
-                        })
+                        if let msg = result.object(forKey: "message") as? String , msg.contains("successfull"){
+                            Utility.showAlertWithSingleOption(controller: self, title: "Congratulation!", message: "Your Podcast has been uploaded to our PDM", preferredStyle: .alert, buttonText: "OK", buttonHandler: {_ in
+                                self.navigationController?.popToRootViewController(animated: true)
+                                Global.shared.Home?.refersh()
+                            })
+                        }
                     }
                 } catch {
                     print(error.localizedDescription)

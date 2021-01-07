@@ -12,6 +12,7 @@ class TopCell: UICollectionViewCell {
     //MARK:- Outlets
     @IBOutlet weak var ivImage: UIImageViewX!
     @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
     
     
     override func awakeFromNib() {

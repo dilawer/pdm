@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,47 +17,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashIconMain" id="OPD-zD-XnS">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pod Digital Media" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ok7-B9-Sw0">
-                                <rect key="frame" x="0.0" y="430" width="414" height="36"/>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qRk-pe-Hph">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashIconMain" id="OPD-zD-XnS">
+                                        <rect key="frame" x="0.0" y="-12" width="414" height="822"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pod Digital Media" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ok7-B9-Sw0">
+                                <rect key="frame" x="0.0" y="400" width="414" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="26"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The First Multicultural Podcast Network" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6hb-bW-IRW">
-                                <rect key="frame" x="20" y="476" width="374" height="63"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="23"/>
-                                <color key="textColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="The First Multicultural Podcast Network" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6hb-bW-IRW">
+                                <rect key="frame" x="40" y="446" width="334" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="19"/>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="6hb-bW-IRW" firstAttribute="leading" secondItem="Ok7-B9-Sw0" secondAttribute="leading" constant="20" id="9ak-oZ-FwE"/>
-                            <constraint firstItem="Ok7-B9-Sw0" firstAttribute="centerY" secondItem="OPD-zD-XnS" secondAttribute="centerY" id="IGQ-6o-rxb"/>
-                            <constraint firstAttribute="trailing" secondItem="OPD-zD-XnS" secondAttribute="trailing" id="NkB-FC-yeU"/>
-                            <constraint firstItem="6hb-bW-IRW" firstAttribute="trailing" secondItem="Ok7-B9-Sw0" secondAttribute="trailing" constant="-20" id="OBF-ka-LZt"/>
-                            <constraint firstItem="6hb-bW-IRW" firstAttribute="centerX" secondItem="Ok7-B9-Sw0" secondAttribute="centerX" id="SAh-HU-bBC"/>
-                            <constraint firstItem="Ok7-B9-Sw0" firstAttribute="centerX" secondItem="OPD-zD-XnS" secondAttribute="centerX" id="UaK-b7-3sh"/>
-                            <constraint firstItem="Ok7-B9-Sw0" firstAttribute="leading" secondItem="OPD-zD-XnS" secondAttribute="leading" id="cO9-CE-gcF"/>
-                            <constraint firstItem="6hb-bW-IRW" firstAttribute="top" secondItem="Ok7-B9-Sw0" secondAttribute="bottom" constant="10" id="ifi-zg-p70"/>
-                            <constraint firstItem="Ok7-B9-Sw0" firstAttribute="trailing" secondItem="OPD-zD-XnS" secondAttribute="trailing" id="owH-gX-AjB"/>
-                            <constraint firstItem="OPD-zD-XnS" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="s6g-Lc-jnn"/>
-                            <constraint firstItem="OPD-zD-XnS" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="woo-Zf-4A1"/>
-                            <constraint firstAttribute="bottom" secondItem="OPD-zD-XnS" secondAttribute="bottom" id="wp6-Na-X4e"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="JvJ-FI-ep9"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qRk-pe-Hph" firstAttribute="top" secondItem="JvJ-FI-ep9" secondAttribute="top" id="3qf-Kg-b8w"/>
+                            <constraint firstItem="JvJ-FI-ep9" firstAttribute="bottom" secondItem="qRk-pe-Hph" secondAttribute="bottom" id="bBP-P8-1Eq"/>
+                            <constraint firstItem="JvJ-FI-ep9" firstAttribute="trailing" secondItem="qRk-pe-Hph" secondAttribute="trailing" id="usR-ep-H6p"/>
+                            <constraint firstItem="qRk-pe-Hph" firstAttribute="leading" secondItem="JvJ-FI-ep9" secondAttribute="leading" id="zNe-rB-1Ps"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
     <resources>
         <image name="splashIconMain" width="125" height="271"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

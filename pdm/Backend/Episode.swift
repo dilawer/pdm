@@ -22,6 +22,7 @@ class Episode{
     var episodeID: String
     var eposide_name: String
     var podcast_name: String
+    var podcast_id:Int
     var author: String
     var file_link: String
     var description: String
@@ -38,9 +39,11 @@ class Episode{
         self.description = ""
         self.duration = ""
         self.icon = ""
+        self.podcast_id = 0
     }
     
     func setEpisodeData(data : NSDictionary) {
+        self.podcast_id = data["podcast_id"] as? Int ?? 0
         self.episodeID = "\(data[kepisode_id] ?? "")"
         self.eposide_name = data[kepisode_name] as? String ?? ""
         self.podcast_name = data[kpodcast_name] as? String ?? ""

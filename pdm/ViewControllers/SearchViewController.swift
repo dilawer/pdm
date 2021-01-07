@@ -34,15 +34,16 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         register()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
         if let text = searchText {
             tfSearch.text = text
             WebManager.getInstance(delegate: self)?.search(query: text)
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
-    }
     override func viewDidAppear(_ animated: Bool) {
+        MusicPlayer.instance.delegate = self
         if let _ = Global.shared.podcaste{
             guard let _ = Global.shared.universalPlayer else {
                 let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
@@ -83,14 +84,22 @@ extension SearchViewController:UICollectionViewDataSource,UICollectionViewDelega
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(identifier: "selectedPodcastViewController") as! selectedPodcastViewController
-        let p = self.podcats[indexPath.row]
-        let podCast = Podcast()
-        podCast.podcastID = String(p.podcastID)
-        podCast.podcast_name = p.podcastName
-        podCast.podcast_icon = p.podcastIcon
-        vc.podcast = podCast
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        if collectionView == collectionCatgory{
+            let vc = storyboard?.instantiateViewController(withIdentifier: "PodcastListViewController") as! PodcastListViewController
+            vc.searchVC = self
+            vc.catID = categories[indexPath.row].categoryId
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let vc = storyboard?.instantiateViewController(identifier: "selectedPodcastViewController") as! selectedPodcastViewController
+            let p = self.podcats[indexPath.row]
+            let podCast = Podcast()
+            podCast.podcastID = String(p.podcastID)
+            podCast.podcast_name = p.podcastName
+            podCast.podcast_icon = p.podcastIcon
+            vc.podcast = podCast
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func register(){
@@ -139,7 +148,7 @@ extension SearchViewController: WebManagerDelegate {
                                 if let listCat = searchResult.data.categories{
                                     for category in listCat{
                                         let cat = Category()
-                                        cat.categoryId = String(category.id ?? 0)
+                                        cat.categoryId = String(category.category_id ?? 0)
                                         cat.category_icon = category.categoryIcon
                                         cat.category_name = category.categoryName
                                         self.categories.append(cat)
@@ -177,5 +186,30 @@ extension SearchViewController: UITextFieldDelegate{
             WebManager.getInstance(delegate: self)?.search(query: text)
         }
         return true
+    }
+}
+//MARK:- Music Player
+extension SearchViewController:MusicDelgate{
+    func playerStausChanged(isPlaying: Bool) {
+        let player = Global.shared.universalPlayer
+        if isPlaying {
+            player?.ivPlay.image = UIImage(named: "ic_ipause")
+        } else {
+            player?.ivPlay.image = UIImage(named: "ic_iplay")
+        }
+    }
+    
+    func songChanged(pod: Pod) {
+        if let pod = Global.shared.podcaste{
+            let player = Global.shared.universalPlayer
+            ImageLoader.loadImage(imageView: (player?.ivImage) ?? UIImageView(), url: Global.shared.podDetails?.podcastIcon ?? "")
+            player?.lblName.text = Global.shared.podDetails?.podcastName
+            player?.lblEpisode.text = pod.episodeName
+            if MusicPlayer.instance.isPlaying {
+                player?.ivPlay.image = UIImage(named: "ic_ipause")
+            } else {
+                player?.ivPlay.image = UIImage(named: "ic_iplay")
+            }
+        }
     }
 }

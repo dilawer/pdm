@@ -38,6 +38,14 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var tfConfirmPassword: UITextField!
     @IBOutlet weak var tfFullName: UITextField!
     @IBOutlet weak var tfDOB: UITextField!
+    @IBOutlet weak var btnPrivacy: UIButton!
+    
+    //MARK:- Action
+    @IBAction func actionPrivacy(_ sender: Any) {
+        if let url = URL(string: kPrivacyURL) {
+            UIApplication.shared.open(url)
+        }
+    }
     
     //MARK:- Veriables
     var loginType:LoginType = .userName
@@ -49,6 +57,7 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
 //        self.customization()
         setLoginSeleted()
         self.navigationController?.isNavigationBarHidden = true
+        self.passwordTF.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
         datePicker.datePickerMode = .date
@@ -137,11 +146,7 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func continueButtonTapped(_ sender: Any) {
-        if isValid(){
-            let userName = userNameTF.text
-            let password = passwordTF.text
-            WebManager.getInstance(delegate: self)?.signInWithEmail(email: userName!, pass: password!, type: loginType)
-        }
+        signin()
     }
     @IBAction func continueSignup(_ sender: Any) {
         if isSignupValid(){
@@ -194,7 +199,7 @@ extension SignInViewController: WebManagerDelegate {
             } else {
                 let user = User.getInstance()
                 user?.setUserData(data: result.object(forKey: kdata)! as! NSDictionary)
-                let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
+                let vcone = self.storyboard?.instantiateViewController(withIdentifier: "WelcomeViewController")
                 self.navigationController?.pushViewController(vcone!, animated: true)
             }
             
@@ -204,6 +209,13 @@ extension SignInViewController: WebManagerDelegate {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
+        }
+    }
+    func signin(){
+        if isValid(){
+            let userName = userNameTF.text
+            let password = passwordTF.text
+            WebManager.getInstance(delegate: self)?.signInWithEmail(email: userName!, pass: password!, type: loginType)
         }
     }
 }
@@ -241,6 +253,7 @@ extension SignInViewController{
         loginButtonOutlet.setTitleColor(.white, for: .normal)
         self.loginView.isHidden = false
         self.signupView.isHidden = true
+        btnPrivacy.alpha = 0
     }
     func setSignupSelected(){
         if(signupButtonOutlet.backgroundColor == UIColor.orange) {
@@ -253,6 +266,7 @@ extension SignInViewController{
         loginButtonOutlet.setTitleColor(.black, for: .normal)
         self.loginView.isHidden = true
         self.signupView.isHidden = false
+        btnPrivacy.alpha = 1
     }
 }
 //MARK:- Validation
@@ -268,6 +282,8 @@ extension SignInViewController{
                 return false
             }
             loginType = .email
+        } else {
+            loginType = .userName
         }
         if passwordTF.text?.isEmpty ?? true {
             Utility.showAlertWithSingleOption(controller: self, title: "Validation Error", message: "Password is Required", preferredStyle: .alert, buttonText: "OK")
@@ -433,5 +449,13 @@ extension SignInViewController:ASAuthorizationControllerDelegate,ASAuthorization
         default:
             break
         }
+    }
+}
+//MARK:- TextFiedld
+extension SignInViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.passwordTF.resignFirstResponder()
+        signin()
+        return true
     }
 }

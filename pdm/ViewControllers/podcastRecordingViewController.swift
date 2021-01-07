@@ -7,6 +7,7 @@
 
 import UIKit
 import SoundWave
+import AVFoundation
 
 class podcastRecordingViewController: UIViewController, UIGestureRecognizerDelegate {
 
@@ -36,50 +37,7 @@ class podcastRecordingViewController: UIViewController, UIGestureRecognizerDeleg
     
     //MARK:- Actions
     @IBAction func actionRecording(_ sender: Any) {
-        if self.currentState == .recording{
-            self.chronometer?.stop()
-            self.chronometer = nil
-            self.recordingView.audioVisualizationMode = .read
-            do {
-                try self.viewModel.stopRecording()
-                self.timer.invalidate()
-                self.currentState = .recorded
-                self.recordingView.audioVisualizationMode = .read
-                self.recordingView.meteringLevels = array
-                DispatchQueue.main.asyncAfter(deadline: .now()+1.0, execute: {
-                    let vc = self.storyboard?.instantiateViewController(identifier: "UploadViewController") as! UploadViewController
-                    vc.array = self.array
-                    vc.length = self.lblTime.text ?? "00:00"
-                    do{
-                        let path = "file://\(self.viewModel.currentAudioRecord?.audioFilePathLocal?.absoluteURL.absoluteString ?? "")"
-                        if let data = URL(string: path){
-                            let mp3 = podcastRecordingViewController.getURL()
-                            AudioRecorderManager.convertAudio(data, outputURL: mp3)
-                            let audio = try Data(contentsOf: mp3)
-                            vc.audio = audio
-                        }
-                    }catch{
-                        
-                    }
-                    vc.sceonds = Int(self.totalSec)
-                    self.navigationController?.pushViewController(vc, animated: true)
-                })
-            } catch {
-                self.currentState = .ready
-            }
-        } else if self.currentState == .ready {
-            self.viewModel.startRecording { [weak self] soundRecord, error in
-                if let error = error {
-//                    self?.showAlert(with: error)
-                    return
-                }
-                self?.recordingView.audioVisualizationMode = .write
-                self?.currentState = .recording
-                self?.chronometer = Chronometer()
-                self?.chronometer?.start()
-                self?.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self?.updateCounting), userInfo: nil, repeats: true)
-            }
-        }
+        checkPermission()
     }
     @IBAction func actionBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
@@ -128,6 +86,71 @@ class podcastRecordingViewController: UIViewController, UIGestureRecognizerDeleg
     @objc func updateCounting(){
         totalSec += 1
         lblTime.text = totalSec.stringFromTimeInterval()
+    }
+    func checkPermission(){
+        switch AVAudioSession.sharedInstance().recordPermission {
+        case AVAudioSessionRecordPermission.granted:
+            self.record()
+        case AVAudioSessionRecordPermission.denied:
+            Utility.showAlertWithOptions(controller: self, title: "Permission Required", message: "Please Grant Permission Of Audio Recording", preferredStyle: .alert, rightBtnText: "Settings", leftBtnText: "Not Now", leftBtnhandler: {
+                _ in
+            }, rightBtnhandler: {
+                _ in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: {_ in
+//                    self.checkPermission()
+                })
+            })
+        case AVAudioSessionRecordPermission.undetermined:
+            AVAudioSession.sharedInstance().requestRecordPermission({ (granted) in
+                self.record()
+            })
+        }
+    }
+    func record(){
+        if self.currentState == .recording{
+            self.chronometer?.stop()
+            self.chronometer = nil
+            self.recordingView.audioVisualizationMode = .read
+            do {
+                try self.viewModel.stopRecording()
+                self.timer.invalidate()
+                self.currentState = .recorded
+                self.recordingView.audioVisualizationMode = .read
+                self.recordingView.meteringLevels = array
+                DispatchQueue.main.asyncAfter(deadline: .now()+1.0, execute: {
+                    let vc = self.storyboard?.instantiateViewController(identifier: "UploadViewController") as! UploadViewController
+                    vc.array = self.array
+                    vc.length = self.lblTime.text ?? "00:00"
+                    do{
+                        let path = "file://\(self.viewModel.currentAudioRecord?.audioFilePathLocal?.absoluteURL.absoluteString ?? "")"
+                        if let data = URL(string: path){
+                            let mp3 = podcastRecordingViewController.getURL()
+                            AudioRecorderManager.convertAudio(data, outputURL: mp3)
+                            let audio = try Data(contentsOf: mp3)
+                            vc.audio = audio
+                        }
+                    }catch{
+                        
+                    }
+                    vc.sceonds = Int(self.totalSec)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                })
+            } catch {
+                self.currentState = .ready
+            }
+        } else if self.currentState == .ready {
+            self.viewModel.startRecording { [weak self] soundRecord, error in
+                if let error = error {
+//                    self?.showAlert(with: error)
+                    return
+                }
+                self?.recordingView.audioVisualizationMode = .write
+                self?.currentState = .recording
+                self?.chronometer = Chronometer()
+                self?.chronometer?.start()
+                self?.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self?.updateCounting), userInfo: nil, repeats: true)
+            }
+        }
     }
 }
 enum AudioRecodingState {

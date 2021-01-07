@@ -33,6 +33,9 @@ class Category{
         self.category_icon = "\(data[kcategory_icon] ?? "")"
         self.created_at = data[kcreated_at] as? String ?? ""
         self.updated_at = data[updated_at] as? String ?? ""
+        if let cat_id = data["category_id"] as? Int{
+            self.categoryId = String(cat_id)
+        }
     }
 }
 

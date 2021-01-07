@@ -21,12 +21,13 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7d-JG-8xB" customClass="UIViewX" customModule="pdm" customModuleProvider="target">
                         <rect key="frame" x="8" y="8" width="156" height="155"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J3m-db-JYV" customClass="UIImageViewX" customModule="pdm" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5625bdf0936689c817dc75afe20428ae" translatesAutoresizingMaskIntoConstraints="NO" id="J3m-db-JYV" customClass="UIImageViewX" customModule="pdm" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="156" height="108"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="W5F-jK-aze">
@@ -47,6 +48,9 @@
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LsI-Qb-rH9">
+                                <rect key="frame" x="0.0" y="0.0" width="156" height="155"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
@@ -55,9 +59,13 @@
                             <constraint firstItem="J3m-db-JYV" firstAttribute="top" secondItem="b7d-JG-8xB" secondAttribute="top" id="73E-nc-uzV"/>
                             <constraint firstAttribute="trailing" secondItem="J3m-db-JYV" secondAttribute="trailing" id="8s6-aN-4x9"/>
                             <constraint firstItem="9yt-tg-1g7" firstAttribute="leading" secondItem="W5F-jK-aze" secondAttribute="leading" id="BY3-Jv-Fle"/>
+                            <constraint firstAttribute="bottom" secondItem="LsI-Qb-rH9" secondAttribute="bottom" id="GT4-xG-rNT"/>
+                            <constraint firstItem="LsI-Qb-rH9" firstAttribute="leading" secondItem="b7d-JG-8xB" secondAttribute="leading" id="J60-1Z-wUl"/>
                             <constraint firstItem="O90-xt-8He" firstAttribute="centerY" secondItem="W5F-jK-aze" secondAttribute="centerY" id="LG5-ov-hFn"/>
+                            <constraint firstItem="LsI-Qb-rH9" firstAttribute="top" secondItem="b7d-JG-8xB" secondAttribute="top" id="N9S-KY-kJA"/>
                             <constraint firstAttribute="bottom" secondItem="J3m-db-JYV" secondAttribute="bottom" constant="47" id="Uud-97-oOC"/>
                             <constraint firstItem="W5F-jK-aze" firstAttribute="leading" secondItem="b7d-JG-8xB" secondAttribute="leading" constant="4" id="YGL-Ik-dpi"/>
+                            <constraint firstAttribute="trailing" secondItem="LsI-Qb-rH9" secondAttribute="trailing" id="dI0-iN-oiE"/>
                             <constraint firstItem="9yt-tg-1g7" firstAttribute="top" secondItem="W5F-jK-aze" secondAttribute="bottom" id="ep3-oO-WNY"/>
                             <constraint firstItem="J3m-db-JYV" firstAttribute="leading" secondItem="b7d-JG-8xB" secondAttribute="leading" id="gxo-Hj-tWL"/>
                             <constraint firstAttribute="trailing" secondItem="O90-xt-8He" secondAttribute="trailing" constant="4" id="p8t-MN-tCP"/>
@@ -67,7 +75,13 @@
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                 <real key="value" value="10"/>
                             </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="LsI-Qb-rH9"/>
+                            </mask>
+                        </variation>
                     </view>
                 </subviews>
             </view>
@@ -88,7 +102,13 @@
             <point key="canvasLocation" x="-28.985507246376812" y="98.102678571428569"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="J3m-db-JYV">
+            <size key="intrinsicContentSize" width="125" height="73.666666666666671"/>
+        </designable>
+    </designables>
     <resources>
+        <image name="5625bdf0936689c817dc75afe20428ae" width="125" height="73.666664123535156"/>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

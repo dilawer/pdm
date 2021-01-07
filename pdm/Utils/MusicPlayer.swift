@@ -20,18 +20,47 @@ class MusicPlayer {
     var isPlaying:Bool{
         return self.player.isPlaying
     }
+    var didRepeat = false
+    var didShuffle = false
 
     func initPlayer(url: String) {
         guard let url = URL(string: url) else { return }
-        let playerItem = AVPlayerItem(url: url)
-        player = AVPlayer(playerItem: playerItem)
-        playAudioBackground()
-        UIApplication.shared.beginReceivingRemoteControlEvents()
-        updater = CADisplayLink(target: self, selector: #selector(MusicPlayer.trackAudio))
-        updater.add(to: RunLoop.current, forMode: RunLoop.Mode.common)
-        setupRemoteTransportControls()
-        setupNowPlaying()
-        NotificationCenter.default.addObserver(self, selector:#selector(self.playerDidFinishPlaying(note:)),name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+        let asset = AVAsset(url: url)
+        let keys: [String] = ["playable"]
+        asset.loadValuesAsynchronously(forKeys: keys, completionHandler: {
+            var error: NSError? = nil
+            let status = asset.statusOfValue(forKey: "playable", error: &error)
+            switch status {
+            case .loaded:
+                DispatchQueue.main.async { [self] in
+                    let playerItem = AVPlayerItem(asset: asset)
+                    player = AVPlayer(playerItem: playerItem)
+                    playAudioBackground()
+                    delegate?.playerStausChanged(isPlaying: true)
+                    player.play()
+                    UIApplication.shared.beginReceivingRemoteControlEvents()
+                    updater = CADisplayLink(target: self, selector: #selector(MusicPlayer.trackAudio))
+                    updater.add(to: RunLoop.current, forMode: RunLoop.Mode.common)
+                    setupRemoteTransportControls()
+                    setupNowPlaying()
+                    NotificationCenter.default.addObserver(self, selector:#selector(self.playerDidFinishPlaying(note:)),name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+                    
+                }
+                break
+            case .failed:
+                 DispatchQueue.main.async {
+                     
+                }
+                break
+             case .cancelled:
+                DispatchQueue.main.async {
+                    
+                }
+                break
+             default:
+                break
+            }
+        })
     }
     
     @objc func trackAudio() {
@@ -45,6 +74,11 @@ class MusicPlayer {
         }
     }
     @objc func playerDidFinishPlaying(note: NSNotification){
+        if self.didRepeat{
+            MusicPlayer.instance.player.seek(to: CMTime.zero)
+            MusicPlayer.instance.player.play()
+            return
+        }
         MusicPlayer.instance.stop()
         guard UserDefaults.standard.bool(forKey: kAutoPlay) else {
             return
@@ -54,7 +88,18 @@ class MusicPlayer {
             progressBar.progress = 0
         }
         if let globalList = Global.shared.podDetails{
-            if globalList.pods.count > Global.shared.currentPlayingIndex+1{
+            if self.didShuffle{
+                let range = 0..<globalList.pods.count
+                let index = range.randomElement() ?? Global.shared.currentPlayingIndex+1
+                if globalList.pods.count > index{
+                    let new = globalList.pods[index]
+                    MusicPlayer.instance.initPlayer(url: new.episodeFileLink)
+//                    Global.shared.currentPlayingIndex += 1
+                    Global.shared.podcaste = new
+                    delegate?.songChanged(pod: new)
+                    MusicPlayer.instance.play()
+                }
+            } else if globalList.pods.count > Global.shared.currentPlayingIndex+1{
                 let new = globalList.pods[Global.shared.currentPlayingIndex+1]
                 MusicPlayer.instance.initPlayer(url: new.episodeFileLink)
                 Global.shared.currentPlayingIndex += 1

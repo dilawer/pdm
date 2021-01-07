@@ -69,6 +69,7 @@ class selectedPodcastViewController: UIViewController, UIGestureRecognizerDelega
         }
     }
     override func viewDidAppear(_ animated: Bool) {
+        MusicPlayer.instance.delegate = self
         if let _ = Global.shared.podcaste{
             guard let _ = Global.shared.universalPlayer else {
                 let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
@@ -160,5 +161,30 @@ extension selectedPodcastViewController: UICollectionViewDelegate,UICollectionVi
         cell.celltime.text = self.moreEpisodes[cellIndex].duration
         cell.layer.cornerRadius = 10
         return cell
+    }
+}
+//MARK:- Music Player
+extension selectedPodcastViewController:MusicDelgate{
+    func playerStausChanged(isPlaying: Bool) {
+        let player = Global.shared.universalPlayer
+        if isPlaying {
+            player?.ivPlay.image = UIImage(named: "ic_ipause")
+        } else {
+            player?.ivPlay.image = UIImage(named: "ic_iplay")
+        }
+    }
+    
+    func songChanged(pod: Pod) {
+        if let pod = Global.shared.podcaste{
+            let player = Global.shared.universalPlayer
+            ImageLoader.loadImage(imageView: (player?.ivImage) ?? UIImageView(), url: Global.shared.podDetails?.podcastIcon ?? "")
+            player?.lblName.text = Global.shared.podDetails?.podcastName
+            player?.lblEpisode.text = pod.episodeName
+            if MusicPlayer.instance.isPlaying {
+                player?.ivPlay.image = UIImage(named: "ic_ipause")
+            } else {
+                player?.ivPlay.image = UIImage(named: "ic_iplay")
+            }
+        }
     }
 }

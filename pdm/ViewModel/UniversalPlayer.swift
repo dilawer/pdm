@@ -94,6 +94,20 @@ extension UniversalPlayer:MusicDelgate{
         }
     }
     func refresh(){
+        if let pod = Global.shared.podcaste{
+            if let view = Global.shared.universalPlayer{
+                ImageLoader.loadImage(imageView: view.ivImage, url: Global.shared.podDetails?.podcastIcon ?? "")
+                view.lblName.text = Global.shared.podDetails?.podcastName
+                view.lblEpisode.text = pod.episodeName
+                if MusicPlayer.instance.isPlaying {
+                    view.ivPlay.image = UIImage(named: "ic_ipause")
+                    view.rightConstraint.constant = 8
+                } else {
+                    view.ivPlay.image = UIImage(named: "ic_iplay")
+                    view.rightConstraint.constant = 4
+                }
+            }
+        }
         if Global.shared.isLiked(id: Global.shared.curentPlayingID){
             isLiked = true
             ivLike.image = UIImage(named: "ic_liked")

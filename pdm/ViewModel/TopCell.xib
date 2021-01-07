@@ -83,6 +83,7 @@
             <connections>
                 <outlet property="ivImage" destination="Neu-fo-cto" id="pBp-QY-lvA"/>
                 <outlet property="lblName" destination="WM2-hg-CsJ" id="bgW-Ff-CTJ"/>
+                <outlet property="viewHeight" destination="UAm-MY-7l9" id="hCw-Y2-sVd"/>
             </connections>
             <point key="canvasLocation" x="89.130434782608702" y="60.9375"/>
         </collectionViewCell>

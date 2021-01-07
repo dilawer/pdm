@@ -59,10 +59,10 @@
                                             <rect key="frame" x="72" y="0.0" width="145" height="72"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="b7R-P7-8Cj">
-                                                    <rect key="frame" x="10" y="16" width="71.5" height="40"/>
+                                                    <rect key="frame" x="10" y="16" width="135" height="40"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lip Service" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gS-d1-fMg">
-                                                            <rect key="frame" x="0.0" y="0.0" width="71.5" height="16"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lip Service asdh fashd jh asdjhf ajshd " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gS-d1-fMg">
+                                                            <rect key="frame" x="0.0" y="0.0" width="135" height="16"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -74,12 +74,19 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="7gS-d1-fMg" firstAttribute="top" secondItem="b7R-P7-8Cj" secondAttribute="top" id="Bfd-2Z-Bbs"/>
+                                                        <constraint firstAttribute="trailing" secondItem="7gS-d1-fMg" secondAttribute="trailing" id="KaX-bQ-tg1"/>
+                                                        <constraint firstItem="oyA-mw-rde" firstAttribute="top" secondItem="7gS-d1-fMg" secondAttribute="bottom" constant="8" symbolic="YES" id="isI-k3-Q3R"/>
+                                                        <constraint firstItem="7gS-d1-fMg" firstAttribute="leading" secondItem="b7R-P7-8Cj" secondAttribute="leading" id="oZ9-JX-xTp"/>
+                                                    </constraints>
                                                 </stackView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="b7R-P7-8Cj" firstAttribute="centerY" secondItem="lwl-fg-m7Z" secondAttribute="centerY" id="TzJ-wS-tZH"/>
                                                 <constraint firstItem="b7R-P7-8Cj" firstAttribute="leading" secondItem="lwl-fg-m7Z" secondAttribute="leading" constant="10" id="cce-QA-equ"/>
+                                                <constraint firstAttribute="trailing" secondItem="b7R-P7-8Cj" secondAttribute="trailing" id="fVo-0E-XCP"/>
                                             </constraints>
                                         </view>
                                     </subviews>

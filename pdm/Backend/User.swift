@@ -15,7 +15,7 @@ let kprofile = "profile"
 let kcover = "cover"
 
 //
-let kfullName = "fullname"
+let kfullName = "fullName"
 let kemail = "email"
 let kdob = "dob"
 let kcreatedAt = "createdAt"

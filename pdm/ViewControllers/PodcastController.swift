@@ -30,7 +30,11 @@ class PodcastController: UIViewController{
     var arrayRecommended = [NewRelease]()
     var arrayNewRelease = [NewRelease]()
     var podWeek:PodcastOfTheWeek?
-    var textArr : [String]=[]
+    var textArr = ["POD of the week","Categories"]
+    let imageArr: [UIImage] = [
+        UIImage(named: "ic_week")!,
+        UIImage(named: "ic_category")!,
+    ]
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let vctwo = storyboard?.instantiateViewController(withIdentifier: "recordServiceViewController") as? recordServiceViewController;
@@ -52,7 +56,7 @@ class PodcastController: UIViewController{
         let layoutone = UICollectionViewFlowLayout()
         let itemSizetrending = UIScreen.main.bounds.width/3 - 2
         layoutone.scrollDirection = .horizontal
-        layoutone.itemSize = CGSize(width: itemSizetrending + 30, height: itemSizetrending + 30)
+        layoutone.itemSize = CGSize(width: itemSizetrending + 30, height: itemSizetrending + 20)
         layoutone.minimumInteritemSpacing = 10
         layoutone.minimumLineSpacing = 0
         trendcollectionview.collectionViewLayout = layoutone
@@ -60,7 +64,7 @@ class PodcastController: UIViewController{
         let layouttwo = UICollectionViewFlowLayout()
         let itemSizerecom = UIScreen.main.bounds.width/3 - 2
         layouttwo.scrollDirection = .horizontal
-        layouttwo.itemSize = CGSize(width: itemSizerecom + 30, height: itemSizerecom + 30)
+        layouttwo.itemSize = CGSize(width: itemSizerecom + 30, height: itemSizerecom + 20)
         layouttwo.minimumInteritemSpacing = 10
         layouttwo.minimumLineSpacing = 0
         recomcollectionview.collectionViewLayout = layouttwo
@@ -68,7 +72,7 @@ class PodcastController: UIViewController{
         let layoutthree = UICollectionViewFlowLayout()
         let itemSizerel = UIScreen.main.bounds.width/3 - 2
         layoutthree.scrollDirection = .horizontal
-        layoutthree.itemSize = CGSize(width: itemSizerel + 30, height: itemSizerel + 30)
+        layoutthree.itemSize = CGSize(width: itemSizerel + 30, height: itemSizerel + 20)
         layoutthree.minimumInteritemSpacing = 10
         layoutthree.minimumLineSpacing = 0
         newReleasesCollectionView.collectionViewLayout = layoutthree
@@ -83,12 +87,14 @@ class PodcastController: UIViewController{
         self.navigationController?.isNavigationBarHidden = true
     }
     override func viewDidAppear(_ animated: Bool) {
+        MusicPlayer.instance.delegate = self
         if let _ = Global.shared.podcaste{
             guard let _ = Global.shared.universalPlayer else {
                 let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
                 let y = self.view.frame.maxY-tabHeight
                 bottomConstant.constant = -90
                 Global.shared.universalPlayer = Global.shared.showPlayer(frame: CGRect(x: 0, y: y, width: self.view.frame.width, height: 90))
+                Global.shared.universalPlayer?.refresh()
                 return
             }
             bottomConstant.constant = 90
@@ -118,7 +124,16 @@ extension PodcastController: UICollectionViewDelegate , UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(identifier: "LipServiceViewController") as! LipServiceViewController
         if collectionView == self.uppercollectionview {
-            vc.podCastID = String(podWeek?.id ?? 0)
+//            vc.podCastID = String(podWeek?.id ?? 0)
+            if indexPath.row == 0{
+                let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
+                vc?.podCastID = Global.shared.podCastOfTheWeek.podcastID
+                self.navigationController?.pushViewController(vc!, animated: true)
+            }
+            if indexPath.row == 1{
+                self.tabBarController?.selectedIndex = 2
+            }
+            return
         }else if collectionView == trendcollectionview{
             vc.podCastID = String(arrayTrending[indexPath.row].podcastID)
         }else if collectionView == recomcollectionview{
@@ -132,8 +147,13 @@ extension PodcastController: UICollectionViewDelegate , UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.uppercollectionview {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCell", for: indexPath) as! TopCell
-            ImageLoader.loadImage(imageView: cell.ivImage, url: podWeek?.podcastIcon ?? "")
+//            ImageLoader.loadImage(imageView: cell.ivImage, url: podWeek?.podcastIcon ?? "")
             cell.lblName.text = textArr[indexPath.row]
+            if Global.shared.podCastOfTheWeek.podcast_icon != nil{
+                ImageLoader.loadImage(imageView: cell.ivImage, url: Global.shared.podCastOfTheWeek.podcast_icon)
+            } else {
+                cell.ivImage.image = imageArr[indexPath.row]
+            }
             
             return cell
             }
@@ -205,7 +225,7 @@ extension PodcastController: WebManagerDelegate {
                             arrayTrending = data.trending
                             arrayRecommended = data.recommended
                             arrayNewRelease = data.newRelease
-                            textArr.append(podWeek?.podcastName ?? "Pod of the week")
+//                            textArr.append(podWeek?.podcastName ?? "Pod of the week")
                         }
                     }
                 } catch {
@@ -222,6 +242,31 @@ extension PodcastController: WebManagerDelegate {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
+        }
+    }
+}
+//MARK:- Music Player
+extension PodcastController:MusicDelgate{
+    func playerStausChanged(isPlaying: Bool) {
+        let player = Global.shared.universalPlayer
+        if isPlaying {
+            player?.ivPlay.image = UIImage(named: "ic_ipause")
+        } else {
+            player?.ivPlay.image = UIImage(named: "ic_iplay")
+        }
+    }
+    
+    func songChanged(pod: Pod) {
+        if let pod = Global.shared.podcaste{
+            let player = Global.shared.universalPlayer
+            ImageLoader.loadImage(imageView: (player?.ivImage) ?? UIImageView(), url: Global.shared.podDetails?.podcastIcon ?? "")
+            player?.lblName.text = Global.shared.podDetails?.podcastName
+            player?.lblEpisode.text = pod.episodeName
+            if MusicPlayer.instance.isPlaying {
+                player?.ivPlay.image = UIImage(named: "ic_ipause")
+            } else {
+                player?.ivPlay.image = UIImage(named: "ic_iplay")
+            }
         }
     }
 }

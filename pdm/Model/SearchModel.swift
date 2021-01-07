@@ -21,11 +21,13 @@ struct Categorys: Codable {
     let id:Int?
     let categoryName: String
     let categoryIcon: String
+    let category_id:Int?
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case categoryName = "category_name"
         case categoryIcon = "category_icon"
+        case category_id = "category_id"
     }
 }
 

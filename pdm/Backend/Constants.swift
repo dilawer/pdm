@@ -5,8 +5,9 @@ let kheader : [String : String] = ["Content-Type":"application/json"]
 
 //MARK: APP URLS
 let kbaseURL = "https://staging.oqh.obm.mybluehost.me/api/"
-let kTermsUrl = "https://google.com"
-let kPrivacyURL = "https://google.com"
+let kTermsUrl = "http://staging.oqh.obm.mybluehost.me/termsAndConditions"
+let kPrivacyURL = "http://staging.oqh.obm.mybluehost.me/privacyPolicy"
+let kContactUs = "http://staging.oqh.obm.mybluehost.me/contactUs"
 let kFbUrl = "https:carigologistics.com/signin_with_facebook"
 let kFcmTokenUrl = "https:carigologistics.com/user/updateFcmToken"
 let kFetchCategoriesURL = "https:carigologistics.com/get_categories"
@@ -34,6 +35,8 @@ let kLikedPodcasts = "podcast/likedLists"
 let kLikePodcast = "podcast/like"
 let kPlayPodcast = "podcast/play"
 let kDeletePodcast = "home/profile/deleteUploadedPod/"
+let kUploadImage = "home/profile/updateUserImage"
+let kEditProfile = "home/profile/editUserDetail"
 
 
 //MARK: API KEYS

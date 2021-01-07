@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let rootVC = storyboard.instantiateViewController(identifier: "mainViewController") as? UINavigationController else {
+        guard let rootVC = storyboard.instantiateViewController(identifier: "SplashViewController") as? UIViewController else {
             print("ViewController not found")
             return
         }

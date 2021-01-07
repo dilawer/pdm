@@ -30,7 +30,7 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
     }
     
     //MARK:- Veriables
-    let textArr = ["Pod of the week","Trending"]
+    let textArr = ["POD of the week","Trending"]
     let cattextArr = ["News","Sports","Mental Health","Music","Health","Mental Health"]
     let imageArr: [UIImage] = [
         UIImage(named: "ic_week")!,
@@ -67,6 +67,7 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
         self.navigationController?.pushViewController(vctwo!, animated: true)
     }
     override func viewDidAppear(_ animated: Bool) {
+        MusicPlayer.instance.delegate = self
         if let _ = Global.shared.podcaste{
             guard let _ = Global.shared.universalPlayer else {
                 let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
@@ -120,7 +121,12 @@ extension CategoryViewController{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.catupcollectionview {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCell", for: indexPath) as! TopCell
-            cell.ivImage.image = imageArr[indexPath.row]
+            if Global.shared.podCastOfTheWeek.podcast_icon != nil{
+                ImageLoader.loadImage(imageView: cell.ivImage, url: Global.shared.podCastOfTheWeek.podcast_icon)
+            } else {
+                cell.ivImage.image = imageArr[indexPath.row]
+            }
+//            cell.ivImage.image = imageArr[indexPath.row]
             cell.lblName.text = textArr[indexPath.row]
             return cell
         }
@@ -213,5 +219,30 @@ extension CategoryViewController: UITextFieldDelegate{
             self.navigationController?.pushViewController(vc, animated: true)
         }
         return true
+    }
+}
+//MARK:- Music Player
+extension CategoryViewController:MusicDelgate{
+    func playerStausChanged(isPlaying: Bool) {
+        let player = Global.shared.universalPlayer
+        if isPlaying {
+            player?.ivPlay.image = UIImage(named: "ic_ipause")
+        } else {
+            player?.ivPlay.image = UIImage(named: "ic_iplay")
+        }
+    }
+    
+    func songChanged(pod: Pod) {
+        if let pod = Global.shared.podcaste{
+            let player = Global.shared.universalPlayer
+            ImageLoader.loadImage(imageView: (player?.ivImage) ?? UIImageView(), url: Global.shared.podDetails?.podcastIcon ?? "")
+            player?.lblName.text = Global.shared.podDetails?.podcastName
+            player?.lblEpisode.text = pod.episodeName
+            if MusicPlayer.instance.isPlaying {
+                player?.ivPlay.image = UIImage(named: "ic_ipause")
+            } else {
+                player?.ivPlay.image = UIImage(named: "ic_iplay")
+            }
+        }
     }
 }

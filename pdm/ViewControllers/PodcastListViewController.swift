@@ -13,10 +13,32 @@ class PodcastListViewController: UIViewController {
     //MARK:- Outlets
     @IBOutlet weak var collectionPodscasts: UICollectionView!
     @IBOutlet weak var bottomConstant: NSLayoutConstraint!
+    @IBOutlet weak var tfSearch: UITextField!
+    
+    //MARK:- Action
+    @IBAction func actionBack(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    @IBAction func actionSearch(_ sender: Any) {
+        guard !(tfSearch.text?.isEmpty ?? false) else {
+            return
+        }
+        if let text = tfSearch.text{
+            if let searchVC = searchVC{
+                searchVC.searchText = text
+                self.navigationController?.popViewController(animated: false)
+            } else {
+                let vc = storyboard?.instantiateViewController(identifier: "SearchViewController") as! SearchViewController
+                vc.searchText = text
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
     
     //MARK:- Veriables
     var arrayPodcasts = [Podcasts]()
     var catID = "1"
+    var searchVC:SearchViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,12 +46,13 @@ class PodcastListViewController: UIViewController {
         WebManager.getInstance(delegate: self)?.getPodcastsForCategory(cat_id: catID)
     }
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = true
     }
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
     }
     override func viewDidAppear(_ animated: Bool) {
+        MusicPlayer.instance.delegate = self
         if let _ = Global.shared.podcaste{
             guard let _ = Global.shared.universalPlayer else {
                 let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
@@ -108,6 +131,31 @@ extension PodcastListViewController:WebManagerDelegate{
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             break
+        }
+    }
+}
+//MARK:- Music Player
+extension PodcastListViewController:MusicDelgate{
+    func playerStausChanged(isPlaying: Bool) {
+        let player = Global.shared.universalPlayer
+        if isPlaying {
+            player?.ivPlay.image = UIImage(named: "ic_ipause")
+        } else {
+            player?.ivPlay.image = UIImage(named: "ic_iplay")
+        }
+    }
+    
+    func songChanged(pod: Pod) {
+        if let pod = Global.shared.podcaste{
+            let player = Global.shared.universalPlayer
+            ImageLoader.loadImage(imageView: (player?.ivImage) ?? UIImageView(), url: Global.shared.podDetails?.podcastIcon ?? "")
+            player?.lblName.text = Global.shared.podDetails?.podcastName
+            player?.lblEpisode.text = pod.episodeName
+            if MusicPlayer.instance.isPlaying {
+                player?.ivPlay.image = UIImage(named: "ic_ipause")
+            } else {
+                player?.ivPlay.image = UIImage(named: "ic_iplay")
+            }
         }
     }
 }

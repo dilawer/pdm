@@ -61,6 +61,10 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
                 bottomConstant.constant = -90
                 Global.shared.universalPlayer = Global.shared.showPlayer(frame: CGRect(x: 0, y: y, width: self.view.frame.width, height: 90))
                 self.bottoncollectionview.reloadData()
+                Global.shared.universalPlayer?.refresh()
+                DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
+                    self.bottoncollectionview.reloadData()
+                })
                 return
             }
             self.bottoncollectionview.reloadData()
@@ -69,6 +73,9 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
             bottomConstant.constant = 0
         }
         Global.shared.universalPlayer?.refresh()
+        DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
+            self.bottoncollectionview.reloadData()
+        })
     }
     func getHomeData(){
         WebManager.getInstance(delegate: self)?.getHomeData()
@@ -169,7 +176,9 @@ extension HomeViewController: WebManagerDelegate {
                     } else {
                         let podcasts = data.object(forKey: kfeatured) as! NSArray
                         video.setVideoData(data: data.object(forKey: kvideo) as! NSDictionary)
-                        podcastOfTheWeek.setPodcastData(data: data.object(forKey: kpodcast_of_the_week) as! NSDictionary)
+                        if let pow = data.object(forKey: kpodcast_of_the_week) as? NSDictionary{
+                            podcastOfTheWeek.setPodcastData(data: pow)
+                        }
                         Global.shared.podCastOfTheWeek = podcastOfTheWeek
                         featuredPodcasts.removeAll()
                         for i in 0 ..< podcasts.count {
@@ -178,7 +187,7 @@ extension HomeViewController: WebManagerDelegate {
                             featuredPodcasts.append(podcast)
                         }
                         if podcastOfTheWeek.podcastID != ""  {
-                            textArr.insert("Pod of the week", at: 0)
+                            textArr.insert("POD of the week", at: 0)
                             imageArr.insert(UIImage(named: "ic_category")!, at: 0)
                         }
                         self.uppercollectionview.reloadData()

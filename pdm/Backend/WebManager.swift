@@ -152,6 +152,14 @@ class WebManager: NSObject {
         let url = "\(kbaseURL)\(kDeletePodcast)\(id)"
         makeRequest(requestUrl: url, method: .delete, parameters: nil)
     }
+    func uploadImage(parms:[String:Any],file:[String:Data]){
+        let url = "\(kbaseURL)\(kUploadImage)"
+        makeRequest(requestUrl: url, isMultipart: true, fileArray: file, method: .post, parameters: parms)
+    }
+    func editProfile(parms:[String:Any]){
+        let url = "\(kbaseURL)\(kEditProfile)"
+        makeRequest(requestUrl: url, method: .post, parameters: parms)
+    }
     
     
     //MARK:- Search
