@@ -149,10 +149,13 @@ extension PodcastController: UICollectionViewDelegate , UICollectionViewDataSour
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCell", for: indexPath) as! TopCell
 //            ImageLoader.loadImage(imageView: cell.ivImage, url: podWeek?.podcastIcon ?? "")
             cell.lblName.text = textArr[indexPath.row]
-            if Global.shared.podCastOfTheWeek.podcast_icon != nil{
-                ImageLoader.loadImage(imageView: cell.ivImage, url: Global.shared.podCastOfTheWeek.podcast_icon)
-            } else {
-                cell.ivImage.image = imageArr[indexPath.row]
+            cell.ivImage.image = imageArr[indexPath.row]
+            if indexPath.row == 0{
+                if Global.shared.podCastOfTheWeek.podcast_icon != nil{
+                    ImageLoader.loadImage(imageView: cell.ivImage, url: Global.shared.podCastOfTheWeek.podcast_icon)
+                } else {
+                    cell.ivImage.image = imageArr[indexPath.row]
+                }
             }
             
             return cell

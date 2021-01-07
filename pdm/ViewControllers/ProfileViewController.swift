@@ -195,6 +195,7 @@ class ProfileViewController: UIViewController {
         tfEmail.text = user?.email
         tfAge.text = user?.dob
         tfName.text = user?.fullName
+        userNameLabel.text = user?.fullName
         Global.shared.universalPlayer?.alpha = 0
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -254,7 +255,8 @@ extension ProfileViewController{
         self.uploadedPods.text = user?.totalUploads
         self.userNameLabel.text = user?.fullName
         self.tfName.text = user?.fullName
-        self.tfName.text = user?.fullName
+        self.userNameLabel.text = user?.fullName
+        self.tfAge.text = user?.dob
         
         if let profile = user?.profile_image,!profile.isEmpty,profile != "https://staging.oqh.obm.mybluehost.me/storage/profile_image/default.png"{
             ImageLoader.loadImage(imageView: profileDp, url: profile)
@@ -412,6 +414,9 @@ extension ProfileViewController: WebManagerDelegate {
                         self.totalMins.text = user?.totalMins
                         user?.totalUploads = "\(data.object(forKey: kuploadedPods) ?? "")"
                         self.uploadedPods.text = user?.totalUploads
+                        self.userNameLabel.text = user?.fullName
+                        self.tfName.text = user?.fullName
+                        self.tfAge.text = user?.dob
                         user?.saveUser()
                         if let user  =  data.object(forKey: "user") as? NSDictionary{
                             if let userPodcast = user["userPodcast"] as? NSDictionary{
@@ -442,6 +447,7 @@ extension ProfileViewController: WebManagerDelegate {
                     let alert = UIAlertController(title: "Success", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
                         WebManager.getInstance(delegate: self)?.getPdmHistory()
+                        WebManager.getInstance(delegate: self)?.getProfileDetail()
                     }))
                     self.present(alert, animated: true, completion: nil)
                 }

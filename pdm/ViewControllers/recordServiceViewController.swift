@@ -23,9 +23,11 @@ class recordServiceViewController: UIViewController {
     
     @IBAction func uploadFileAction(_ sender: Any) {
         bottomView.animShow()
+        isUploading = true
     }
     
     @IBAction func actionFile(_ sender: Any) {
+        isUploading = false
         bottomView.animHide()
         picker()
         /*
@@ -40,16 +42,26 @@ class recordServiceViewController: UIViewController {
     }
     @IBAction func actionRSS(_ sender: Any) {
         bottomView.animHide()
+        isUploading = false
         picker()
     }
     @IBAction func actionDropBox(_ sender: Any) {
         bottomView.animHide()
+        isUploading = false
         picker()
     }
     @IBAction func actionDrive(_ sender: Any) {
         bottomView.animHide()
+        isUploading = false
         picker()
     }
+    @IBAction func actionDismiss(_ sender: Any) {
+        if isUploading{
+            isUploading = false
+            bottomView.animHide()
+        }
+    }
+    
     @IBAction func startRecording(_ sender: Any) {
         let vctwo = storyboard?.instantiateViewController(withIdentifier: "podcastRecordingViewController") as? podcastRecordingViewController
         self.navigationController?.pushViewController(vctwo!, animated: true)
@@ -57,6 +69,7 @@ class recordServiceViewController: UIViewController {
     @IBAction func actionBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+    var isUploading = false
     
     override func viewWillAppear(_ animated: Bool) {
         Global.shared.universalPlayer?.alpha = 0

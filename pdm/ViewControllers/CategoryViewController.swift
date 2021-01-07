@@ -121,10 +121,13 @@ extension CategoryViewController{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.catupcollectionview {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCell", for: indexPath) as! TopCell
-            if Global.shared.podCastOfTheWeek.podcast_icon != nil{
-                ImageLoader.loadImage(imageView: cell.ivImage, url: Global.shared.podCastOfTheWeek.podcast_icon)
-            } else {
-                cell.ivImage.image = imageArr[indexPath.row]
+            cell.ivImage.image = imageArr[indexPath.row]
+            if indexPath.row == 0{
+                if Global.shared.podCastOfTheWeek.podcast_icon != nil{
+                    ImageLoader.loadImage(imageView: cell.ivImage, url: Global.shared.podCastOfTheWeek.podcast_icon)
+                } else {
+                    cell.ivImage.image = imageArr[indexPath.row]
+                }
             }
 //            cell.ivImage.image = imageArr[indexPath.row]
             cell.lblName.text = textArr[indexPath.row]

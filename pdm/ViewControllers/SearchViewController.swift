@@ -15,6 +15,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var collectionCatgory: UICollectionView!
     @IBOutlet weak var collectionPodcasts: UICollectionView!
     @IBOutlet weak var bottomConstant: NSLayoutConstraint!
+    @IBOutlet weak var lblEmpty: UILabel!
     
     //MARK:- Actions
     @IBAction func actionSearch(_ sender: Any) {
@@ -28,7 +29,15 @@ class SearchViewController: UIViewController {
     
     //MARK:- Veriables
     var categories = [Category]()
-    var podcats = [Podcasts]()
+    var podcats = [Podcasts](){
+        didSet{
+            if podcats.isEmpty{
+                lblEmpty.alpha = 1
+            } else {
+                lblEmpty.alpha = 0
+            }
+        }
+    }
     var searchText:String?
     
     override func viewDidLoad() {

@@ -105,7 +105,7 @@ class WebManager: NSObject {
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
     func signUp(name: String, email: String, pass: String, confirmPass: String, fullName: String, dob: String) {
-        let params = [kUserName: name, kemail: email, kpassword: pass, kconfirmPassword: confirmPass, kfullName: fullName, kdob: dob] as [String : Any]
+        let params = [kUserName: name, kemail: email, kpassword: pass, kconfirmPassword: confirmPass, "fullname": fullName, kdob: dob] as [String : Any]
         let url = "\(kbaseURL)\(kregister)"
         makeRequest(requestUrl: url, method: .post, parameters: params)
     }
