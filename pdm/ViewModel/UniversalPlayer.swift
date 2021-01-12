@@ -40,6 +40,12 @@ class UniversalPlayer: UIView {
             MusicPlayer.instance.play()
         }
     }
+    @IBAction func actionOpenDetails(_ sender: Any) {
+        let vc = activeViewController.storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
+        vc?.podCastID = Global.shared.curentPlayingID
+        vc?.episodeID = Global.shared.podcaste?.episodeID
+        activeViewController.navigationController?.pushViewController(vc!, animated: true)
+    }
     
     class func instanceFromNib() -> UniversalPlayer {
         let view = UINib(nibName: "UniversalPlayer", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! UniversalPlayer
@@ -67,6 +73,7 @@ class UniversalPlayer: UIView {
             }
         }
     }
+    var activeViewController = UIViewController()
 }
 
 //MARK:- Music Player

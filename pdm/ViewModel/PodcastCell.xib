@@ -46,20 +46,39 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_liked" translatesAutoresizingMaskIntoConstraints="NO" id="QLm-vb-AGC">
+                                <rect key="frame" x="156" y="156" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="YbF-Ll-y5B"/>
+                                    <constraint firstAttribute="height" constant="20" id="n5n-u8-INm"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UVk-lG-hOn">
+                                <rect key="frame" x="156" y="156" width="20" height="20"/>
+                                <connections>
+                                    <action selector="actionUnlike:" destination="gTV-IL-0wX" eventType="touchUpInside" id="g1D-Ya-eCG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="QLm-vb-AGC" secondAttribute="trailing" constant="8" id="7pu-Zs-kgp"/>
                             <constraint firstItem="cSG-TL-lg1" firstAttribute="top" secondItem="HEW-9r-0Wq" secondAttribute="bottom" constant="3" id="9un-DJ-Rk8"/>
                             <constraint firstItem="HEW-9r-0Wq" firstAttribute="leading" secondItem="Q4G-V7-NO5" secondAttribute="leading" constant="8" id="BO9-fM-2Wi"/>
+                            <constraint firstItem="UVk-lG-hOn" firstAttribute="top" secondItem="QLm-vb-AGC" secondAttribute="top" id="Npg-1C-RO3"/>
                             <constraint firstAttribute="trailing" secondItem="oU3-0W-0xy" secondAttribute="trailing" id="QEP-U1-wfq"/>
                             <constraint firstAttribute="width" constant="184" id="Qfe-ia-AEj"/>
                             <constraint firstAttribute="height" constant="184" id="Seh-il-LAt"/>
+                            <constraint firstItem="UVk-lG-hOn" firstAttribute="trailing" secondItem="QLm-vb-AGC" secondAttribute="trailing" id="UPi-zH-qqF"/>
                             <constraint firstItem="I7S-KP-hOS" firstAttribute="centerY" secondItem="HEW-9r-0Wq" secondAttribute="centerY" id="W8z-N5-5KJ"/>
                             <constraint firstItem="oU3-0W-0xy" firstAttribute="leading" secondItem="Q4G-V7-NO5" secondAttribute="leading" id="WFW-ma-jJe"/>
+                            <constraint firstAttribute="bottom" secondItem="QLm-vb-AGC" secondAttribute="bottom" constant="8" id="YX4-fa-4Uw"/>
                             <constraint firstItem="oU3-0W-0xy" firstAttribute="top" secondItem="Q4G-V7-NO5" secondAttribute="top" id="enR-qq-pwr"/>
                             <constraint firstItem="cSG-TL-lg1" firstAttribute="leading" secondItem="HEW-9r-0Wq" secondAttribute="leading" id="kGW-HN-ZIt"/>
                             <constraint firstAttribute="trailing" secondItem="HEW-9r-0Wq" secondAttribute="trailing" constant="50" id="kek-YT-dwO"/>
                             <constraint firstItem="HEW-9r-0Wq" firstAttribute="top" secondItem="oU3-0W-0xy" secondAttribute="bottom" constant="4" id="md6-Pe-wNU"/>
+                            <constraint firstItem="UVk-lG-hOn" firstAttribute="bottom" secondItem="QLm-vb-AGC" secondAttribute="bottom" id="qec-mS-UcP"/>
+                            <constraint firstItem="UVk-lG-hOn" firstAttribute="leading" secondItem="QLm-vb-AGC" secondAttribute="leading" id="xvm-nW-QOL"/>
                             <constraint firstAttribute="bottom" secondItem="oU3-0W-0xy" secondAttribute="bottom" constant="56" id="yiF-C8-TBU"/>
                             <constraint firstAttribute="trailing" secondItem="I7S-KP-hOS" secondAttribute="trailing" constant="3" id="z7o-OP-gSh"/>
                         </constraints>
@@ -81,6 +100,7 @@
             <size key="customSize" width="242" height="178"/>
             <connections>
                 <outlet property="ivImage" destination="oU3-0W-0xy" id="EcJ-ps-Mzf"/>
+                <outlet property="ivLiked" destination="QLm-vb-AGC" id="rk9-At-kDq"/>
                 <outlet property="lblDuration" destination="I7S-KP-hOS" id="yqI-4t-fQ2"/>
                 <outlet property="lblEpisodeName" destination="cSG-TL-lg1" id="e6a-yt-x5O"/>
                 <outlet property="lblPodcastName" destination="HEW-9r-0Wq" id="J3z-sb-jvb"/>
@@ -89,4 +109,7 @@
             <point key="canvasLocation" x="69.565217391304358" y="63.616071428571423"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="ic_liked" width="22" height="19"/>
+    </resources>
 </document>

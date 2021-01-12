@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController,UIGestureRecognizerDelegate {
 
     //MARK:- Outlets
     @IBOutlet weak var tfSearch: UITextField!
@@ -46,6 +46,7 @@ class SearchViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         if let text = searchText {
             tfSearch.text = text
             WebManager.getInstance(delegate: self)?.search(query: text)
@@ -66,6 +67,7 @@ class SearchViewController: UIViewController {
             bottomConstant.constant = 0
         }
         Global.shared.universalPlayer?.refresh()
+        Global.shared.universalPlayer?.activeViewController = self
     }
 }
 
@@ -97,6 +99,7 @@ extension SearchViewController:UICollectionViewDataSource,UICollectionViewDelega
         if collectionView == collectionCatgory{
             let vc = storyboard?.instantiateViewController(withIdentifier: "PodcastListViewController") as! PodcastListViewController
             vc.searchVC = self
+            vc.categories.append(categories[indexPath.row])
             vc.catID = categories[indexPath.row].categoryId
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
@@ -194,6 +197,9 @@ extension SearchViewController: UITextFieldDelegate{
         if let text = tfSearch.text{
             WebManager.getInstance(delegate: self)?.search(query: text)
         }
+        return true
+    }
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }

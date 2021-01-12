@@ -57,13 +57,23 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     }
     @IBAction func actionRepeat(_ sender: Any) {
         MusicPlayer.instance.didRepeat = !MusicPlayer.instance.didRepeat
+        if MusicPlayer.instance.didRepeat{
+            MusicPlayer.instance.didShuffle = false
+        }
         refreshUI()
     }
     @IBAction func actionBack(_ sender: Any) {
         MusicPlayer.instance.slowForward()
     }
     @IBAction func actionShuffle(_ sender: Any) {
+        guard UserDefaults.standard.bool(forKey: kAutoPlay) else {
+            Utility.showAlertWithSingleOption(controller: self, title: "Alert", message: "Please Turn On Autoplay from profile settings to enable shuffle", preferredStyle: .alert, buttonText: "OK")
+            return
+        }
         MusicPlayer.instance.didShuffle = !MusicPlayer.instance.didShuffle
+        if MusicPlayer.instance.didShuffle{
+            MusicPlayer.instance.didRepeat = false
+        }
         refreshUI()
     }
     @IBAction func actionFastForward(_ sender: Any) {

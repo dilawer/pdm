@@ -65,6 +65,7 @@ class LikedViewController: UIViewController {
             bottomConstant.constant = 0
         }
         Global.shared.universalPlayer?.refresh()
+        Global.shared.universalPlayer?.activeViewController = self
     }
 }
 
@@ -89,6 +90,11 @@ extension LikedViewController:UICollectionViewDelegate,UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionLiked.dequeueReusableCell(withReuseIdentifier: "PodcastCell", for: indexPath) as! PodcastCell
         cell.config(podcast: liked[indexPath.row], width: (self.collectionLiked.frame.width / 2)-30)
+        cell.ivLiked.alpha = 1
+        cell.likedCallBack = {
+            let status = "0"
+            WebManager.getInstance(delegate: self)?.LikePodcast(parms: ["podcast_id":self.liked[indexPath.row].podcastID,"liked_status":status])
+        }
         return cell
     }
     
@@ -116,18 +122,25 @@ extension LikedViewController: WebManagerDelegate {
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             } else {
-                let data = result.object(forKey: kdata) as! NSDictionary
-                let categories = data.object(forKey: "liked_podcasts") as! NSArray
-                do {
-                    let jsonData = try JSONSerialization.data(withJSONObject: categories, options: .prettyPrinted)
-                    if let liked:[Podcasts] = self.handleResponse(data: jsonData){
-                        self.liked = liked
+                if let data = result.object(forKey: kdata) as? NSDictionary{
+                    if let categories = data.object(forKey: "liked_podcasts") as? NSArray{
+                        do {
+                            let jsonData = try JSONSerialization.data(withJSONObject: categories, options: .prettyPrinted)
+                            if let liked:[Podcasts] = self.handleResponse(data: jsonData){
+                                self.liked = liked
+                                Global.shared.likedPodcast.removeAll()
+                                for i in liked{
+                                    Global.shared.likedPodcast.append(String(i.podcastID))
+                                }
+                            }
+                            collectionLiked.reloadData()
+                        } catch {
+                            print(error.localizedDescription)
+                        }
                     }
-                    collectionLiked.reloadData()
-                } catch {
-                    print(error.localizedDescription)
+                } else {
+                    WebManager.getInstance(delegate: self)?.getLikedPodcasts()
                 }
-                
             }
             
             break

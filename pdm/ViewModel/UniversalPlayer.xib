@@ -100,13 +100,23 @@
                                         <constraint firstAttribute="trailing" secondItem="lwl-fg-m7Z" secondAttribute="trailing" id="ukC-rv-sHl"/>
                                     </constraints>
                                 </stackView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMp-4U-KHe">
+                                    <rect key="frame" x="0.0" y="0.0" width="217" height="72"/>
+                                    <connections>
+                                        <action selector="actionOpenDetails:" destination="iN0-l3-epB" eventType="touchUpInside" id="cnk-bj-uwi"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstItem="cMp-4U-KHe" firstAttribute="leading" secondItem="avX-sS-0b5" secondAttribute="leading" id="00I-zK-TeN"/>
                                 <constraint firstItem="avX-sS-0b5" firstAttribute="leading" secondItem="fxV-eF-bDb" secondAttribute="leading" id="2a8-gm-bhD"/>
                                 <constraint firstItem="avX-sS-0b5" firstAttribute="top" secondItem="fxV-eF-bDb" secondAttribute="top" id="SlV-qC-Jzm"/>
                                 <constraint firstAttribute="bottom" secondItem="avX-sS-0b5" secondAttribute="bottom" id="UNG-kb-bOC"/>
+                                <constraint firstItem="cMp-4U-KHe" firstAttribute="bottom" secondItem="avX-sS-0b5" secondAttribute="bottom" id="b19-SV-4r0"/>
                                 <constraint firstAttribute="trailing" secondItem="avX-sS-0b5" secondAttribute="trailing" id="c1L-zo-9gR"/>
+                                <constraint firstItem="cMp-4U-KHe" firstAttribute="trailing" secondItem="avX-sS-0b5" secondAttribute="trailing" id="fO8-1A-6Bs"/>
+                                <constraint firstItem="cMp-4U-KHe" firstAttribute="top" secondItem="avX-sS-0b5" secondAttribute="top" id="jg1-bj-Oym"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7R5-HW-Rrd">

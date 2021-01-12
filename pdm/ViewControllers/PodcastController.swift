@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-class PodcastController: UIViewController{
+class PodcastController: UIViewController,UIGestureRecognizerDelegate{
     
     //MARK:- Outlets
     @IBOutlet weak var uppercollectionview: UICollectionView!
@@ -81,13 +81,14 @@ class PodcastController: UIViewController{
         recomcollectionview.register(UINib(nibName: "NewReleaseCell", bundle: nil), forCellWithReuseIdentifier: "NewReleaseCell")
         newReleasesCollectionView.register(UINib(nibName: "NewReleaseCell", bundle: nil), forCellWithReuseIdentifier: "NewReleaseCell")
         
-        WebManager.getInstance(delegate: self)?.getHomeTrendingData()
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        WebManager.getInstance(delegate: self)?.getHomeTrendingData()
     }
     override func viewDidAppear(_ animated: Bool) {
         MusicPlayer.instance.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         if let _ = Global.shared.podcaste{
             guard let _ = Global.shared.universalPlayer else {
                 let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
@@ -95,6 +96,7 @@ class PodcastController: UIViewController{
                 bottomConstant.constant = -90
                 Global.shared.universalPlayer = Global.shared.showPlayer(frame: CGRect(x: 0, y: y, width: self.view.frame.width, height: 90))
                 Global.shared.universalPlayer?.refresh()
+                Global.shared.universalPlayer?.activeViewController = self
                 return
             }
             bottomConstant.constant = 90
@@ -102,6 +104,7 @@ class PodcastController: UIViewController{
             bottomConstant.constant = 0
         }
         Global.shared.universalPlayer?.refresh()
+        Global.shared.universalPlayer?.activeViewController = self
     }
 }
 //MARK:- CollectionView

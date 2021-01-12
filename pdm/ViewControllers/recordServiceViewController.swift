@@ -19,8 +19,16 @@ class recordServiceViewController: UIViewController {
         bottomView.layer.masksToBounds = true
         bottomView.roundCorners(corners: [.topLeft,.topRight], radius: 15)
         bottomView.isHidden = true
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeDown.direction = .down
+        self.bottomView.addGestureRecognizer(swipeDown)
     }
-    
+    @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+       if gesture.direction == .down {
+        isUploading = false
+        bottomView.animHide()
+       }
+    }
     @IBAction func uploadFileAction(_ sender: Any) {
         bottomView.animShow()
         isUploading = true
@@ -149,7 +157,7 @@ extension recordServiceViewController:UIDocumentMenuDelegate,UIDocumentPickerDel
 
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         print("view was cancelled")
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
     }
     func picker(){
         let importMenu = UIDocumentMenuViewController(documentTypes: [String(kUTTypeAudio)], in: .import)

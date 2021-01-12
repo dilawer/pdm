@@ -83,6 +83,7 @@ class selectedPodcastViewController: UIViewController, UIGestureRecognizerDelega
             bottomConstant.constant = 0
         }
         Global.shared.universalPlayer?.refresh()
+        Global.shared.universalPlayer?.activeViewController = self
     }
 }
 

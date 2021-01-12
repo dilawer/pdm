@@ -7,7 +7,7 @@
 
 import UIKit
 import Alamofire
-class HomeViewController: UIViewController , UICollectionViewDelegate , UICollectionViewDataSource {
+class HomeViewController: UIViewController , UICollectionViewDelegate , UICollectionViewDataSource,UIGestureRecognizerDelegate {
    
     //MARK:- Outlets
     @IBOutlet weak var viewimage: UIView!
@@ -43,6 +43,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         Global.shared.Home = self
+        Global.shared.activeViewController = self
         uppercollectionview.register(UINib(nibName: "TopCell", bundle: nil), forCellWithReuseIdentifier: "TopCell")
         bottoncollectionview.register(UINib(nibName: "FeaturedCell", bundle: nil), forCellWithReuseIdentifier: "FeaturedCell")
         getHomeData()
@@ -54,6 +55,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     }
     override func viewDidAppear(_ animated: Bool) {
         MusicPlayer.instance.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         if let _ = Global.shared.podcaste{
             guard let _ = Global.shared.universalPlayer else {
                 let tabHeight = (self.tabBarController?.tabBar.frame.height ?? 0) + 90
@@ -62,6 +64,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
                 Global.shared.universalPlayer = Global.shared.showPlayer(frame: CGRect(x: 0, y: y, width: self.view.frame.width, height: 90))
                 self.bottoncollectionview.reloadData()
                 Global.shared.universalPlayer?.refresh()
+                Global.shared.universalPlayer?.activeViewController = self
                 DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
                     self.bottoncollectionview.reloadData()
                 })
@@ -73,6 +76,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
             bottomConstant.constant = 0
         }
         Global.shared.universalPlayer?.refresh()
+        Global.shared.universalPlayer?.activeViewController = self
         DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
             self.bottoncollectionview.reloadData()
         })

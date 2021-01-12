@@ -81,6 +81,7 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
             bottomConstant.constant = 0
         }
         Global.shared.universalPlayer?.refresh()
+        Global.shared.universalPlayer?.activeViewController = self
     }
 }
 //MARK:- Colelltion View
@@ -104,6 +105,7 @@ extension CategoryViewController{
         if collectionView == catdowncollectionview{
             let vc = storyboard?.instantiateViewController(withIdentifier: "PodcastListViewController") as! PodcastListViewController
             vc.catID = categories[indexPath.row].categoryId
+            vc.categories.append(categories[indexPath.row])
             self.navigationController?.pushViewController(vc, animated: true)
         }
         if collectionView == catupcollectionview{

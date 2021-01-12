@@ -71,8 +71,10 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         let user = User.getInstance()
         if user?.isLogin == true{
-            let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
-            self.navigationController?.pushViewController(vcone!, animated: false)
+            let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController
+            vcone?.modalPresentationStyle = .fullScreen
+            self.present(vcone!, animated: false, completion: nil)
+//            self.navigationController?.pushViewController(vcone!, animated: false)
         }
     }
     @objc func dateChanged(_ sender: UIDatePicker) {

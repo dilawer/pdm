@@ -66,7 +66,7 @@ class UploadViewController: UIViewController {
     //MARK:- Veriable
     var array = [Float]()
     var audio:Data?
-    var length = "00:00"
+    var length = "00:00:00"
     var sceonds:Int = 0
     var categories = [Categorys]()
     var imageData:Data?
@@ -109,6 +109,11 @@ class UploadViewController: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         Global.shared.universalPlayer?.alpha = 1
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now()+2.0, execute: {
+            Global.shared.universalPlayer?.alpha = 0
+        })
     }
 }
 
@@ -180,7 +185,7 @@ extension UploadViewController: WebManagerDelegate{
                         }
                     } else if(successresponse as! Bool == true){
                         if let msg = result.object(forKey: "message") as? String , msg.contains("successfull"){
-                            Utility.showAlertWithSingleOption(controller: self, title: "Congratulation!", message: "Your Podcast has been uploaded to our PDM", preferredStyle: .alert, buttonText: "OK", buttonHandler: {_ in
+                            Utility.showAlertWithSingleOption(controller: self, title: "Congratulations!", message: "Your Podcast has been submitted to  PDM for review. We will notify you on approvals.", preferredStyle: .alert, buttonText: "Continue to PDM", buttonHandler: {_ in
                                 self.navigationController?.popToRootViewController(animated: true)
                                 Global.shared.Home?.refersh()
                             })

@@ -13,7 +13,7 @@ import AuthenticationServices
 import Photos
 import AVFoundation
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     
     //MARK:- Outlets
     @IBOutlet weak var uploadPostsTapped: UIView!
@@ -202,6 +202,7 @@ class ProfileViewController: UIViewController {
         WebManager.getInstance(delegate: self)?.getProfileDetail()
         WebManager.getInstance(delegate: self)?.getPdmHistory()
         Global.shared.universalPlayer?.alpha = 0
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     override func viewWillDisappear(_ animated: Bool) {
         Global.shared.universalPlayer?.alpha = 1

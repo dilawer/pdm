@@ -12,9 +12,16 @@ class SplashViewController: UIViewController {
     //MARK:- Actions
     @IBAction func actionContinue(_ sender: Any) {
 //        listOfFonts()
-        if let vc = storyboard?.instantiateViewController(identifier: "mainViewController"){
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
+        let user = User.getInstance()
+        if user?.isLogin == true{
+            let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController
+            vcone?.modalPresentationStyle = .fullScreen
+            self.present(vcone!, animated: false, completion: nil)
+        }else {
+            if let vc = storyboard?.instantiateViewController(identifier: "mainViewController"){
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true, completion: nil)
+            }
         }
     }
     

@@ -12,8 +12,10 @@ class PodcastListViewController: UIViewController {
 
     //MARK:- Outlets
     @IBOutlet weak var collectionPodscasts: UICollectionView!
+    @IBOutlet weak var collectionCatgory: UICollectionView!
     @IBOutlet weak var bottomConstant: NSLayoutConstraint!
     @IBOutlet weak var tfSearch: UITextField!
+    @IBOutlet weak var lblEmpty: UILabel!
     
     //MARK:- Action
     @IBAction func actionBack(_ sender: Any) {
@@ -36,12 +38,22 @@ class PodcastListViewController: UIViewController {
     }
     
     //MARK:- Veriables
-    var arrayPodcasts = [Podcasts]()
+    var arrayPodcasts = [Podcasts](){
+        didSet{
+            if arrayPodcasts.isEmpty{
+                lblEmpty.alpha = 1
+            } else {
+                lblEmpty.alpha = 0
+            }
+        }
+    }
+    var categories = [Category]()
     var catID = "1"
     var searchVC:SearchViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionCatgory.register(UINib(nibName: "CategoryCell", bundle: nil), forCellWithReuseIdentifier: "CategoryCell")
         collectionPodscasts.register(UINib(nibName: "PodcastCell", bundle: nil), forCellWithReuseIdentifier: "PodcastCell")
         WebManager.getInstance(delegate: self)?.getPodcastsForCategory(cat_id: catID)
     }
@@ -66,21 +78,35 @@ class PodcastListViewController: UIViewController {
             bottomConstant.constant = 0
         }
         Global.shared.universalPlayer?.refresh()
+        Global.shared.universalPlayer?.activeViewController = self
     }
 }
 
 //MARK:- CollectionView
 extension PodcastListViewController:UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == collectionCatgory{
+            return categories.count
+        }
         return arrayPodcasts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == collectionCatgory{
+            let cell = collectionCatgory.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
+            let width = self.collectionCatgory.frame.width - 10
+            cell.config(category: self.categories[indexPath.row], width: width)
+            return cell
+        }
+        
         let cell =  collectionPodscasts.dequeueReusableCell(withReuseIdentifier: "PodcastCell", for: indexPath) as! PodcastCell
         cell.config(podcast: arrayPodcasts[indexPath.row], width: (self.collectionPodscasts.frame.width/2) - 30)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == collectionCatgory{
+            return
+        }
         let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
         vc?.podCastID = String(arrayPodcasts[indexPath.row].podcastID)
         self.navigationController?.pushViewController(vc!, animated: true)

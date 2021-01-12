@@ -15,7 +15,16 @@ class PodcastCell: UICollectionViewCell {
     @IBOutlet weak var lblDuration: UILabel!
     @IBOutlet weak var lblEpisodeName: UILabel!
     @IBOutlet weak var width: NSLayoutConstraint!
+    @IBOutlet weak var ivLiked: UIImageView!
     
+    //MARK:- Action
+    @IBAction func actionUnlike(_ sender: Any) {
+        if let likedCallBack = likedCallBack{
+            likedCallBack()
+        }
+    }
+    
+    var likedCallBack:(()->Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

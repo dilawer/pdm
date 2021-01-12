@@ -27,6 +27,7 @@ class Global {
     var userPodcastImageLink:String = ""
     var userPodcastName = ""
     var userPodcastCategory = ""
+    var activeViewController = UIViewController()
     
     var Home:HomeViewController?
     var podCastOfTheWeek:Podcast!
