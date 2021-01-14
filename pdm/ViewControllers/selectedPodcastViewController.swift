@@ -20,6 +20,7 @@ class selectedPodcastViewController: UIViewController, UIGestureRecognizerDelega
     @IBOutlet weak var selectedCollectionView: UICollectionView!
     @IBOutlet weak var lblEpisodeDuration: UILabel!
     @IBOutlet weak var bottomConstant: NSLayoutConstraint!
+    @IBOutlet weak var lblEpisode: UILabel!
     
     //MARK:- Actions
     @IBAction func actionPlay(_ sender: Any) {
@@ -32,18 +33,16 @@ class selectedPodcastViewController: UIViewController, UIGestureRecognizerDelega
     var podcast = Podcast()
     var episode = Episode()
     var latestEpisode = Episode()
-    var moreEpisodes: [Episode]=[]
-    let profiletitleArr = ["In the Mix","the friend Zone","Shots Film","Kind Advise","Good Advise"]
-    let profilesubtitleArr = ["Episode Name","Episode Name","Episode Name","Episode Name","Episode Name"]
-    let profiletimeArr = ["40.00","40.00","40.00","40.00","40.00"]
-    let profileimageArr: [UIImage] = [
-        UIImage(named: "trendingone")!,
-        UIImage(named: "trendingone")!,
-        UIImage(named: "trendingone")!,
-        UIImage(named: "trendingone")!,
-        UIImage(named: "trendingone")!,
-        UIImage(named: "trendingone")!,
-    ]
+    var moreEpisodes = [Episode](){
+        didSet{
+            if moreEpisodes.count > 0{
+                lblEpisode.alpha = 0
+            } else {
+                lblEpisode.alpha = 1
+            }
+        }
+    }
+    var podcastImageUrl = ""
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
@@ -61,10 +60,12 @@ class selectedPodcastViewController: UIViewController, UIGestureRecognizerDelega
         layout.minimumLineSpacing = 15
         selectedCollectionView.collectionViewLayout = layout
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        selectedCollectionView.register(UINib(nibName: "PodcastCell", bundle: nil), forCellWithReuseIdentifier: "PodcastCell")
+        
         if podcast.podcastID != ""{
             WebManager.getInstance(delegate: self)?.getSelectedPodcast(selected: self.podcast.podcastID)
-        }
-        if episode.episodeID != ""{
+        }else if episode.episodeID != ""{
             WebManager.getInstance(delegate: self)?.getSelectedPodcast(selected: self.episode.episodeID)
         }
     }
@@ -111,22 +112,26 @@ extension selectedPodcastViewController: WebManagerDelegate {
                     self.present(alert, animated: true, completion: nil)
                 } else {
                     let data = result.object(forKey: kdata) as! NSDictionary
-                    self.latestEpisode.setEpisodeData(data: data.object(forKey: klatest_episode) as! NSDictionary)
+                    if let latest = data.object(forKey: klatest_episode) as? NSDictionary{
+                        self.latestEpisode.setEpisodeData(data:  latest)
+                    }
                     self.eName.text = self.latestEpisode.eposide_name
                     self.podcastname.text = data.object(forKey: kpodcast_name) as? String
                     self.episodeName.text = self.latestEpisode.eposide_name
                     self.lblDescription.text = data.object(forKey: "episode_description") as? String
                     self.lblEpisodeDuration.text = self.latestEpisode.duration
+                    self.podcastImageUrl = (data.object(forKey: "podcast_icon") as? String) ?? ""
                     
                     ImageLoader.loadImage(imageView: podcastCoverImage, url: (data.object(forKey: "user_cover_image") as? String) ?? "")
-                    ImageLoader.loadImage(imageView: podcastImageView, url: (data.object(forKey: "podcast_icon") as? String) ?? "")
+                    ImageLoader.loadImage(imageView: podcastImageView, url: self.podcastImageUrl)
                     
-                    let episodes = data.object(forKey: kmore_episodes) as! NSArray
-                    self.moreEpisodes.removeAll()
-                    for i in 0 ..< episodes.count {
-                        let episode = Episode()
-                        episode.setEpisodeData(data: episodes[i] as! NSDictionary)
-                        self.moreEpisodes.append(episode)
+                    if let episodes = data.object(forKey: kmore_episodes) as? NSArray{
+                        self.moreEpisodes.removeAll()
+                        for i in 0 ..< episodes.count {
+                            let episode = Episode()
+                            episode.setEpisodeData(data: episodes[i] as! NSDictionary)
+                            self.moreEpisodes.append(episode)
+                        }
                     }
                     self.selectedCollectionView.reloadData()
                 }
@@ -155,12 +160,12 @@ extension selectedPodcastViewController: UICollectionViewDelegate,UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "profilecell", for: indexPath) as! ProfileCollectionViewCell
+        let cell = selectedCollectionView.dequeueReusableCell(withReuseIdentifier: "PodcastCell", for: indexPath) as! PodcastCell
         let cellIndex = indexPath.item
-        cell.cellTitle.text = self.moreEpisodes[cellIndex].eposide_name
-        cell.cellsubtitle.text = self.moreEpisodes[cellIndex].eposide_name
-        cell.celltime.text = self.moreEpisodes[cellIndex].duration
-        cell.layer.cornerRadius = 10
+        cell.lblPodcastName.text = self.moreEpisodes[cellIndex].eposide_name
+        cell.lblEpisodeName.text = self.moreEpisodes[cellIndex].eposide_name
+        cell.lblDuration.text = self.moreEpisodes[cellIndex].duration
+        ImageLoader.loadImage(imageView: cell.ivImage, url: self.podcastImageUrl)
         return cell
     }
 }

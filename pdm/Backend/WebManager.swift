@@ -189,6 +189,7 @@ class WebManager: NSObject {
     //MARK: helper method
     func makeRequest(requestUrl: String,isMultipart:Bool = false,fileArray:[String:Data]? = nil , method: HTTPMethod = .get, parameters: Parameters? = nil) {
         let retryCount = 3
+        let requestUrl = requestUrl.replacingOccurrences(of: " ", with: "%20")
         if Utility.isInternetConnected() {
             SVProgressHUD.setDefaultMaskType(.black)
             SVProgressHUD.show()

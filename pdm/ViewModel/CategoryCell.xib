@@ -38,8 +38,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="u1h-ba-gg0">
-                                <rect key="frame" x="20" y="71" width="220" height="26.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="u1h-ba-gg0">
+                                <rect key="frame" x="20" y="8" width="220" height="152"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -53,11 +53,13 @@
                             <constraint firstItem="QEN-ek-IBJ" firstAttribute="leading" secondItem="sSA-zd-4lb" secondAttribute="leading" id="HIJ-Gi-tBL"/>
                             <constraint firstAttribute="width" constant="260" id="K1O-R4-eCI"/>
                             <constraint firstAttribute="height" constant="168" id="Psa-4V-bP4"/>
+                            <constraint firstAttribute="bottom" secondItem="u1h-ba-gg0" secondAttribute="bottom" constant="8" id="SbV-rM-JcT"/>
                             <constraint firstAttribute="trailing" secondItem="u1h-ba-gg0" secondAttribute="trailing" constant="20" id="Tfe-Wc-WjV"/>
                             <constraint firstItem="8FE-Ll-68I" firstAttribute="top" secondItem="QEN-ek-IBJ" secondAttribute="top" id="Ttz-aq-vwP"/>
                             <constraint firstAttribute="bottom" secondItem="QEN-ek-IBJ" secondAttribute="bottom" id="W64-HH-WEt"/>
                             <constraint firstItem="8FE-Ll-68I" firstAttribute="bottom" secondItem="QEN-ek-IBJ" secondAttribute="bottom" id="Wmb-6h-K1N"/>
                             <constraint firstItem="u1h-ba-gg0" firstAttribute="leading" secondItem="sSA-zd-4lb" secondAttribute="leading" constant="20" id="ax5-ek-Gn3"/>
+                            <constraint firstItem="u1h-ba-gg0" firstAttribute="top" secondItem="sSA-zd-4lb" secondAttribute="top" constant="8" id="f56-0G-C8w"/>
                             <constraint firstAttribute="trailing" secondItem="QEN-ek-IBJ" secondAttribute="trailing" id="oaR-5d-GQN"/>
                             <constraint firstItem="QEN-ek-IBJ" firstAttribute="top" secondItem="sSA-zd-4lb" secondAttribute="top" id="pMF-9U-vHW"/>
                             <constraint firstItem="u1h-ba-gg0" firstAttribute="centerX" secondItem="sSA-zd-4lb" secondAttribute="centerX" id="xQH-3m-1Rh"/>

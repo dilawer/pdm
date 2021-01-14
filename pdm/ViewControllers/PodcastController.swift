@@ -30,7 +30,7 @@ class PodcastController: UIViewController,UIGestureRecognizerDelegate{
     var arrayRecommended = [NewRelease]()
     var arrayNewRelease = [NewRelease]()
     var podWeek:PodcastOfTheWeek?
-    var textArr = ["POD of the week","Categories"]
+    var textArr = ["POD Of The Week","Categories"]
     let imageArr: [UIImage] = [
         UIImage(named: "ic_week")!,
         UIImage(named: "ic_category")!,

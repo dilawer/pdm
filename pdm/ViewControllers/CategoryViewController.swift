@@ -30,7 +30,7 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
     }
     
     //MARK:- Veriables
-    let textArr = ["POD of the week","Trending"]
+    let textArr = ["POD Of The Week","Trending"]
     let cattextArr = ["News","Sports","Mental Health","Music","Health","Mental Health"]
     let imageArr: [UIImage] = [
         UIImage(named: "ic_week")!,

@@ -7,6 +7,8 @@
 
 import UIKit
 import Alamofire
+import WebKit
+
 class HomeViewController: UIViewController , UICollectionViewDelegate , UICollectionViewDataSource,UIGestureRecognizerDelegate {
    
     //MARK:- Outlets
@@ -15,6 +17,8 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     @IBOutlet weak var bottoncollectionview: UICollectionView!
     @IBOutlet weak var uppercollectionview: UICollectionView!
     @IBOutlet weak var bottomConstant: NSLayoutConstraint!
+    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var ivWebPlay: UIImageView!
     
     //MARK:- Actions
     @IBAction func actionRecording(_ sender: Any) {
@@ -23,6 +27,10 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     @IBAction func actionLiked(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(identifier: "LikedViewController") as! LikedViewController
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    @IBAction func actionWebPlay(_ sender: Any) {
+        webView.alpha = 1
+        ivWebPlay.alpha = 0
     }
     
     
@@ -123,6 +131,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
                 ImageLoader.loadImage(imageView: cell.ivImage, url: podcastOfTheWeek.podcast_icon)
             }
             cell.lblName.text = textArr[indexPath.row]
+            cell.viewHeight.constant = 60
             return cell
         }
         else if collectionView == self.bottoncollectionview {
@@ -180,6 +189,14 @@ extension HomeViewController: WebManagerDelegate {
                     } else {
                         let podcasts = data.object(forKey: kfeatured) as! NSArray
                         video.setVideoData(data: data.object(forKey: kvideo) as! NSDictionary)
+                        var videoLink = video.video_link
+                        if !videoLink.contains("embed"){
+                            let splited = videoLink.split(separator: "=")
+                            videoLink = String("https://www.youtube.com/embed/"+(splited.last ?? "9bZkp7q19f0"))
+                        }
+                        if let url = URL(string: videoLink){
+                            webView.load(URLRequest(url: url))
+                        }
                         if let pow = data.object(forKey: kpodcast_of_the_week) as? NSDictionary{
                             podcastOfTheWeek.setPodcastData(data: pow)
                         }
@@ -191,7 +208,7 @@ extension HomeViewController: WebManagerDelegate {
                             featuredPodcasts.append(podcast)
                         }
                         if podcastOfTheWeek.podcastID != ""  {
-                            textArr.insert("POD of the week", at: 0)
+                            textArr.insert("POD Of The Week", at: 0)
                             imageArr.insert(UIImage(named: "ic_category")!, at: 0)
                         }
                         self.uppercollectionview.reloadData()

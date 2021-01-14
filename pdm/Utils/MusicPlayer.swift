@@ -23,7 +23,7 @@ class MusicPlayer {
     var didRepeat = false
     var didShuffle = false
 
-    func initPlayer(url: String) {
+    func initPlayer(url: String,shouldPlay:Bool = true) {
         guard let url = URL(string: url) else { return }
         let asset = AVAsset(url: url)
         let keys: [String] = ["playable"]
@@ -35,9 +35,11 @@ class MusicPlayer {
                 DispatchQueue.main.async { [self] in
                     let playerItem = AVPlayerItem(asset: asset)
                     player = AVPlayer(playerItem: playerItem)
-                    playAudioBackground()
-                    delegate?.playerStausChanged(isPlaying: true)
-                    player.play()
+                    if shouldPlay{
+                        playAudioBackground()
+                        delegate?.playerStausChanged(isPlaying: true)
+                        player.play()
+                    }
                     UIApplication.shared.beginReceivingRemoteControlEvents()
                     updater = CADisplayLink(target: self, selector: #selector(MusicPlayer.trackAudio))
                     updater.add(to: RunLoop.current, forMode: RunLoop.Mode.common)

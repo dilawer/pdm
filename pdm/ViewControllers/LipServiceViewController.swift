@@ -94,8 +94,13 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
                 let new = globalList.pods[Global.shared.currentPlayingIndex]
                 MusicPlayer.instance.pause()
                 MusicPlayer.instance.stop()
+                Global.shared.curentPlayingID = podCastID
                 MusicPlayer.instance.initPlayer(url: new.episodeFileLink)
                 Global.shared.podcaste = new
+                shouldPlay = false
+                MusicPlayer.instance.progressBar = lblProgressView
+                WebManager.getInstance(delegate: self)?.PlayPodCast(parms: ["podcast_id":podCastID,
+                                                                            "episode_id":String(Global.shared.podcaste?.episodeID ?? -1)])
                 MusicPlayer.instance.delegate?.songChanged(pod: new)
                 if globalList.pods.count > Global.shared.currentPlayingIndex+1{
                     let next = globalList.pods[Global.shared.currentPlayingIndex+1]
