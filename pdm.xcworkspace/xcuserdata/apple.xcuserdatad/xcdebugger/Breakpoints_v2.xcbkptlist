@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "167"
             endingLineNumber = "167"
-            landmarkName = "successResponse(response:webManager:)"
+            landmarkName = "continueWithAppleTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -32,7 +32,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "97"
             endingLineNumber = "97"
-            landmarkName = "signInWithEmail(email:pass:)"
+            landmarkName = "getPodcastDetails(podCast_id:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -48,7 +48,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "184"
             endingLineNumber = "184"
-            landmarkName = "successResponse(response:webManager:)"
+            landmarkName = "networkFailureAction()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -112,7 +112,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "113"
             endingLineNumber = "113"
-            landmarkName = "downloadImage(imageUrl:imageView:)"
+            landmarkName = "forgotUsername(email:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -128,7 +128,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "122"
             endingLineNumber = "122"
-            landmarkName = "downloadImage(imageUrl:imageView:)"
+            landmarkName = "resetPassword(parms:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -144,7 +144,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "115"
             endingLineNumber = "115"
-            landmarkName = "downloadImage(imageUrl:imageView:)"
+            landmarkName = "forgotUsername(email:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -178,38 +178,6 @@
             endingLineNumber = "53"
             landmarkName = "successResponse(response:webManager:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "91A33966-0805-4CA8-978A-1C54F90B0473 - 9f07a1af4d039ed8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "pdm.ForgetNameViewController.successResponse(response: Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;, webManager: pdm.WebManager) -&gt; ()"
-                  moduleName = "pdm"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/iOS/pdm/ViewControllers/ForgetNameViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "53"
-                  endingLineNumber = "53"
-                  offsetFromSymbolStart = "210">
-               </Location>
-               <Location
-                  uuid = "91A33966-0805-4CA8-978A-1C54F90B0473 - 9f07a1af4d039ed8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "pdm.ForgetNameViewController.successResponse(response: Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;, webManager: pdm.WebManager) -&gt; ()"
-                  moduleName = "pdm"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/apple/Documents/iOS/pdm/ViewControllers/ForgetNameViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "53"
-                  endingLineNumber = "53"
-                  offsetFromSymbolStart = "248">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -224,7 +192,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "133"
             endingLineNumber = "133"
-            landmarkName = "makeRequest(requestUrl:method:parameters:)"
+            landmarkName = "getPdmHistory()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -240,7 +208,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
             endingLineNumber = "145"
-            landmarkName = "makeRequest(requestUrl:method:parameters:)"
+            landmarkName = "LikePodcast(parms:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -256,7 +224,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "149"
             endingLineNumber = "149"
-            landmarkName = "makeRequest(requestUrl:method:parameters:)"
+            landmarkName = "PlayPodCast(parms:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

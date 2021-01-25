@@ -34,18 +34,18 @@ class MusicPlayer {
             case .loaded:
                 DispatchQueue.main.async { [self] in
                     let playerItem = AVPlayerItem(asset: asset)
-                    player = AVPlayer(playerItem: playerItem)
+                    self.player = AVPlayer(playerItem: playerItem)
                     if shouldPlay{
-                        playAudioBackground()
-                        delegate?.playerStausChanged(isPlaying: true)
-                        player.play()
+                        self.playAudioBackground()
+                        self.delegate?.playerStausChanged(isPlaying: true)
+                        self.player.play()
                     }
                     UIApplication.shared.beginReceivingRemoteControlEvents()
-                    updater = CADisplayLink(target: self, selector: #selector(MusicPlayer.trackAudio))
-                    updater.add(to: RunLoop.current, forMode: RunLoop.Mode.common)
-                    setupRemoteTransportControls()
-                    setupNowPlaying()
-                    NotificationCenter.default.addObserver(self, selector:#selector(self.playerDidFinishPlaying(note:)),name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+                    self.updater = CADisplayLink(target: self, selector: #selector(MusicPlayer.trackAudio))
+                    self.updater.add(to: RunLoop.current, forMode: RunLoop.Mode.common)
+                    self.setupRemoteTransportControls()
+                    self.setupNowPlaying()
+                    NotificationCenter.default.addObserver(self, selector:#selector(self.playerDidFinishPlaying(note:)),name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player.currentItem)
                     
                 }
                 break

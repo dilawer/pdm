@@ -5,7 +5,13 @@ target 'pdm' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for pdm
+  
+
+# Pods for pdm
+
+# Add the pod for Firebase Cloud Messaging
+pod 'Firebase/Messaging'
+
   pod 'Alamofire'
   pod 'FacebookCore'
   pod 'FacebookLogin'
