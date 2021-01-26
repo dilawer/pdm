@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import WebKit
+import Mixpanel
 
 class HomeViewController: UIViewController , UICollectionViewDelegate , UICollectionViewDataSource,UIGestureRecognizerDelegate {
    
@@ -57,6 +58,22 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
         getHomeData()
         refersh()
         WebManager.getInstance(delegate: self)?.getLikedPodcasts()
+        
+        //mixpanel
+        let user = User.getInstance()
+        Mixpanel.mainInstance().identify(distinctId: user!.userid)
+        Mixpanel.mainInstance().people.set(properties: [ mp_avatar: user!.profile_image, mp_email:user!.email, mp_name:user!.userName])
+        
+//        let mp_email = "$email"
+//        let mp_first_name = "$first_name"
+//        let mp_last_name = "$last_name"
+//        let mp_name = "$name"
+//        let mp_created = "$created"
+//        let mp_region = "$region"
+//        let mp_country_code = "$country_code"
+//        let mp_timezone = "$timezone"
+        
+        
     }
     public func refersh(){
         WebManager.getInstance(delegate: self)?.getProfileDetail()

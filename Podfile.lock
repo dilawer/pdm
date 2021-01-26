@@ -87,6 +87,9 @@ PODS:
   - Kingfisher (5.15.8):
     - Kingfisher/Core (= 5.15.8)
   - Kingfisher/Core (5.15.8)
+  - Mixpanel-swift (2.8.2):
+    - Mixpanel-swift/Complete (= 2.8.2)
+  - Mixpanel-swift/Complete (2.8.2)
   - nanopb (2.30907.0):
     - nanopb/decode (= 2.30907.0)
     - nanopb/encode (= 2.30907.0)
@@ -105,6 +108,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - IQKeyboardManager
   - Kingfisher
+  - Mixpanel-swift
   - SoundWave
   - SVProgressHUD
 
@@ -129,6 +133,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - IQKeyboardManager
     - Kingfisher
+    - Mixpanel-swift
     - nanopb
     - PromisesObjC
     - SoundWave
@@ -154,11 +159,12 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
   Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
+  Mixpanel-swift: ef37387899c8967fa95d492887f4bcc980041aa0
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SoundWave: d98ffaa863570b29d991da32a09b7ce1b4aaf2d4
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: e54e0f39c432d0fcf6c9799d035b3fe22589d68f
+PODFILE CHECKSUM: adfa4f40ccc643236dd502e7f610538730a6de80
 
 COCOAPODS: 1.10.0

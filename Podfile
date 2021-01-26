@@ -20,6 +20,7 @@ pod 'Firebase/Messaging'
   pod 'GoogleSignIn'
   pod 'Kingfisher'
   pod "SoundWave"
+  pod 'Mixpanel-swift'
   pod 'IQKeyboardManager'
   target 'pdmTests' do
     # inherit! :search_paths

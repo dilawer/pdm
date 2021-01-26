@@ -3,15 +3,29 @@ import Foundation
 
 let kheader : [String : String] = ["Content-Type":"application/json"]
 
+
+
 //MARK: APP URLS
 let kbaseURL = "https://staging.oqh.obm.mybluehost.me/api/"
 let kTermsUrl = "http://staging.oqh.obm.mybluehost.me/termsAndConditions"
 let kPrivacyURL = "http://staging.oqh.obm.mybluehost.me/privacyPolicy"
 let kContactUs = "http://staging.oqh.obm.mybluehost.me/contactUs"
-let kFbUrl = "https:carigologistics.com/signin_with_facebook"
-let kFcmTokenUrl = "https:carigologistics.com/user/updateFcmToken"
-let kFetchCategoriesURL = "https:carigologistics.com/get_categories"
-let kGMS_APIKEY = "AIzaSyCFispDflTAC3cJCZHJHiKA9ESeVOLaUNI"
+//let kFbUrl = "https:carigologistics.com/signin_with_facebook"
+//let kFcmTokenUrl = "https:carigologistics.com/user/updateFcmToken"
+//let kFetchCategoriesURL = "https:carigologistics.com/get_categories"
+//let kGMS_APIKEY = "AIzaSyCFispDflTAC3cJCZHJHiKA9ESeVOLaUNI"
+let kMixpanelInitializeToken = "136a836213cf57fbc82b6372b9ce4a49"
+
+//MARK: Mixpanel Attributes
+let mp_avatar = "$avatar"
+let mp_email = "$email"
+let mp_first_name = "$first_name"
+let mp_last_name = "$last_name"
+let mp_name = "$name"
+let mp_created = "$created"
+let mp_region = "$region"
+let mp_country_code = "$country_code"
+let mp_timezone = "$timezone"
 
 
 //MARK: api methods

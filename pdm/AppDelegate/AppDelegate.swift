@@ -9,6 +9,7 @@ import UIKit
 import GoogleSignIn
 import AVKit
 import Firebase
+import Mixpanel
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -25,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } catch let error as NSError {
             print("Setting category to AVAudioSessionCategoryPlayback failed: \(error)")
         }
+        Mixpanel.initialize(token: kMixpanelInitializeToken)
         self.firebaseConfigurations(application)
         
         
