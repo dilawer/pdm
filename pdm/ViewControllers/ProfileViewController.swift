@@ -12,6 +12,7 @@ import FacebookLogin
 import AuthenticationServices
 import Photos
 import AVFoundation
+import Mixpanel
 
 class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     
@@ -55,6 +56,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
                 let user = User.getInstance()
                 user?.removeUser()
                 user?.saveUser()
+                //mixpanel
+                Mixpanel.mainInstance().reset()
+                
                 GIDSignIn.sharedInstance().signOut()
                 LoginManager().logOut()
                 MusicPlayer.instance.stop()
