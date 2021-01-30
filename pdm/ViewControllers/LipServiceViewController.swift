@@ -35,12 +35,15 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
                 Global.shared.podcaste = active
                 Global.shared.curentPlayingID = podCastID
                 ivPlayPause.image = UIImage(named: "ic_ipause")
+                Global.shared.nowPlayingPodDetails = Global.shared.podDetails
                 MusicPlayer.instance.initPlayer(url: active.episodeFileLink)
                 MusicPlayer.instance.play()
                 MusicPlayer.instance.progressBar = lblProgressView
                 WebManager.getInstance(delegate: self)?.PlayPodCast(parms: ["podcast_id":podCastID,
                                                                             "episode_id":String(active.episodeID)])
                 shouldPlay = false
+            }else {
+                Utility.showAlertWithSingleOption(controller: self, title: "Empty Podcast", message: "This Podcast has no Episode. Please try playing another One.", preferredStyle: .alert, buttonText: "OK")
             }
         }
         else {
@@ -123,6 +126,7 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     var profileimageArr = [String]()
     var moreArray = [Podcasts]()
     var activePod:Pod?
+    var fromMin = false
     var shouldPlay = true
     var found = false
     var isLiked = false{
@@ -246,7 +250,7 @@ extension LipServiceViewController:WebManagerDelegate{
                                 Global.shared.podDetails = data
                                 lblName.text = data.podcastName
                                 ImageLoader.loadImage(imageView: ivPodcast, url: data.podcastIcon )
-                                if let episodeID = episodeID{
+                                if let episodeID = episodeID,!fromMin{
                                     for (index,i) in data.pods.enumerated(){
                                         if i.episodeID == episodeID{
                                             lblName.text = i.episodeName
@@ -255,6 +259,18 @@ extension LipServiceViewController:WebManagerDelegate{
                                             activePod = i
                                             Global.shared.currentPlayingIndex = index
                                             MusicPlayer.instance.delegate?.songChanged(pod: i)
+                                            if MusicPlayer.instance.isPlaying{
+                                                MusicPlayer.instance.stop()
+                                                Global.shared.podcaste = activePod
+                                                Global.shared.curentPlayingID = podCastID
+                                                ivPlayPause.image = UIImage(named: "ic_ipause")
+                                                MusicPlayer.instance.initPlayer(url: i.episodeFileLink)
+                                                MusicPlayer.instance.play()
+                                                MusicPlayer.instance.progressBar = lblProgressView
+                                                WebManager.getInstance(delegate: self)?.PlayPodCast(
+                                                    parms: ["podcast_id":podCastID,"episode_id":String(i.episodeID)])
+                                                shouldPlay = false
+                                            }
                                             found = true
                                             if data.pods.count > index+1{
                                                 let next = data.pods[index+1]

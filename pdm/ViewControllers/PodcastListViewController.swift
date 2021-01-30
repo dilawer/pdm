@@ -55,6 +55,7 @@ class PodcastListViewController: UIViewController {
         super.viewDidLoad()
         collectionCatgory.register(UINib(nibName: "CategoryCell", bundle: nil), forCellWithReuseIdentifier: "CategoryCell")
         collectionPodscasts.register(UINib(nibName: "PodcastCell", bundle: nil), forCellWithReuseIdentifier: "PodcastCell")
+        tfSearch.delegate = self
         WebManager.getInstance(delegate: self)?.getPodcastsForCategory(cat_id: catID)
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -158,6 +159,19 @@ extension PodcastListViewController:WebManagerDelegate{
             self.present(alert, animated: true, completion: nil)
             break
         }
+    }
+}
+//MARK:- TextFiedld
+extension PodcastListViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.tfSearch.resignFirstResponder()
+        if let text = tfSearch.text{
+            WebManager.getInstance(delegate: self)?.search(query: text)
+        }
+        return true
+    }
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
 //MARK:- Music Player

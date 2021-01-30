@@ -565,3 +565,9 @@ let kMe = "/me"
 let kPhoto = " (photos only)."
 let kHash = "#"
 let kLine = " |"
+
+//MARK:- UserDefaults
+let kAppleFirst = "APPLE_FIRST"
+let kAppleLast = "APPLE_LAST"
+let kAppleEmail = "APPLE_EMAIL"
+let kAppleId = "APPLE_ID"

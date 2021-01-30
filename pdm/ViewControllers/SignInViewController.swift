@@ -436,13 +436,26 @@ extension SignInViewController:ASAuthorizationControllerDelegate,ASAuthorization
             
             print(appleIDCredential)
             guard let _ = appleIDCredential.fullName?.givenName else {
-                Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "There is an error while reterving your id please go to \niPhone Settings > Apple Id > Password & Security > Apple ID logins > PDM App > Stop using Apple ID", preferredStyle: .alert, buttonText: "OK")
+                let defaults = UserDefaults.standard
+                guard let firstName = defaults.string(forKey: kAppleFirst) else {
+                    Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "There is an error while reterving your id please go to \niPhone Settings > Apple Id > Password & Security > Apple ID logins > PDM App > Stop using Apple ID", preferredStyle: .alert, buttonText: "OK")
+                    return
+                }
+                let lastName = defaults.string(forKey: kAppleLast) ?? ""
+                let email = defaults.string(forKey: kAppleEmail) ?? ""
+                let id = defaults.string(forKey: kAppleId) ?? ""
+                WebManager.getInstance(delegate: self)?.socialLogin(provider: "apple", email: email, id: id, given_name: firstName, family_name: lastName)
                 return
             }
             let firstName = appleIDCredential.fullName?.givenName ?? ""
             let lastName = appleIDCredential.fullName?.familyName ?? ""
             let email = appleIDCredential.email ?? ""
             let id = appleIDCredential.user
+            let defaults = UserDefaults.standard
+            defaults.setValue(firstName, forKey: kAppleFirst)
+            defaults.setValue(lastName, forKey: kAppleLast)
+            defaults.setValue(email, forKey: kAppleEmail)
+            defaults.setValue(id, forKey: kAppleId)
             WebManager.getInstance(delegate: self)?.socialLogin(provider: "apple", email: email, id: id, given_name: firstName, family_name: lastName)
         case let passwordCredential as ASPasswordCredential:
             let username = passwordCredential.user

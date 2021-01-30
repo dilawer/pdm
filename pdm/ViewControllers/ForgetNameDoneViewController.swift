@@ -18,7 +18,7 @@ class ForgetNameDoneViewController: UIViewController {
         emailLabelOutlet.text = email
     }
     @IBAction func returnByttonTapped(_ sender: Any) {
-        let vc = self.navigationController!.viewControllers[1]
-        self.navigationController!.popToViewController(vc, animated: true)
+//        let vc = self.navigationController!.viewControllers[1]
+        self.navigationController!.popToRootViewController(animated: true)
     }
 }

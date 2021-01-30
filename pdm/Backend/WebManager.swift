@@ -81,7 +81,7 @@ class WebManager: NSObject {
     func getProfileDetail() {
         let params = [:] as [String : Any]
         let url = "\(kbaseURL)\(kprofile_detail)"
-        makeRequest(requestUrl: url, method: .get, parameters: params)
+        makeRequest(requestUrl: url, method: .get, parameters: params,showProgress: false)
     }
     func getCategoriesData() {
         let params = [:] as [String : Any]
@@ -130,7 +130,7 @@ class WebManager: NSObject {
     }
     func getPdmHistory(){
         let url = "\(kbaseURL)\(kUploadHistory)"
-        makeRequest(requestUrl: url, method: .get, parameters: nil)
+        makeRequest(requestUrl: url, method: .get, parameters: nil,showProgress: false)
     }
     func uploadPodcast(parms:[String : Any],file:[String : Data]){
         let url = "\(kbaseURL)\(kUploadPodcast)"
@@ -187,12 +187,14 @@ class WebManager: NSObject {
     
 
     //MARK: helper method
-    func makeRequest(requestUrl: String,isMultipart:Bool = false,fileArray:[String:Data]? = nil , method: HTTPMethod = .get, parameters: Parameters? = nil) {
+    func makeRequest(requestUrl: String,isMultipart:Bool = false,fileArray:[String:Data]? = nil , method: HTTPMethod = .get, parameters: Parameters? = nil,showProgress:Bool = true) {
         let retryCount = 3
         let requestUrl = requestUrl.replacingOccurrences(of: " ", with: "%20")
         if Utility.isInternetConnected() {
             SVProgressHUD.setDefaultMaskType(.black)
-            SVProgressHUD.show()
+            if showProgress{
+                SVProgressHUD.show()
+            }
             var headers: HTTPHeaders = []
             if User.getInstance()?.isLogin == true {
                 headers = [

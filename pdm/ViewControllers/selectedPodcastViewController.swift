@@ -21,11 +21,13 @@ class selectedPodcastViewController: UIViewController, UIGestureRecognizerDelega
     @IBOutlet weak var lblEpisodeDuration: UILabel!
     @IBOutlet weak var bottomConstant: NSLayoutConstraint!
     @IBOutlet weak var lblEpisode: UILabel!
+    @IBOutlet weak var viewEmpty: UIView!
     
     //MARK:- Actions
     @IBAction func actionPlay(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(identifier: "LipServiceViewController") as! LipServiceViewController
         vc.podCastID = self.podcast.podcastID
+        vc.episodeID = Int(self.latestEpisode.episodeID)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -37,8 +39,10 @@ class selectedPodcastViewController: UIViewController, UIGestureRecognizerDelega
         didSet{
             if moreEpisodes.count > 0{
                 lblEpisode.alpha = 0
+                viewEmpty.alpha = 0
             } else {
                 lblEpisode.alpha = 1
+                viewEmpty.alpha = 1
             }
         }
     }
@@ -117,7 +121,7 @@ extension selectedPodcastViewController: WebManagerDelegate {
                     }
                     self.eName.text = self.latestEpisode.eposide_name
                     self.podcastname.text = data.object(forKey: kpodcast_name) as? String
-                    self.episodeName.text = self.latestEpisode.eposide_name
+                    self.episodeName.text = self.podcastname.text
                     self.lblDescription.text = data.object(forKey: "episode_description") as? String
                     self.lblEpisodeDuration.text = self.latestEpisode.duration
                     self.podcastImageUrl = (data.object(forKey: "podcast_icon") as? String) ?? ""
@@ -155,14 +159,21 @@ extension selectedPodcastViewController: UICollectionViewDelegate,UICollectionVi
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        let vctwo = storyboard?.instantiateViewController(withIdentifier: "v") as? selectedPodcastViewController;
 //        self.navigationController?.pushViewController(vctwo!, animated: true)
-        let id = moreEpisodes[indexPath.row].episodeID
-        WebManager.getInstance(delegate: self)?.getSelectedPodcast(selected: id)
+//        let id = moreEpisodes[indexPath.row].episodeID
+//        WebManager.getInstance(delegate: self)?.getSelectedPodcast(selected: id)
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
+        vc?.podCastID = self.podcast.podcastID
+        vc?.episodeID = Int(moreEpisodes[indexPath.row].episodeID)
+        self.navigationController?.pushViewController(vc!, animated: true)
+        
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = selectedCollectionView.dequeueReusableCell(withReuseIdentifier: "PodcastCell", for: indexPath) as! PodcastCell
         let cellIndex = indexPath.item
-        cell.lblPodcastName.text = self.moreEpisodes[cellIndex].eposide_name
+        cell.lblPodcastName.text = self.podcastname.text
         cell.lblEpisodeName.text = self.moreEpisodes[cellIndex].eposide_name
         cell.lblDuration.text = self.moreEpisodes[cellIndex].duration
         ImageLoader.loadImage(imageView: cell.ivImage, url: self.podcastImageUrl)

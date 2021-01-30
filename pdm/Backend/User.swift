@@ -96,8 +96,10 @@ var email: String
     }
     
     class func getInstance() -> User? {
-        if let data = UserDefaults.standard.object(forKey: k_user) as? NSData {
-            return NSKeyedUnarchiver.unarchiveObject(with: data as Data) as? User
+        if let data = UserDefaults.standard.object(forKey: k_user) as? Data {
+            if let user = NSKeyedUnarchiver.unarchiveObject(with: data) as? User{
+                return user
+            }
         }
         return User(userid: "", username: "", fullName: "", email: "", dob: "", createdAt: "", updatedAt: "", profileImage : "", autoplay: false, coverImage: "", access_token: "", isLogin: false, totalListens: "", totalMins: "", totalUploads: "", totalLiked: "")
     }

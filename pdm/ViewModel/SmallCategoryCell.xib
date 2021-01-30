@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SmallCategoryCell" id="gTV-IL-0wX" customClass="SmallCategoryCell" customModule="pdm" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SmallCategoryCell" id="gTV-IL-0wX" customClass="SmallCategoryCell" customModule="PDM" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="257" height="83"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -21,7 +21,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bqh-Fz-ytk">
                         <rect key="frame" x="8" y="8" width="241" height="65"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qaf-A2-pPl" customClass="UIImageViewX" customModule="pdm" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qaf-A2-pPl" customClass="UIImageViewX" customModule="PDM" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="241" height="65"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -29,7 +29,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <view alpha="0.30000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mdK-8a-sXy" customClass="UIViewX" customModule="pdm" customModuleProvider="target">
+                            <view alpha="0.30000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mdK-8a-sXy" customClass="UIViewX" customModule="PDM" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="241" height="65"/>
                                 <color key="backgroundColor" systemColor="labelColor"/>
                                 <userDefinedRuntimeAttributes>
@@ -38,13 +38,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3kB-WF-BZK">
-                                <rect key="frame" x="92.5" y="19.5" width="56" height="26.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="3kB-WF-BZK">
+                                <rect key="frame" x="20" y="19.5" width="201" height="26.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QdN-yc-cDi" customClass="UIViewX" customModule="pdm" customModuleProvider="target">
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QdN-yc-cDi" customClass="UIViewX" customModule="PDM" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="241" height="65"/>
                                 <color key="backgroundColor" red="0.94117647059999998" green="0.52549019610000003" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <userDefinedRuntimeAttributes>
@@ -57,6 +57,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3kB-WF-BZK" firstAttribute="centerY" secondItem="Bqh-Fz-ytk" secondAttribute="centerY" id="6oV-TC-daN"/>
+                            <constraint firstItem="3kB-WF-BZK" firstAttribute="leading" secondItem="Bqh-Fz-ytk" secondAttribute="leading" constant="20" id="Oy1-1z-7hd"/>
                             <constraint firstAttribute="bottom" secondItem="Qaf-A2-pPl" secondAttribute="bottom" id="Pwg-zd-fiL"/>
                             <constraint firstAttribute="height" constant="65" id="SDO-pT-ROe"/>
                             <constraint firstItem="3kB-WF-BZK" firstAttribute="centerX" secondItem="Bqh-Fz-ytk" secondAttribute="centerX" id="SEv-Vs-t94"/>
@@ -72,6 +73,7 @@
                             <constraint firstItem="mdK-8a-sXy" firstAttribute="trailing" secondItem="Qaf-A2-pPl" secondAttribute="trailing" id="vCU-i5-9VF"/>
                             <constraint firstItem="QdN-yc-cDi" firstAttribute="top" secondItem="mdK-8a-sXy" secondAttribute="top" id="wRD-VK-HXJ"/>
                             <constraint firstItem="Qaf-A2-pPl" firstAttribute="leading" secondItem="Bqh-Fz-ytk" secondAttribute="leading" id="xCo-hK-ZGn"/>
+                            <constraint firstAttribute="trailing" secondItem="3kB-WF-BZK" secondAttribute="trailing" constant="20" id="ziK-bR-wV3"/>
                         </constraints>
                     </view>
                 </subviews>

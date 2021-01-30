@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		04F403AB973C71CE7C4250CC /* Pods_pdm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90A6454BA3E80D66A5577EA9 /* Pods_pdm.framework */; };
 		1873A6A1258196D700CD607D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A0258196D700CD607D /* Utility.swift */; };
-		1873A6A325819C8700CD607D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A225819C8700CD607D /* User.swift */; };
 		1873A6A5258297D600CD607D /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A4258297D600CD607D /* Podcast.swift */; };
 		1873A6A72582AC6100CD607D /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A62582AC6100CD607D /* Video.swift */; };
 		1873A6A92582C23700CD607D /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A82582C23700CD607D /* Episode.swift */; };
@@ -38,6 +37,8 @@
 		A023129725939B7800797347 /* NewReleaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A023129525939B7800797347 /* NewReleaseCell.xib */; };
 		A02C2E5F259457780031EDEE /* LikedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02C2E5E259457780031EDEE /* LikedViewController.swift */; };
 		A02C2E64259483FC0031EDEE /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02C2E63259483FC0031EDEE /* MusicPlayer.swift */; };
+		A030A6AD25B2B4300015E415 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1873A6A225819C8700CD607D /* User.swift */; };
+		A03E424825B15F48007BBEA7 /* RecentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0B7BDB825A6EE9C002F05B0 /* RecentCell.xib */; };
 		A0484DF72596DABD0070702A /* ActionSheetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0484DF62596DABD0070702A /* ActionSheetHelper.swift */; };
 		A0484DFD2596DD250070702A /* SmallCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0484DFB2596DD240070702A /* SmallCategoryCell.swift */; };
 		A0484DFE2596DD250070702A /* SmallCategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0484DFC2596DD240070702A /* SmallCategoryCell.xib */; };
@@ -66,7 +67,6 @@
 		A0B7BDB225A6DF32002F05B0 /* UploadedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B7BDB025A6DF32002F05B0 /* UploadedCell.swift */; };
 		A0B7BDB325A6DF32002F05B0 /* UploadedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0B7BDB125A6DF32002F05B0 /* UploadedCell.xib */; };
 		A0B7BDB925A6EE9D002F05B0 /* RecentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B7BDB725A6EE9C002F05B0 /* RecentCell.swift */; };
-		A0B7BDC025A6F137002F05B0 /* RecentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0B7BDB825A6EE9C002F05B0 /* RecentCell.xib */; };
 		A0CE3E7925A47684007BB58E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE3E7825A47684007BB58E /* SplashViewController.swift */; };
 		A0CE3E8425A48A12007BB58E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE3E8325A48A12007BB58E /* WelcomeViewController.swift */; };
 		A0FD85D12595C5AE0051EFC2 /* CustomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD85D02595C5AE0051EFC2 /* CustomNavigation.swift */; };
@@ -202,7 +202,7 @@
 		C6967AB22527482200FCD7A6 /* OTPresetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPresetPasswordViewController.swift; sourceTree = "<group>"; };
 		C6967AB7252751AA00FCD7A6 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		C6A5578D25767047002B1590 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6CDE2972526F00200B8C411 /* pdm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pdm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6CDE2972526F00200B8C411 /* PDM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6CDE29A2526F00200B8C411 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6CDE29C2526F00200B8C411 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C6CDE29E2526F00200B8C411 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -382,7 +382,7 @@
 		C6CDE2982526F00200B8C411 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C6CDE2972526F00200B8C411 /* pdm.app */,
+				C6CDE2972526F00200B8C411 /* PDM.app */,
 				C6CDE2AD2526F00300B8C411 /* pdmTests.xctest */,
 				C6CDE2B82526F00300B8C411 /* pdmUITests.xctest */,
 			);
@@ -492,9 +492,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C6CDE2962526F00200B8C411 /* pdm */ = {
+		C6CDE2962526F00200B8C411 /* PDM */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C6CDE2C12526F00300B8C411 /* Build configuration list for PBXNativeTarget "pdm" */;
+			buildConfigurationList = C6CDE2C12526F00300B8C411 /* Build configuration list for PBXNativeTarget "PDM" */;
 			buildPhases = (
 				C1CC00F9E2B2D706F5875212 /* [CP] Check Pods Manifest.lock */,
 				C6CDE2932526F00200B8C411 /* Sources */,
@@ -507,9 +507,9 @@
 			);
 			dependencies = (
 			);
-			name = pdm;
+			name = PDM;
 			productName = pdm;
-			productReference = C6CDE2972526F00200B8C411 /* pdm.app */;
+			productReference = C6CDE2972526F00200B8C411 /* PDM.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C6CDE2AC2526F00300B8C411 /* pdmTests */ = {
@@ -589,7 +589,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C6CDE2962526F00200B8C411 /* pdm */,
+				C6CDE2962526F00200B8C411 /* PDM */,
 				C6CDE2AC2526F00300B8C411 /* pdmTests */,
 				C6CDE2B72526F00300B8C411 /* pdmUITests */,
 			);
@@ -610,7 +610,7 @@
 				A0664491259773AE009CAD3A /* FontsFree-Net-SF-Compact-Rounded-Semibold.ttf in Resources */,
 				A0B7BDB325A6DF32002F05B0 /* UploadedCell.xib in Resources */,
 				A06A50F425922E0E008B4773 /* CategoryCell.xib in Resources */,
-				A0B7BDC025A6F137002F05B0 /* RecentCell.xib in Resources */,
+				A03E424825B15F48007BBEA7 /* RecentCell.xib in Resources */,
 				A076C75125985CBD00FEAA19 /* TopCell.xib in Resources */,
 				A023127225931ABD00797347 /* PodcastCell.xib in Resources */,
 				A04E19952599B07500E49400 /* UniversalPlayer.xib in Resources */,
@@ -877,10 +877,10 @@
 				C642A756253CC13C00F48EC2 /* LipServiceViewController.swift in Sources */,
 				A0484DF72596DABD0070702A /* ActionSheetHelper.swift in Sources */,
 				A076C75D2598B76A00FEAA19 /* SearchViewController.swift in Sources */,
+				A030A6AD25B2B4300015E415 /* User.swift in Sources */,
 				A06A50EA25921D83008B4773 /* UIImageViewX.swift in Sources */,
 				A05FBBA22595A849005A94BF /* UIViewCircular.swift in Sources */,
 				C6967AB32527482200FCD7A6 /* OTPresetPasswordViewController.swift in Sources */,
-				1873A6A325819C8700CD607D /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -905,12 +905,12 @@
 /* Begin PBXTargetDependency section */
 		C6CDE2AF2526F00300B8C411 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C6CDE2962526F00200B8C411 /* pdm */;
+			target = C6CDE2962526F00200B8C411 /* PDM */;
 			targetProxy = C6CDE2AE2526F00300B8C411 /* PBXContainerItemProxy */;
 		};
 		C6CDE2BA2526F00300B8C411 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C6CDE2962526F00200B8C411 /* pdm */;
+			target = C6CDE2962526F00200B8C411 /* PDM */;
 			targetProxy = C6CDE2B92526F00300B8C411 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1060,7 +1060,7 @@
 				CODE_SIGN_ENTITLEMENTS = pdm/pdm.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = Q5ZXDW6NC6;
 				INFOPLIST_FILE = pdm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1085,7 +1085,7 @@
 				CODE_SIGN_ENTITLEMENTS = pdm/pdm.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = Q5ZXDW6NC6;
 				INFOPLIST_FILE = pdm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1201,7 +1201,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C6CDE2C12526F00300B8C411 /* Build configuration list for PBXNativeTarget "pdm" */ = {
+		C6CDE2C12526F00300B8C411 /* Build configuration list for PBXNativeTarget "PDM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C6CDE2C22526F00300B8C411 /* Debug */,
