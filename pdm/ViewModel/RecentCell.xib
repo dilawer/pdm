@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -10,17 +11,17 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RecentCell" id="gTV-IL-0wX" customClass="RecentCell" customModule="pdm">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RecentCell" id="gTV-IL-0wX" customClass="RecentCell" customModule="PDM" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="172" height="171"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="172" height="171"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7d-JG-8xB" customClass="UIViewX" customModule="pdm" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7d-JG-8xB" customClass="UIViewX" customModule="PDM" customModuleProvider="target">
                         <rect key="frame" x="8" y="8" width="156" height="155"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5625bdf0936689c817dc75afe20428ae" translatesAutoresizingMaskIntoConstraints="NO" id="J3m-db-JYV" customClass="UIImageViewX" customModule="pdm" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5625bdf0936689c817dc75afe20428ae" translatesAutoresizingMaskIntoConstraints="NO" id="J3m-db-JYV" customClass="UIImageViewX" customModule="PDM" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="156" height="108"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -50,7 +51,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LsI-Qb-rH9">
                                 <rect key="frame" x="0.0" y="0.0" width="156" height="155"/>
                                 <connections>
-                                    <action selector="actionClick:" destination="gTV-IL-0wX" eventType="touchUpInside" id="hi1-0P-TKG"/>
+                                    <action selector="actionClick:" destination="gTV-IL-0wX" eventType="touchUpInside" id="lgR-LG-ReR"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -91,10 +92,10 @@
             </constraints>
             <size key="customSize" width="172" height="171"/>
             <connections>
-                <outlet property="ivImage" destination="J3m-db-JYV" id="l8r-UT-Q91"/>
-                <outlet property="lblDuration" destination="O90-xt-8He" id="tNB-8G-d5I"/>
-                <outlet property="lblEpisode" destination="9yt-tg-1g7" id="fFL-19-9B4"/>
-                <outlet property="lblName" destination="W5F-jK-aze" id="7Qv-90-h45"/>
+                <outlet property="ivImage" destination="J3m-db-JYV" id="RW8-7e-dzR"/>
+                <outlet property="lblDuration" destination="O90-xt-8He" id="rbo-ep-4Sd"/>
+                <outlet property="lblEpisode" destination="9yt-tg-1g7" id="vHD-fH-YlU"/>
+                <outlet property="lblName" destination="W5F-jK-aze" id="2mY-sE-tsE"/>
             </connections>
             <point key="canvasLocation" x="-28.985507246376812" y="98.102678571428569"/>
         </collectionViewCell>

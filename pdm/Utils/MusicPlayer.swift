@@ -81,8 +81,10 @@ class MusicPlayer {
             MusicPlayer.instance.player.play()
             return
         }
-        MusicPlayer.instance.stop()
         guard UserDefaults.standard.bool(forKey: kAutoPlay) else {
+            player.pause()
+            delegate?.playerStausChanged(isPlaying: false)
+            MusicPlayer.instance.player.seek(to: CMTime.zero)
             return
         }
         delegate?.playerStausChanged(isPlaying: false)
@@ -91,6 +93,7 @@ class MusicPlayer {
         }
         if let globalList = Global.shared.podDetails{
             if self.didShuffle{
+                MusicPlayer.instance.stop()
                 let range = 0..<globalList.pods.count
                 let index = range.randomElement() ?? Global.shared.currentPlayingIndex+1
                 if globalList.pods.count > index{
@@ -102,12 +105,17 @@ class MusicPlayer {
                     MusicPlayer.instance.play()
                 }
             } else if globalList.pods.count > Global.shared.currentPlayingIndex+1{
+                MusicPlayer.instance.stop()
                 let new = globalList.pods[Global.shared.currentPlayingIndex+1]
                 MusicPlayer.instance.initPlayer(url: new.episodeFileLink)
                 Global.shared.currentPlayingIndex += 1
                 Global.shared.podcaste = new
                 delegate?.songChanged(pod: new)
                 MusicPlayer.instance.play()
+            } else {
+                player.pause()
+                delegate?.playerStausChanged(isPlaying: false)
+                MusicPlayer.instance.player.seek(to: CMTime.zero)
             }
         }
     }

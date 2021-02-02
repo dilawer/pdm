@@ -44,14 +44,15 @@ class UniversalPlayer: UIView {
         let vc = activeViewController.storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
         vc?.podCastID = Global.shared.curentPlayingID
         vc?.episodeID = Global.shared.podcaste?.episodeID
+        vc?.fromMin = true
         activeViewController.navigationController?.pushViewController(vc!, animated: true)
     }
     
     class func instanceFromNib() -> UniversalPlayer {
         let view = UINib(nibName: "UniversalPlayer", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! UniversalPlayer
         if let pod = Global.shared.podcaste{
-            ImageLoader.loadImage(imageView: view.ivImage, url: Global.shared.podDetails?.podcastIcon ?? "")
-            view.lblName.text = Global.shared.podDetails?.podcastName
+            ImageLoader.loadImage(imageView: view.ivImage, url: Global.shared.nowPlayingPodDetails?.podcastIcon ?? "")
+            view.lblName.text = Global.shared.nowPlayingPodDetails?.podcastName
             view.lblEpisode.text = pod.episodeName
             if MusicPlayer.instance.isPlaying {
                 view.ivPlay.image = UIImage(named: "ic_ipause")
@@ -103,8 +104,8 @@ extension UniversalPlayer:MusicDelgate{
     func refresh(){
         if let pod = Global.shared.podcaste{
             if let view = Global.shared.universalPlayer{
-                ImageLoader.loadImage(imageView: view.ivImage, url: Global.shared.podDetails?.podcastIcon ?? "")
-                view.lblName.text = Global.shared.podDetails?.podcastName
+                ImageLoader.loadImage(imageView: view.ivImage, url: Global.shared.nowPlayingPodDetails?.podcastIcon ?? "")
+                view.lblName.text = Global.shared.nowPlayingPodDetails?.podcastName
                 view.lblEpisode.text = pod.episodeName
                 if MusicPlayer.instance.isPlaying {
                     view.ivPlay.image = UIImage(named: "ic_ipause")

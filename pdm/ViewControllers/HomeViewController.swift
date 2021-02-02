@@ -20,6 +20,8 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     @IBOutlet weak var bottomConstant: NSLayoutConstraint!
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var ivWebPlay: UIImageView!
+    @IBOutlet weak var lblLoadingVideo: UILabel!
+    @IBOutlet weak var emptyView: UIView!
     
     //MARK:- Actions
     @IBAction func actionRecording(_ sender: Any) {
@@ -30,8 +32,8 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func actionWebPlay(_ sender: Any) {
-        webView.alpha = 1
-        ivWebPlay.alpha = 0
+//        webView.alpha = 1
+//        ivWebPlay.alpha = 0
     }
     
     
@@ -53,6 +55,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
         super.viewDidLoad()
         Global.shared.Home = self
         Global.shared.activeViewController = self
+        webView.navigationDelegate = self
         uppercollectionview.register(UINib(nibName: "TopCell", bundle: nil), forCellWithReuseIdentifier: "TopCell")
         bottoncollectionview.register(UINib(nibName: "FeaturedCell", bundle: nil), forCellWithReuseIdentifier: "FeaturedCell")
         getHomeData()
@@ -207,7 +210,9 @@ extension HomeViewController: WebManagerDelegate {
                         let podcasts = data.object(forKey: kfeatured) as! NSArray
                         video.setVideoData(data: data.object(forKey: kvideo) as! NSDictionary)
                         var videoLink = video.video_link
-                        if !videoLink.contains("embed"){
+                        if videoLink.isEmpty{
+                            self.emptyView.alpha = 1.0
+                        }else if !videoLink.contains("embed"){
                             let splited = videoLink.split(separator: "=")
                             videoLink = String("https://www.youtube.com/embed/"+(splited.last ?? "9bZkp7q19f0"))
                         }
@@ -245,6 +250,16 @@ extension HomeViewController: WebManagerDelegate {
         }
     }
 }
+//MARK:- WebNavigation
+extension HomeViewController:WKNavigationDelegate{
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        DispatchQueue.main.asyncAfter(deadline: .now()+3.0, execute: { [self] in
+            webView.alpha = 1
+            ivWebPlay.alpha = 0
+        })
+    }
+}
+
 //MARK:- Music Player
 extension HomeViewController:MusicDelgate{
     func playerStausChanged(isPlaying: Bool) {

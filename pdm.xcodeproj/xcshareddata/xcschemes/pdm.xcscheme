@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C6CDE2962526F00200B8C411"
-               BuildableName = "pdm.app"
-               BlueprintName = "pdm"
+               BuildableName = "PDM.app"
+               BlueprintName = "PDM"
                ReferencedContainer = "container:pdm.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -65,8 +65,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C6CDE2962526F00200B8C411"
-            BuildableName = "pdm.app"
-            BlueprintName = "pdm"
+            BuildableName = "PDM.app"
+            BlueprintName = "PDM"
             ReferencedContainer = "container:pdm.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -82,8 +82,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C6CDE2962526F00200B8C411"
-            BuildableName = "pdm.app"
-            BlueprintName = "pdm"
+            BuildableName = "PDM.app"
+            BlueprintName = "PDM"
             ReferencedContainer = "container:pdm.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

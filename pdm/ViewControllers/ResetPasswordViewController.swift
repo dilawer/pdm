@@ -83,7 +83,7 @@ extension ResetPasswordViewController{
             return false
         }
         if !(paswwordOutlet.text ?? "").isValidPassword(){
-            Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Password is Not Valid", preferredStyle: .alert, buttonText: "OK")
+            Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Password Should be Minimum 8 Characters Long and Must Contains 1 Capital, 1 Number ,1 Lower Case & 1 Special Character(!@#$&*)", preferredStyle: .alert, buttonText: "OK")
             return false
         }
         if confirmPasswordOutlet.text?.isEmpty ?? true{

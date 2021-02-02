@@ -20,6 +20,7 @@ class Global {
     var universalPlayer:UniversalPlayer?
     var podcaste:Pod?
     var podDetails:DetailsDataClass?
+    var nowPlayingPodDetails:DetailsDataClass?
     var curentPlayingID = ""
     var currentPlayingIndex = 0
     var likedPodcast = [String]()
