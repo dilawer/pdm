@@ -162,6 +162,11 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
                 ivPlayPause.image = UIImage(named: "ic_ipause")
                 shouldPlay = false
             }
+            if MusicPlayer.instance.isPause{
+                shouldPlay = false
+                ivPlayPause.image = UIImage(named: "ic_iplay")
+                MusicPlayer.instance.progressBar = lblProgressView
+            }
         } else {
             shouldPlay = true
         }

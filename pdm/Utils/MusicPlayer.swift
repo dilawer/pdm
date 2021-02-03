@@ -22,6 +22,7 @@ class MusicPlayer {
     }
     var didRepeat = false
     var didShuffle = false
+    var isPause = false
 
     func initPlayer(url: String,shouldPlay:Bool = true) {
         guard let url = URL(string: url) else { return }
@@ -132,6 +133,7 @@ class MusicPlayer {
     }
     
     func pause(){
+        isPause = true
         delegate?.playerStausChanged(isPlaying: false)
         player.pause()
     }
@@ -174,6 +176,7 @@ class MusicPlayer {
     }
     
     func play() {
+        isPause = false
         delegate?.playerStausChanged(isPlaying: true)
         player.play()
     }
