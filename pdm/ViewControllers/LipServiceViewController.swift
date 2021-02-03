@@ -39,6 +39,7 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
                 MusicPlayer.instance.initPlayer(url: active.episodeFileLink)
                 MusicPlayer.instance.play()
                 MusicPlayer.instance.progressBar = lblProgressView
+                MusicPlayer.instance.lblDuration = lblDuration
                 WebManager.getInstance(delegate: self)?.PlayPodCast(parms: ["podcast_id":podCastID,
                                                                             "episode_id":String(active.episodeID)])
                 shouldPlay = false
@@ -102,6 +103,7 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
                 Global.shared.podcaste = new
                 shouldPlay = false
                 MusicPlayer.instance.progressBar = lblProgressView
+                MusicPlayer.instance.lblDuration = lblDuration
                 WebManager.getInstance(delegate: self)?.PlayPodCast(parms: ["podcast_id":podCastID,
                                                                             "episode_id":String(Global.shared.podcaste?.episodeID ?? -1)])
                 MusicPlayer.instance.delegate?.songChanged(pod: new)
@@ -159,6 +161,7 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
         if Global.shared.curentPlayingID == podCastID{
             if isPlaying{
                 MusicPlayer.instance.progressBar = lblProgressView
+                MusicPlayer.instance.lblDuration = lblDuration
                 ivPlayPause.image = UIImage(named: "ic_ipause")
                 shouldPlay = false
             }
@@ -166,6 +169,7 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
                 shouldPlay = false
                 ivPlayPause.image = UIImage(named: "ic_iplay")
                 MusicPlayer.instance.progressBar = lblProgressView
+                MusicPlayer.instance.lblDuration = lblDuration
             }
         } else {
             shouldPlay = true
@@ -272,6 +276,7 @@ extension LipServiceViewController:WebManagerDelegate{
                                                 MusicPlayer.instance.initPlayer(url: i.episodeFileLink)
                                                 MusicPlayer.instance.play()
                                                 MusicPlayer.instance.progressBar = lblProgressView
+                                                MusicPlayer.instance.lblDuration = lblDuration
                                                 WebManager.getInstance(delegate: self)?.PlayPodCast(
                                                     parms: ["podcast_id":podCastID,"episode_id":String(i.episodeID)])
                                                 shouldPlay = false

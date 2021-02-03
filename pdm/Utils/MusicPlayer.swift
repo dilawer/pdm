@@ -16,6 +16,7 @@ class MusicPlayer {
     var player = AVPlayer()
     var updater : CADisplayLink! = nil
     var progressBar:UIProgressView?
+    var lblDuration:UILabel?
     var delegate:MusicDelgate?
     var isPlaying:Bool{
         return self.player.isPlaying
@@ -28,6 +29,7 @@ class MusicPlayer {
         guard let url = URL(string: url) else { return }
         let asset = AVAsset(url: url)
         let keys: [String] = ["playable"]
+        getTime()
         asset.loadValuesAsynchronously(forKeys: keys, completionHandler: {
             var error: NSError? = nil
             let status = asset.statusOfValue(forKey: "playable", error: &error)
@@ -67,12 +69,20 @@ class MusicPlayer {
     }
     
     @objc func trackAudio() {
+        getTime()
+    }
+    func getTime(){
         let current:Double = player.currentTime().seconds
         if let total = player.currentItem?.asset.duration{
             let total:Double = CMTimeGetSeconds(total)
             let normalizedTime = Float( current / total)
             if let progressBar = progressBar{
                 progressBar.progress = normalizedTime
+            }
+            if let lblDuration = lblDuration{
+                let sec = total-current
+                let mint = sec/60
+                lblDuration.text = "\(String(format: "%02.f", mint)):\(String(format: "%02.f", sec))"
             }
         }
     }
