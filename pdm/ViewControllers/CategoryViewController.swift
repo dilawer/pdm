@@ -30,10 +30,9 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
     }
     
     //MARK:- Veriables
-    let textArr = ["POD Of The Week","Trending"]
+    var textArr = ["Trending"]
     let cattextArr = ["News","Sports","Mental Health","Music","Health","Mental Health"]
-    let imageArr: [UIImage] = [
-        UIImage(named: "ic_week")!,
+    var imageArr: [UIImage] = [
         UIImage(named: "ic_trending")!,
     ]
     let catimageArr: [UIImage] = [
@@ -60,6 +59,11 @@ class CategoryViewController: UIViewController,UICollectionViewDelegate,UICollec
         layoutc.itemSize = CGSize(width: itemSizec + 40, height: itemSizec + 40)
         layoutc.minimumInteritemSpacing = 2
         layoutc.minimumLineSpacing = 15
+        if let _ = Global.shared.podCastOfTheWeek{
+            textArr.insert("POD Of The Week", at: 0)
+            imageArr.insert(UIImage(named: "ic_week")!, at: 0)
+        }
+        
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -110,9 +114,13 @@ extension CategoryViewController{
         }
         if collectionView == catupcollectionview{
             if indexPath.row == 0{
-                let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
-                vc?.podCastID = Global.shared.podCastOfTheWeek.podcastID
-                self.navigationController?.pushViewController(vc!, animated: true)
+                if let _ = Global.shared.podCastOfTheWeek{
+                    let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
+                    vc?.podCastID = Global.shared.podCastOfTheWeek.podcastID
+                    self.navigationController?.pushViewController(vc!, animated: true)
+                } else {
+                    self.tabBarController?.selectedIndex = 1
+                }
             }
             if indexPath.row == 1{
                 self.tabBarController?.selectedIndex = 1

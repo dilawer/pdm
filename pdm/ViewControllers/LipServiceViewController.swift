@@ -27,6 +27,7 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     @IBOutlet weak var btnFastForward: UIButton!
     @IBOutlet weak var ivPlayPause: UIImageView!
     @IBOutlet weak var ivLike: UIImageView!
+    @IBOutlet weak var lblUpNext: UILabel!
     
     //MARK:- Actions
     @IBAction func actionPlayPause(_ sender: Any) {
@@ -382,9 +383,11 @@ extension LipServiceViewController:MusicDelgate{
             if globalList.pods.count > Global.shared.currentPlayingIndex+1{
                 let next = globalList.pods[Global.shared.currentPlayingIndex+1]
                 lblNextName.text = next.episodeName
+                lblUpNext.alpha = 1
             } else {
                 ivNextEpisode.image = nil
-                lblNextName.text = "-"
+                lblNextName.text = ""
+                lblUpNext.alpha = 0
             }
         }
     }

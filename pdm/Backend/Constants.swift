@@ -6,10 +6,11 @@ let kheader : [String : String] = ["Content-Type":"application/json"]
 
 
 //MARK: APP URLS
-let kbaseURL = "https://staging.oqh.obm.mybluehost.me/api/"
-let kTermsUrl = "http://staging.oqh.obm.mybluehost.me/termsAndConditions"
-let kPrivacyURL = "http://staging.oqh.obm.mybluehost.me/privacyPolicy"
-let kContactUs = "http://staging.oqh.obm.mybluehost.me/contactUs"
+//let kbaseURL = "https://staging.oqh.obm.mybluehost.me/api/"
+let kbaseURL = "https://oqh.obm.mybluehost.me/api/"
+let kTermsUrl = "https://www.termsfeed.com/live/fffdba5e-dfca-43a4-a751-f9ad9c4dddb3"
+let kPrivacyURL = "https://www.termsfeed.com/live/252dcec2-b37d-4126-ad9f-247d2a2b04ac"
+let kContactUs = "https://poddigitalmedia.com/about-us/"
 //let kFbUrl = "https:carigologistics.com/signin_with_facebook"
 //let kFcmTokenUrl = "https:carigologistics.com/user/updateFcmToken"
 //let kFetchCategoriesURL = "https:carigologistics.com/get_categories"

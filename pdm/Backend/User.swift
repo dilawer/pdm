@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import Mixpanel
+import GoogleSignIn
+import FacebookLogin
+import AuthenticationServices
 
 let kuserid = "userid"
 let kuserName = "userName"
@@ -152,6 +156,24 @@ var email: String
         self.totalUploads = ""
         self.totalLiked = ""
         saveUser()
+    }
+    func signout(){
+        Mixpanel.mainInstance().reset()
+        GIDSignIn.sharedInstance().signOut()
+        LoginManager().logOut()
+        MusicPlayer.instance.stop()
+        Global.shared.universalPlayer?.removeFromSuperview()
+        Global.shared.curentPlayingID = ""
+        Global.shared.currentPlayingIndex = 0
+        Global.shared.likedPodcast = [String]()
+        Global.shared.podCastOfTheWeek = nil
+        Global.shared.universalPlayer = nil
+        Global.shared.podcaste = nil
+        Global.shared.podDetails = nil
+        Global.shared.userPodcastID = nil
+        Global.shared.userPodcastImageLink = ""
+        Global.shared.userPodcastName = ""
+        Global.shared.userPodcastCategory = ""
     }
     
     //MARK: ecoding/decoding methods for custom objects

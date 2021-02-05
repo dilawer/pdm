@@ -22,6 +22,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     @IBOutlet weak var ivWebPlay: UIImageView!
     @IBOutlet weak var lblLoadingVideo: UILabel!
     @IBOutlet weak var emptyView: UIView!
+    @IBOutlet weak var lblEmpty: UILabel!
     
     //MARK:- Actions
     @IBAction func actionRecording(_ sender: Any) {
@@ -42,7 +43,15 @@ class HomeViewController: UIViewController , UICollectionViewDelegate , UICollec
     var imageArr: [UIImage] = [
         UIImage(named: "ic_category")!,
     ]
-    var featuredPodcasts: [Podcast]=[]
+    var featuredPodcasts = [Podcast](){
+        didSet{
+            if featuredPodcasts.count == 0{
+                lblEmpty.alpha = 1
+            } else {
+                lblEmpty.alpha = 0
+            }
+        }
+    }
     var video = Video()
     var podcastOfTheWeek = Podcast()
     let btimageArr: [UIImage] = [
@@ -181,6 +190,17 @@ extension HomeViewController: WebManagerDelegate {
         switch(response.result) {
         case .success(let JSON):
             let result = JSON as! NSDictionary
+            let msg = (result["message"] as? String) ?? ""
+            if msg == "Unauthenticated." {
+                let user = User.getInstance()
+                user?.removeUser()
+                user?.saveUser()
+                if let vc = self.storyboard?.instantiateViewController(identifier: "mainViewController"){
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true, completion: nil)
+                }
+                return
+            }
             let successresponse = result.object(forKey: "success")!
             if(successresponse as! Bool == false) {
                 let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)

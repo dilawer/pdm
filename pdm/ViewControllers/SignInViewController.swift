@@ -195,6 +195,7 @@ extension SignInViewController: WebManagerDelegate {
             let result = JSON as! NSDictionary
             let successresponse = result.object(forKey: "success")!
             if(successresponse as! Bool == false) {
+                GIDSignIn.sharedInstance().signOut()
                 let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)

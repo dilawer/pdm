@@ -80,9 +80,10 @@ class MusicPlayer {
                 progressBar.progress = normalizedTime
             }
             if let lblDuration = lblDuration{
-                let sec = total-current
+                var sec = Int(total-current)
                 let mint = sec/60
-                lblDuration.text = "\(String(format: "%02.f", mint)):\(String(format: "%02.f", sec))"
+                sec = sec - (Int(mint)*60)
+                lblDuration.text = "\(String(format: "%02d", mint)):\(String(format: "%02d", sec))"
             }
         }
     }

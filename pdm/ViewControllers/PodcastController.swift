@@ -17,6 +17,9 @@ class PodcastController: UIViewController,UIGestureRecognizerDelegate{
     @IBOutlet weak var newReleasesCollectionView: UICollectionView!
     @IBOutlet weak var recordAction: UIImageView!
     @IBOutlet weak var bottomConstant: NSLayoutConstraint!
+    @IBOutlet weak var lblEmptyTrending: UILabel!
+    @IBOutlet weak var lblEmptyRecomended: UILabel!
+    @IBOutlet weak var lblEmptyNewRelease: UILabel!
     
     
     //MARK:- Action
@@ -26,13 +29,36 @@ class PodcastController: UIViewController,UIGestureRecognizerDelegate{
     }
     
     //MARK:- Veriables
-    var arrayTrending = [NewRelease]()
-    var arrayRecommended = [NewRelease]()
-    var arrayNewRelease = [NewRelease]()
+    var arrayTrending = [NewRelease](){
+        didSet{
+            if arrayTrending.count == 0{
+                lblEmptyTrending.alpha = 1
+            } else {
+                lblEmptyTrending.alpha = 0
+            }
+        }
+    }
+    var arrayRecommended = [NewRelease](){
+        didSet{
+            if arrayRecommended.count == 0{
+                lblEmptyRecomended.alpha = 1
+            } else {
+                lblEmptyRecomended.alpha = 0
+            }
+        }
+    }
+    var arrayNewRelease = [NewRelease](){
+        didSet{
+            if arrayNewRelease.count == 0{
+                lblEmptyNewRelease.alpha = 1
+            } else {
+                lblEmptyNewRelease.alpha = 0
+            }
+        }
+    }
     var podWeek:PodcastOfTheWeek?
-    var textArr = ["POD Of The Week","Categories"]
-    let imageArr: [UIImage] = [
-        UIImage(named: "ic_week")!,
+    var textArr = ["Categories"]
+    var imageArr: [UIImage] = [
         UIImage(named: "ic_category")!,
     ]
     
@@ -50,6 +76,11 @@ class PodcastController: UIViewController,UIGestureRecognizerDelegate{
         uppercollectionview.dataSource = self
         trendcollectionview.delegate = self
         trendcollectionview.dataSource = self
+        
+        if let _ = Global.shared.podCastOfTheWeek{
+            textArr.insert("POD Of The Week", at: 0)
+            imageArr.insert(UIImage(named: "ic_week")!, at: 0)
+        }
         
         uppercollectionview.register(UINib(nibName: "TopCell", bundle: nil), forCellWithReuseIdentifier: "TopCell")
         
@@ -129,9 +160,13 @@ extension PodcastController: UICollectionViewDelegate , UICollectionViewDataSour
         if collectionView == self.uppercollectionview {
 //            vc.podCastID = String(podWeek?.id ?? 0)
             if indexPath.row == 0{
-                let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
-                vc?.podCastID = Global.shared.podCastOfTheWeek.podcastID
-                self.navigationController?.pushViewController(vc!, animated: true)
+                if let _ = Global.shared.podCastOfTheWeek{
+                    let vc = storyboard?.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController
+                    vc?.podCastID = Global.shared.podCastOfTheWeek.podcastID
+                    self.navigationController?.pushViewController(vc!, animated: true)
+                } else {
+                    self.tabBarController?.selectedIndex = 2
+                }
             }
             if indexPath.row == 1{
                 self.tabBarController?.selectedIndex = 2

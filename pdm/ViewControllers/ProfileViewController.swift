@@ -56,25 +56,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
                 let user = User.getInstance()
                 user?.removeUser()
                 user?.saveUser()
-                //mixpanel
-                Mixpanel.mainInstance().reset()
-                
-                GIDSignIn.sharedInstance().signOut()
-                LoginManager().logOut()
-                MusicPlayer.instance.stop()
-                Global.shared.universalPlayer?.removeFromSuperview()
-                Global.shared.curentPlayingID = ""
-                Global.shared.currentPlayingIndex = 0
-                Global.shared.likedPodcast = [String]()
-                Global.shared.podCastOfTheWeek = nil
-                Global.shared.universalPlayer = nil
-                Global.shared.podcaste = nil
-                Global.shared.podDetails = nil
-                Global.shared.userPodcastID = nil
-                Global.shared.userPodcastImageLink = ""
-                Global.shared.userPodcastName = ""
-                Global.shared.userPodcastCategory = ""
-                
                 /*
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 let navVC = appDelegate.window?.rootViewController as? UINavigationController
@@ -84,7 +65,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
                 }
-                
                 
                 
               case .cancel:

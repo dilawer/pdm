@@ -136,22 +136,22 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="3DA-Cp-A5F">
-                                        <rect key="frame" x="40" y="348.5" width="334" height="199.5"/>
+                                        <rect key="frame" x="40" y="350" width="334" height="196.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome To Pod Digital Media Podcast App" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3GT-Us-ZT4">
-                                                <rect key="frame" x="8" y="0.0" width="318" height="72"/>
+                                                <rect key="frame" x="3.5" y="0.0" width="327" height="70"/>
                                                 <fontDescription key="fontDescription" name="SFCompactRounded-Ultralight" family="SF Compact Rounded" pointSize="30"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The First Multicultural Podcast Network" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cU-Ct-kBX">
-                                                <rect key="frame" x="71.5" y="92" width="191" height="45.5"/>
+                                                <rect key="frame" x="73" y="90" width="188.5" height="44.5"/>
                                                 <fontDescription key="fontDescription" name="SFCompactRounded-Ultralight" family="SF Compact Rounded" pointSize="19"/>
                                                 <color key="textColor" red="0.93333333333333335" green="0.52549019607843139" blue="0.21568627450980393" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uwg-no-bQf" customClass="UIButtonX" customModule="PDM" customModuleProvider="target">
-                                                <rect key="frame" x="52" y="157.5" width="230" height="42"/>
+                                                <rect key="frame" x="52" y="154.5" width="230" height="42"/>
                                                 <color key="backgroundColor" red="0.4823529412" green="0.64705882349999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="230" id="gfu-pc-mMQ"/>
@@ -3094,6 +3094,12 @@
                                                             <outlet property="delegate" destination="SR2-7a-tJq" id="P8G-km-vBF"/>
                                                         </connections>
                                                     </collectionView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Podcast Available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWO-TO-LUk">
+                                                        <rect key="frame" x="141.5" y="61.5" width="131.5" height="17"/>
+                                                        <fontDescription key="fontDescription" name="SFCompactRounded-Ultralight" family="SF Compact Rounded" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
@@ -3101,6 +3107,8 @@
                                                     <constraint firstAttribute="height" constant="140" id="2pz-Sr-Sba"/>
                                                     <constraint firstAttribute="trailing" secondItem="lTL-oN-4F8" secondAttribute="trailing" constant="10" id="GhE-f7-4vv"/>
                                                     <constraint firstItem="lTL-oN-4F8" firstAttribute="leading" secondItem="0SY-Kg-7DZ" secondAttribute="leading" constant="10" id="VaT-Kn-gBr"/>
+                                                    <constraint firstItem="IWO-TO-LUk" firstAttribute="centerY" secondItem="0SY-Kg-7DZ" secondAttribute="centerY" id="cNV-fj-5AN"/>
+                                                    <constraint firstItem="IWO-TO-LUk" firstAttribute="centerX" secondItem="0SY-Kg-7DZ" secondAttribute="centerX" id="gWD-pw-6QK"/>
                                                     <constraint firstAttribute="bottom" secondItem="lTL-oN-4F8" secondAttribute="bottom" id="ivy-MV-haN"/>
                                                 </constraints>
                                             </view>
@@ -3206,12 +3214,20 @@
                                                             <outlet property="delegate" destination="SR2-7a-tJq" id="yxm-l6-c8a"/>
                                                         </connections>
                                                     </collectionView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Podcast Available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGO-Rg-D2F">
+                                                        <rect key="frame" x="141.5" y="61.5" width="131.5" height="17"/>
+                                                        <fontDescription key="fontDescription" name="SFCompactRounded-Ultralight" family="SF Compact Rounded" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="7em-R4-quu" firstAttribute="top" secondItem="FEC-Uo-mzg" secondAttribute="top" id="65y-Ou-t4l"/>
+                                                    <constraint firstItem="cGO-Rg-D2F" firstAttribute="centerY" secondItem="FEC-Uo-mzg" secondAttribute="centerY" id="Ffz-lQ-u32"/>
                                                     <constraint firstAttribute="trailing" secondItem="7em-R4-quu" secondAttribute="trailing" constant="10" id="RJe-br-Xgc"/>
                                                     <constraint firstAttribute="height" constant="140" id="WRX-MV-jub"/>
+                                                    <constraint firstItem="cGO-Rg-D2F" firstAttribute="centerX" secondItem="FEC-Uo-mzg" secondAttribute="centerX" id="i6I-Ga-26c"/>
                                                     <constraint firstItem="7em-R4-quu" firstAttribute="leading" secondItem="FEC-Uo-mzg" secondAttribute="leading" constant="10" id="mbx-GZ-938"/>
                                                     <constraint firstAttribute="bottom" secondItem="7em-R4-quu" secondAttribute="bottom" id="yOB-0Z-wWT"/>
                                                 </constraints>
@@ -3318,13 +3334,21 @@
                                                             <outlet property="delegate" destination="SR2-7a-tJq" id="lCx-1h-Yg5"/>
                                                         </connections>
                                                     </collectionView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Podcast Available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2NE-iI-wnE">
+                                                        <rect key="frame" x="141" y="61" width="131.5" height="17"/>
+                                                        <fontDescription key="fontDescription" name="SFCompactRounded-Ultralight" family="SF Compact Rounded" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="7HG-29-SJ2" firstAttribute="top" secondItem="tKx-xy-ax0" secondAttribute="top" id="S93-W7-JZt"/>
+                                                    <constraint firstItem="2NE-iI-wnE" firstAttribute="centerX" secondItem="tKx-xy-ax0" secondAttribute="centerX" id="V0b-if-XyY"/>
                                                     <constraint firstItem="7HG-29-SJ2" firstAttribute="leading" secondItem="tKx-xy-ax0" secondAttribute="leading" constant="10" id="Vaf-hE-Pvc"/>
                                                     <constraint firstAttribute="trailing" secondItem="7HG-29-SJ2" secondAttribute="trailing" constant="10" id="VnH-jb-rfJ"/>
                                                     <constraint firstAttribute="bottom" secondItem="7HG-29-SJ2" secondAttribute="bottom" id="rvi-D5-bSF"/>
+                                                    <constraint firstItem="2NE-iI-wnE" firstAttribute="centerY" secondItem="tKx-xy-ax0" secondAttribute="centerY" id="svL-SG-QOT"/>
                                                     <constraint firstAttribute="height" constant="140" id="ulT-9y-kNB"/>
                                                 </constraints>
                                             </view>
@@ -3422,6 +3446,9 @@
                     <navigationItem key="navigationItem" id="gUf-gt-gqM"/>
                     <connections>
                         <outlet property="bottomConstant" destination="SeP-fG-YIm" id="Pwa-jE-k3n"/>
+                        <outlet property="lblEmptyNewRelease" destination="2NE-iI-wnE" id="cTz-4j-9bA"/>
+                        <outlet property="lblEmptyRecomended" destination="cGO-Rg-D2F" id="QfT-HA-VVY"/>
+                        <outlet property="lblEmptyTrending" destination="IWO-TO-LUk" id="S7t-zw-U7x"/>
                         <outlet property="newReleasesCollectionView" destination="7HG-29-SJ2" id="cY9-ox-3cd"/>
                         <outlet property="recomcollectionview" destination="7em-R4-quu" id="HiL-E4-Dn9"/>
                         <outlet property="recordAction" destination="Z0D-hr-Sj1" id="Lyc-lj-Y7u"/>
@@ -4349,6 +4376,7 @@
                         <outlet property="lblNextName" destination="aPW-T6-q7z" id="cka-jM-LxP"/>
                         <outlet property="lblPlayPause" destination="7ji-De-htF" id="rVg-Xc-YL5"/>
                         <outlet property="lblProgressView" destination="6mg-Wp-TZf" id="tN3-zK-ieM"/>
+                        <outlet property="lblUpNext" destination="BZj-Yw-uDM" id="CDy-K2-xEh"/>
                         <outlet property="lipServiceCollectionView" destination="GRL-y7-noe" id="LYv-sA-vqg"/>
                     </connections>
                 </viewController>
@@ -4690,13 +4718,21 @@
                                                             <outlet property="delegate" destination="hXY-dh-Seb" id="Xio-EM-7tR"/>
                                                         </connections>
                                                     </collectionView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Podcast Available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e4g-GO-RT1">
+                                                        <rect key="frame" x="140" y="80.5" width="134" height="17"/>
+                                                        <fontDescription key="fontDescription" name="SFCompactRounded-Ultralight" family="SF Compact Rounded" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="ddh-5F-SFu" firstAttribute="top" secondItem="Fhr-dC-73t" secondAttribute="top" constant="10" id="4qD-ro-eqZ"/>
                                                     <constraint firstAttribute="trailing" secondItem="ddh-5F-SFu" secondAttribute="trailing" id="G9D-D8-OcW"/>
+                                                    <constraint firstItem="e4g-GO-RT1" firstAttribute="centerX" secondItem="ddh-5F-SFu" secondAttribute="centerX" id="KHl-P1-6jC"/>
                                                     <constraint firstItem="ddh-5F-SFu" firstAttribute="leading" secondItem="Fhr-dC-73t" secondAttribute="leading" id="Kc8-zX-HjZ"/>
                                                     <constraint firstAttribute="bottom" secondItem="ddh-5F-SFu" secondAttribute="bottom" constant="10" id="RL4-Bt-gSB"/>
+                                                    <constraint firstItem="e4g-GO-RT1" firstAttribute="centerY" secondItem="ddh-5F-SFu" secondAttribute="centerY" id="TlH-mt-RV4"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -4748,6 +4784,7 @@
                         <outlet property="bottoncollectionview" destination="ddh-5F-SFu" id="634-GY-j7y"/>
                         <outlet property="emptyView" destination="KJq-sd-2gS" id="Pnj-yO-Z3j"/>
                         <outlet property="ivWebPlay" destination="2Bf-XG-uwW" id="FbQ-6c-85U"/>
+                        <outlet property="lblEmpty" destination="e4g-GO-RT1" id="bnC-aj-rPb"/>
                         <outlet property="lblLoadingVideo" destination="iXF-6f-aE8" id="Rpk-Jy-UQT"/>
                         <outlet property="uppercollectionview" destination="taS-y2-ab5" id="W0q-zN-FAw"/>
                         <outlet property="videomage" destination="ZP6-hn-GBM" id="5qZ-73-xx5"/>
@@ -4768,7 +4805,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Podcast Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBh-gm-XHa">
-                                <rect key="frame" x="122" y="435.5" width="170.5" height="25.5"/>
+                                <rect key="frame" x="118.5" y="436" width="177" height="24.5"/>
                                 <fontDescription key="fontDescription" name="SFCompactRounded-Ultralight" family="SF Compact Rounded" pointSize="21"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -4798,7 +4835,7 @@
                                 </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Liked Podcast" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iaB-U9-WTe">
-                                <rect key="frame" x="20" y="134" width="125.5" height="24"/>
+                                <rect key="frame" x="20" y="134" width="128.5" height="24"/>
                                 <fontDescription key="fontDescription" name="SFCompactRounded-Ultralight" family="SF Compact Rounded" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -6234,7 +6271,7 @@
                                         <rect key="frame" x="0.0" y="200" width="414" height="660"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Episode Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cm6-Pj-Iey">
-                                                <rect key="frame" x="138.5" y="320" width="137" height="20.5"/>
+                                                <rect key="frame" x="136" y="320" width="142" height="20"/>
                                                 <fontDescription key="fontDescription" name="SFCompactRounded-Ultralight" family="SF Compact Rounded" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
