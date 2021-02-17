@@ -275,7 +275,7 @@ extension HomeViewController:WKNavigationDelegate{
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         DispatchQueue.main.asyncAfter(deadline: .now()+3.0, execute: { [self] in
             webView.alpha = 1
-            ivWebPlay.alpha = 0
+            self.ivWebPlay.alpha = 0
         })
     }
 }

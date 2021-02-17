@@ -243,11 +243,11 @@ extension ProfileViewController{
         self.userNameLabel.text = user?.fullName
         self.tfAge.text = user?.dob
         
-        if let profile = user?.profile_image,!profile.isEmpty,profile != "https://staging.oqh.obm.mybluehost.me/storage/profile_image/default.png"{
+        if let profile = user?.profile_image,!profile.isEmpty,profile != "\(kbaseURL)\(kprofile_default)"{
             ImageLoader.loadImage(imageView: profileDp, url: profile)
             ImageLoader.loadImage(imageView: profileImageView, url: profile)
         }
-        if let cover = user?.cover_image,!cover.isEmpty,cover != "https://staging.oqh.obm.mybluehost.me/storage/cover_image/default.png"{
+        if let cover = user?.cover_image,!cover.isEmpty,cover != "\(kbaseURL)\(kcover_default)"{
             ImageLoader.loadImage(imageView: coverImageView, url: cover)
         }
         

@@ -6,15 +6,11 @@ let kheader : [String : String] = ["Content-Type":"application/json"]
 
 
 //MARK: APP URLS
-//let kbaseURL = "https://staging.oqh.obm.mybluehost.me/api/"
-let kbaseURL = "https://oqh.obm.mybluehost.me/api/"
+let kbaseURL = "https://admin.poddigitalmedia.com/api/"
+//let kbaseURL = "https://staging.poddigitalmedia.com/api/"
 let kTermsUrl = "https://www.termsfeed.com/live/fffdba5e-dfca-43a4-a751-f9ad9c4dddb3"
 let kPrivacyURL = "https://www.termsfeed.com/live/252dcec2-b37d-4126-ad9f-247d2a2b04ac"
 let kContactUs = "https://poddigitalmedia.com/about-us/"
-//let kFbUrl = "https:carigologistics.com/signin_with_facebook"
-//let kFcmTokenUrl = "https:carigologistics.com/user/updateFcmToken"
-//let kFetchCategoriesURL = "https:carigologistics.com/get_categories"
-//let kGMS_APIKEY = "AIzaSyCFispDflTAC3cJCZHJHiKA9ESeVOLaUNI"
 let kMixpanelInitializeToken = "136a836213cf57fbc82b6372b9ce4a49"
 
 //MARK: Mixpanel Attributes
@@ -52,6 +48,9 @@ let kPlayPodcast = "podcast/play"
 let kDeletePodcast = "home/profile/deleteUploadedPod/"
 let kUploadImage = "home/profile/updateUserImage"
 let kEditProfile = "home/profile/editUserDetail"
+let kprofile_default = "storage/profile_image/default.png"
+let kcover_default = "storage/cover_image/default.png"
+
 
 
 //MARK: API KEYS

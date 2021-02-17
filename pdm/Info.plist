@@ -69,13 +69,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Needed for image upload</string>
+	<string>Media library is required to upload audio for podcast.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Needed for image upload</string>
+	<string>Camera is required to upload images.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Allow access to Microphone to Record Podcast.</string>
+	<string>Microphone access is required to record audio for Podcast.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Needed for image upload</string>
+	<string>Photo library is required to upload images.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
