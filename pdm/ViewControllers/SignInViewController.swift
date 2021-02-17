@@ -352,7 +352,7 @@ extension SignInViewController: GIDSignInDelegate{
     }
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
-            Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Error While Google Signin Please Try later", preferredStyle: .alert, buttonText: "OK")
+            Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Login Canceled", preferredStyle: .alert, buttonText: "OK")
         } else {
             let userId = user.userID ?? ""
             let idToken = user.authentication.idToken
