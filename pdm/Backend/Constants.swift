@@ -8,8 +8,8 @@ let kheader : [String : String] = ["Content-Type":"application/json"]
 //MARK: APP URLS
 let kbaseURL = "https://admin.poddigitalmedia.com/api/"
 //let kbaseURL = "https://staging.poddigitalmedia.com/api/"
-let kTermsUrl = "https://www.termsfeed.com/live/fffdba5e-dfca-43a4-a751-f9ad9c4dddb3"
-let kPrivacyURL = "https://www.termsfeed.com/live/252dcec2-b37d-4126-ad9f-247d2a2b04ac"
+let kTermsUrl = "https://admin.poddigitalmedia.com/terms"
+let kPrivacyURL = "https://admin.poddigitalmedia.com/privacy-policy"
 let kContactUs = "https://poddigitalmedia.com/about-us/"
 let kMixpanelInitializeToken = "136a836213cf57fbc82b6372b9ce4a49"
 
