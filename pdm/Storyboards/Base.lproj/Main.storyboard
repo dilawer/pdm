@@ -136,22 +136,22 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="3DA-Cp-A5F">
-                                        <rect key="frame" x="40" y="350" width="334" height="196.5"/>
+                                        <rect key="frame" x="40" y="348.5" width="334" height="199.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome To Pod Digital Media Podcast App" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3GT-Us-ZT4">
-                                                <rect key="frame" x="3.5" y="0.0" width="327" height="70"/>
+                                                <rect key="frame" x="8" y="0.0" width="318" height="72"/>
                                                 <fontDescription key="fontDescription" name="SFCompactRounded-Ultralight" family="SF Compact Rounded" pointSize="30"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The First Multicultural Podcast Network" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cU-Ct-kBX">
-                                                <rect key="frame" x="73" y="90" width="188.5" height="44.5"/>
+                                                <rect key="frame" x="71.5" y="92" width="191" height="45.5"/>
                                                 <fontDescription key="fontDescription" name="SFCompactRounded-Ultralight" family="SF Compact Rounded" pointSize="19"/>
                                                 <color key="textColor" red="0.93333333333333335" green="0.52549019607843139" blue="0.21568627450980393" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uwg-no-bQf" customClass="UIButtonX" customModule="PDM" customModuleProvider="target">
-                                                <rect key="frame" x="52" y="154.5" width="230" height="42"/>
+                                                <rect key="frame" x="52" y="157.5" width="230" height="42"/>
                                                 <color key="backgroundColor" red="0.4823529412" green="0.64705882349999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="230" id="gfu-pc-mMQ"/>
@@ -4224,7 +4224,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPW-T6-q7z">
-                                <rect key="frame" x="392.5" y="433.5" width="11.5" height="14.5"/>
+                                <rect key="frame" x="150" y="433.5" width="254" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -4344,6 +4344,7 @@
                             <constraint firstItem="uLz-fP-6hB" firstAttribute="bottom" secondItem="0h0-OP-qWZ" secondAttribute="bottom" id="bS3-G6-dIc"/>
                             <constraint firstItem="EDA-Lf-ofH" firstAttribute="leading" secondItem="uLz-fP-6hB" secondAttribute="leading" constant="10" id="d9C-tN-Z7O"/>
                             <constraint firstItem="BZj-Yw-uDM" firstAttribute="top" secondItem="QsK-qg-Boo" secondAttribute="bottom" constant="10" id="e7Q-6a-Ayn"/>
+                            <constraint firstItem="aPW-T6-q7z" firstAttribute="leading" secondItem="uLz-fP-6hB" secondAttribute="leading" constant="150" id="go0-SN-VH3"/>
                             <constraint firstItem="ogU-xA-TB7" firstAttribute="top" secondItem="QsK-qg-Boo" secondAttribute="bottom" constant="10" id="i8D-7D-5tx"/>
                             <constraint firstItem="uLz-fP-6hB" firstAttribute="trailing" secondItem="0h0-OP-qWZ" secondAttribute="trailing" id="idU-Vh-4Zv"/>
                             <constraint firstItem="0h0-OP-qWZ" firstAttribute="leading" secondItem="uLz-fP-6hB" secondAttribute="leading" id="j9U-SY-aou"/>
@@ -5001,7 +5002,7 @@
                                     <action selector="actionDismiss:" destination="VY6-fl-s54" eventType="touchUpInside" id="v6U-6B-0Ww"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POD DIgitial Media" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fPE-cg-Lrk">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pod DIgitial Media" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fPE-cg-Lrk">
                                 <rect key="frame" x="10" y="110" width="394" height="33.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -6558,7 +6559,7 @@
         <image name="ic_shuffl" width="28" height="20"/>
         <image name="ic_unLiked" width="22" height="19"/>
         <image name="ic_upload" width="11" height="11"/>
-        <image name="person" catalog="system" width="32" height="32"/>
+        <image name="person" catalog="system" width="128" height="117"/>
         <image name="person.3" catalog="system" width="128" height="62"/>
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <image name="person.crop.circle" catalog="system" width="128" height="121"/>
