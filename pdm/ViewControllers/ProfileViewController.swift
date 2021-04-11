@@ -260,11 +260,20 @@ extension ProfileViewController{
         } else {
             autoplay.setOn(false, animated: false)
         }
-        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(handleDatePicker(sender:) ), for: .valueChanged)
         datePicker.datePickerMode = .date
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        } 
         datePicker.maximumDate = Date()
         tfAge.inputView = datePicker
     }
+    
+    @objc func handleDatePicker(sender: UIDatePicker) {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+        tfAge.text = dateFormatter.string(from: sender.date)
+            }
     @objc func dateChanged(_ sender: UIDatePicker) {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: sender.date)
         if let day = components.day, let month = components.month, let year = components.year {

@@ -29,7 +29,16 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     @IBOutlet weak var ivLike: UIImageView!
     @IBOutlet weak var lblUpNext: UILabel!
     
+    private var podcastDetail = ""
     //MARK:- Actions
+     
+    @IBAction func btnShareClicked(_ sender: UIButton) {
+        let items = [activePod?.episodeFileLink] 
+        let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        present(ac, animated: true)
+    }
+    
+    
     @IBAction func actionPlayPause(_ sender: Any) {
         if shouldPlay{
             if let active = activePod{
@@ -258,6 +267,7 @@ extension LipServiceViewController:WebManagerDelegate{
                         if let details:PodcastDetailsResponse = self.handleResponse(data: jsonData){
                             if let data = details.data{
                                 Global.shared.podDetails = data
+                                podcastDetail = "\(data.podcastName)-\(data.pods[0].episodeName)"
                                 lblName.text = data.podcastName
                                 ImageLoader.loadImage(imageView: ivPodcast, url: data.podcastIcon )
                                 if let episodeID = episodeID,!fromMin{

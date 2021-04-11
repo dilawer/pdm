@@ -24,26 +24,44 @@ class ImageLoader{
             imageView.image = UIImage(named: "placeholder")
             return
         }
-        imageView.kf.setImage(with: url,placeholder: UIImage(named: "placeholder"),completionHandler: { (image, error, cacheType, imageUrl) in
+        imageView.kf.setImage(with: url , placeholder: UIImage(named: "placeholder") , completionHandler: {result in
             if let color = tint{
                 imageView.tintColor = color
                 imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
             }
         })
+//        imageView.kf.setImage(with: url,placeholder: UIImage(named: "placeholder"),completionHandler: { (image, error, cacheType, imageUrl) in
+//            if let color = tint{
+//                imageView.tintColor = color
+//                imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
+//            }
+//        })
     }
-    func downloadImage(imageView:UIImageView,url:String){
+    func downloadImage(imageView:UIImageView , url:String){
         guard let url = URL(string: url.replacingOccurrences(of: " ", with: "%20")) else {
             imageView.image = UIImage(named: "placeholder")
             return
         }
-        imageView.kf.setImage(with: url,placeholder: UIImage(named: "placeholder"),completionHandler: { (image, error, cacheType, imageUrl) in
-            if let img = image{
-                DispatchQueue.main.asyncAfter(deadline: .now()+1.0, execute: {
-                    if let imageCallBack = self.imageCallBack{
-                        imageCallBack(img)
-                    }
-                })
-            }
+        imageView.kf.setImage(with: url , placeholder: UIImage(named: "placeholder") , completionHandler: { result  in
+            print("downloadImage result = \(result)")
+//            do {
+//                if let img = result.get().image{
+//                    DispatchQueue.main.asyncAfter(deadline: .now()+1.0, execute: {
+//                        if let imageCallBack = self.imageCallBack{
+//                            imageCallBack(img)
+//                        }
+//                    })
+//                }
+//            }
         })
+//        imageView.kf.setImage(with: url,placeholder: UIImage(named: "placeholder"),completionHandler: { (image, error, cacheType, imageUrl) in
+//            if let img = image{
+//                DispatchQueue.main.asyncAfter(deadline: .now()+1.0, execute: {
+//                    if let imageCallBack = self.imageCallBack{
+//                        imageCallBack(img)
+//                    }
+//                })
+//            }
+//        })
     }
 }

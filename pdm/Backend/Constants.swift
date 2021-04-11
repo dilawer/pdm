@@ -2,12 +2,10 @@ import Foundation
 
 
 let kheader : [String : String] = ["Content-Type":"application/json"]
-
-
-
+ 
 //MARK: APP URLS
-let kbaseURL = "https://admin.poddigitalmedia.com/api/"
-//let kbaseURL = "https://staging.poddigitalmedia.com/api/"
+//let kbaseURL = "https://admin.poddigitalmedia.com/api/"
+let kbaseURL = "https://staging.poddigitalmedia.com/api/"
 let kTermsUrl = "https://admin.poddigitalmedia.com/terms"
 let kPrivacyURL = "https://admin.poddigitalmedia.com/privacy-policy"
 let kContactUs = "https://poddigitalmedia.com/about-us/"

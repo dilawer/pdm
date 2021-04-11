@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_pdm_pdmUITestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_pdm_pdmUITestsVersionString[];
+FOUNDATION_EXPORT double Pods_PDM_pdmUITestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_PDM_pdmUITestsVersionString[];
 

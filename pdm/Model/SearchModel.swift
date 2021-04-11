@@ -27,7 +27,7 @@ struct Categorys: Codable {
         case id = "id"
         case categoryName = "category_name"
         case categoryIcon = "category_icon"
-        case category_id = "category_id"
+        case category_id = "category_id" 
     }
 }
 
@@ -43,5 +43,6 @@ struct Podcasts: Codable {
         case podcastDuration = "podcast_duration"
         case episodeName = "episode_name"
         case podcastIcon = "podcast_icon"
+ 
     }
 }

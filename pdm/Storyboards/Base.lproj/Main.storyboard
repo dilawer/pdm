@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="quS-7e-veX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="quS-7e-veX">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -230,7 +230,7 @@
                                                         <attributedString key="attributedText">
                                                             <fragment content="Pod Digital Media">
                                                                 <attributes>
-                                                                    <font key="NSFont" size="30" name="SFProRounded-Semibold"/>
+                                                                    <font key="NSFont" metaFont="system" size="30"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
                                                             </fragment>
@@ -243,7 +243,7 @@
                                                             <fragment content="The First Multicultural Podcast Network">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.43137254901960786" green="0.58431372549019611" blue="0.2233694494" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                                    <font key="NSFont" size="21" name="SFProRounded-Thin"/>
+                                                                    <font key="NSFont" metaFont="system" size="21"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
                                                             </fragment>
@@ -1281,11 +1281,11 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gx2-3m-FAi">
-                                <rect key="frame" x="30" y="184" width="354" height="29.5"/>
+                                <rect key="frame" x="30" y="184" width="354" height="30"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Need help with your username">
                                         <attributes>
-                                            <font key="NSFont" size="25" name="SFProRounded-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="25"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                         </attributes>
                                     </fragment>
@@ -1293,7 +1293,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fSB-qe-rLo" customClass="UIViewX" customModule="PDM" customModuleProvider="target">
-                                <rect key="frame" x="50" y="312" width="304" height="45"/>
+                                <rect key="frame" x="50" y="312.5" width="304" height="45"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -1308,13 +1308,13 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the email associated with your PDM account, and we'll help remind you of your username. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n9U-5V-R5N">
-                                <rect key="frame" x="50" y="243.5" width="314" height="48.5"/>
+                                <rect key="frame" x="50" y="244" width="314" height="48.5"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tGH-iR-iZY">
-                                <rect key="frame" x="60" y="312" width="294" height="45"/>
+                                <rect key="frame" x="60" y="312.5" width="294" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="UdA-cI-xj1"/>
                                 </constraints>
@@ -1322,7 +1322,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="adk-57-WMY" customClass="UIButtonX" customModule="PDM" customModuleProvider="target">
-                                <rect key="frame" x="117" y="387" width="180" height="35"/>
+                                <rect key="frame" x="117" y="387.5" width="180" height="35"/>
                                 <color key="backgroundColor" red="0.43137254899999999" green="0.58431372550000005" blue="0.2233694494" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="ChG-FQ-E11"/>
@@ -1496,11 +1496,11 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FcX-na-lJf">
-                                <rect key="frame" x="30" y="184" width="354" height="58.5"/>
+                                <rect key="frame" x="30" y="184" width="354" height="30"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Need Help With Your Password?">
                                         <attributes>
-                                            <font key="NSFont" size="25" name="SFProRounded-Regular"/>
+                                            <font key="NSFont" metaFont="system" size="25"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -1508,13 +1508,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the email associated with your PDM account, and we'll help reset your password. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRR-aj-1uv">
-                                <rect key="frame" x="50" y="272.5" width="314" height="28"/>
+                                <rect key="frame" x="50" y="244" width="314" height="28"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0MA-zh-AQc" customClass="UIViewX" customModule="PDM" customModuleProvider="target">
-                                <rect key="frame" x="50" y="320.5" width="304" height="45"/>
+                                <rect key="frame" x="50" y="292" width="304" height="45"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -1529,7 +1529,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZLq-bf-W9m">
-                                <rect key="frame" x="60" y="320.5" width="294" height="45"/>
+                                <rect key="frame" x="60" y="292" width="294" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="uXy-ME-GU7"/>
                                 </constraints>
@@ -1537,7 +1537,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQT-OL-0Yp" customClass="UIButtonX" customModule="PDM" customModuleProvider="target">
-                                <rect key="frame" x="117" y="395.5" width="180" height="40"/>
+                                <rect key="frame" x="117" y="367" width="180" height="40"/>
                                 <color key="backgroundColor" red="0.43137254899999999" green="0.58431372550000005" blue="0.2233694494" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="lVJ-3R-l5R"/>
@@ -2918,7 +2918,7 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="112" height="69"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pod of the" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RBD-zk-14C">
-                                                                                    <rect key="frame" x="41.5" y="28.5" width="53" height="12"/>
+                                                                                    <rect key="frame" x="41.5" y="28.5" width="52.5" height="12"/>
                                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <nil key="highlightedColor"/>
@@ -4310,6 +4310,13 @@
                                     <constraint firstAttribute="trailing" secondItem="GRL-y7-noe" secondAttribute="trailing" constant="20" id="RSF-Xj-Hw1"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YXY-yf-iSk">
+                                <rect key="frame" x="320" y="172" width="22" height="22"/>
+                                <state key="normal" image="sharethis"/>
+                                <connections>
+                                    <action selector="btnShareClicked:" destination="q8l-c0-gnm" eventType="touchUpInside" id="TCR-bX-bRX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="uLz-fP-6hB"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -4333,6 +4340,7 @@
                             <constraint firstItem="gSY-tc-aG2" firstAttribute="top" secondItem="vt1-1P-YAU" secondAttribute="bottom" constant="10" id="HeO-u9-YbL"/>
                             <constraint firstItem="vuL-Ek-inI" firstAttribute="bottom" secondItem="AOi-at-TZ8" secondAttribute="bottom" id="Jyt-th-JmT"/>
                             <constraint firstItem="3te-c6-Lx8" firstAttribute="trailing" secondItem="3L8-n9-pbG" secondAttribute="trailing" id="MBu-sm-Fak"/>
+                            <constraint firstItem="gSY-tc-aG2" firstAttribute="top" secondItem="YXY-yf-iSk" secondAttribute="bottom" constant="14.5" id="Pol-51-Prx"/>
                             <constraint firstItem="hyU-1W-g2q" firstAttribute="top" secondItem="UUm-7V-uRd" secondAttribute="bottom" constant="5" id="RTf-h6-3OP"/>
                             <constraint firstItem="gSY-tc-aG2" firstAttribute="centerX" secondItem="uLz-fP-6hB" secondAttribute="centerX" id="Tbh-2T-sQe"/>
                             <constraint firstItem="ogU-xA-TB7" firstAttribute="leading" secondItem="uLz-fP-6hB" secondAttribute="leading" constant="10" id="UB7-j8-NSK"/>
@@ -4340,6 +4348,7 @@
                             <constraint firstItem="vuL-Ek-inI" firstAttribute="trailing" secondItem="AOi-at-TZ8" secondAttribute="trailing" id="Uva-uB-vg2"/>
                             <constraint firstItem="vuL-Ek-inI" firstAttribute="top" secondItem="AOi-at-TZ8" secondAttribute="top" id="Wds-oc-jgo"/>
                             <constraint firstItem="owv-aq-KQP" firstAttribute="leading" secondItem="uLz-fP-6hB" secondAttribute="leading" constant="10" id="X6b-N5-QKF"/>
+                            <constraint firstItem="YXY-yf-iSk" firstAttribute="leading" secondItem="AOi-at-TZ8" secondAttribute="trailing" constant="8" symbolic="YES" id="XJe-bg-wO3"/>
                             <constraint firstItem="EDA-Lf-ofH" firstAttribute="top" secondItem="owv-aq-KQP" secondAttribute="bottom" constant="5" id="Z3q-bH-AiY"/>
                             <constraint firstItem="uLz-fP-6hB" firstAttribute="bottom" secondItem="0h0-OP-qWZ" secondAttribute="bottom" id="bS3-G6-dIc"/>
                             <constraint firstItem="EDA-Lf-ofH" firstAttribute="leading" secondItem="uLz-fP-6hB" secondAttribute="leading" constant="10" id="d9C-tN-Z7O"/>
@@ -6441,7 +6450,7 @@
             <size key="intrinsicContentSize" width="40" height="26"/>
         </designable>
         <designable name="96T-6Q-KDJ">
-            <size key="intrinsicContentSize" width="4" height="17"/>
+            <size key="intrinsicContentSize" width="14" height="17"/>
         </designable>
         <designable name="A6d-CO-t22">
             <size key="intrinsicContentSize" width="57" height="30"/>
@@ -6453,7 +6462,7 @@
             <size key="intrinsicContentSize" width="83" height="36"/>
         </designable>
         <designable name="NG0-6F-Osj">
-            <size key="intrinsicContentSize" width="4" height="18.5"/>
+            <size key="intrinsicContentSize" width="14" height="18.5"/>
         </designable>
         <designable name="PMa-Mb-VGC">
             <size key="intrinsicContentSize" width="83" height="23"/>
@@ -6486,25 +6495,25 @@
             <size key="intrinsicContentSize" width="43" height="26"/>
         </designable>
         <designable name="fNs-SX-pvY">
-            <size key="intrinsicContentSize" width="4" height="17"/>
+            <size key="intrinsicContentSize" width="14" height="17"/>
         </designable>
         <designable name="g2a-Uq-pyg">
-            <size key="intrinsicContentSize" width="4" height="17"/>
+            <size key="intrinsicContentSize" width="14" height="17"/>
         </designable>
         <designable name="gAn-j1-kUq">
             <size key="intrinsicContentSize" width="46" height="50.5"/>
         </designable>
         <designable name="ifD-VZ-aGW">
-            <size key="intrinsicContentSize" width="4" height="18.5"/>
+            <size key="intrinsicContentSize" width="14" height="18.5"/>
         </designable>
         <designable name="kTf-xo-qH1">
-            <size key="intrinsicContentSize" width="4" height="18.5"/>
+            <size key="intrinsicContentSize" width="14" height="18.5"/>
         </designable>
         <designable name="khz-bR-jhB">
             <size key="intrinsicContentSize" width="82" height="27"/>
         </designable>
         <designable name="qmZ-tJ-lgC">
-            <size key="intrinsicContentSize" width="4" height="18.5"/>
+            <size key="intrinsicContentSize" width="14" height="18.5"/>
         </designable>
         <designable name="rQT-OL-0Yp">
             <size key="intrinsicContentSize" width="48" height="29"/>
@@ -6513,7 +6522,7 @@
             <size key="intrinsicContentSize" width="93" height="18.5"/>
         </designable>
         <designable name="xG3-wu-sFy">
-            <size key="intrinsicContentSize" width="4" height="18.5"/>
+            <size key="intrinsicContentSize" width="14" height="18.5"/>
         </designable>
         <designable name="zMo-WY-RVR">
             <size key="intrinsicContentSize" width="90" height="26"/>
@@ -6566,6 +6575,7 @@
         <image name="recomone" width="46" height="50.5"/>
         <image name="releaseone" width="46" height="50.5"/>
         <image name="searchicon" width="8" height="8"/>
+        <image name="sharethis" width="22" height="22"/>
         <image name="splashIconMain" width="125" height="271"/>
         <image name="trendingone" width="46" height="50.5"/>
         <image name="upperone" width="39" height="22"/>

@@ -15,12 +15,14 @@ class SmallCategoryCell: UICollectionViewCell {
     @IBOutlet weak var viewSelected: UIViewX!
     @IBOutlet weak var height: NSLayoutConstraint!
     @IBOutlet weak var width: NSLayoutConstraint!
+    var catSelected: Bool = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
-    func config(categories:Categorys,width:CGFloat,isSeleted:Bool){
+     
+    func config(categories:Categorys, width:CGFloat, isSeleted:Bool){
         lblName.text = categories.categoryName
         ImageLoader.loadImage(imageView: ivImage, url: categories.categoryIcon)
         self.width.constant = width
@@ -29,6 +31,11 @@ class SmallCategoryCell: UICollectionViewCell {
         } else {
             viewSelected.alpha = 0
         }
+//        if catSelected{
+//            viewSelected.alpha = 0.5
+//        } else {
+//            viewSelected.alpha = 0
+//        }
     }
 
 }

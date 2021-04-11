@@ -1,5 +1,5 @@
-framework module Pods_pdm_pdmUITests {
-  umbrella header "Pods-pdm-pdmUITests-umbrella.h"
+framework module Pods_PDM_pdmUITests {
+  umbrella header "Pods-PDM-pdmUITests-umbrella.h"
 
   export *
   module * { export * }

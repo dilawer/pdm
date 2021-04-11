@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_pdmVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_pdmVersionString[];
+FOUNDATION_EXPORT double Pods_PDMVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_PDMVersionString[];
 

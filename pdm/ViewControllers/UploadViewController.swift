@@ -28,13 +28,19 @@ class UploadViewController: UIViewController {
     
     //MARK:- Action
     @IBAction func actionPickImage(_ sender: Any) {
-        guard !isPodcastUploaded else {
-            return
-        }
+        print("Working = \(isPodcastUploaded)")
+//        guard !isPodcastUploaded else {
+//            return
+//        }
         getImage()
     }
     @IBAction func actionUploadToPDM(_ sender: Any) {
+        print("actionUploadToPDM global = \(Global.shared.userPodcastCategory), selected = \(String(selectedCategory))")
         if isValid(){
+            selectedCategoryArray.removeAll()
+            for cat in categoriesArray {
+                selectedCategoryArray.append(String(cat))
+            }
             let podcastID = Global.shared.userPodcastID
             let params:[String:Any] = [
                 "duration":String(sceonds),
@@ -43,14 +49,18 @@ class UploadViewController: UIViewController {
                 "episode_description":tfDescription.text ?? "",
                 "user_podcast_exist":podcastID == nil ? "0" : "1",
                 "podcast":podcastID == nil ? (tfPodcastName.text ?? "") : (podcastID ?? "0"),
-                "category":podcastID == nil ? (String(selectedCategory)) : (Global.shared.userPodcastCategory)
+                "category":categoriesArray.description//podcastID == nil ? (String(selectedCategory)) : (Global.shared.userPodcastCategory)
+                //"category":podcastID == nil ? "1" : "2"
+
             ]
+            print("actionUploadToPDM params = \(params)")
             var file = [String:Data]()
             if !isPodcastUploaded{
                 file = ["podcast_icon":imageData ?? Data(),"file":audio ?? Data()]
             } else {
-                file = ["file":audio!]
+                file = ["podcast_icon":imageData ?? Data(),"file":audio ?? Data()]
             }
+            print("actionUploadToPDM file = \(file)")
             WebManager.getInstance(delegate: self)?.uploadPodcast(parms: params, file: file)
         }
     }
@@ -65,6 +75,9 @@ class UploadViewController: UIViewController {
     
     //MARK:- Veriable
     var array = [Float]()
+    var categoriesArray = [Int]()
+    var selectedCategoryArray = [String]()
+    var categoriesIndexArray = [Int]()
     var audio:Data?
     var length = "00:00:00"
     var sceonds:Int = 0
@@ -106,6 +119,7 @@ class UploadViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         Global.shared.universalPlayer?.alpha = 0
+        print("Global.shared.userPodcastCategory = \(Global.shared.userPodcastCategory)")
     }
     override func viewWillDisappear(_ animated: Bool) {
         Global.shared.universalPlayer?.alpha = 1
@@ -129,14 +143,36 @@ extension UploadViewController:UICollectionViewDelegate,UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionCat.dequeueReusableCell(withReuseIdentifier: "SmallCategoryCell", for: indexPath) as! SmallCategoryCell
         let category = categories[indexPath.row]
-        var isSelected = false
-        if indexPath.row == selectdIndex{
-            isSelected = true
+
+//        var isSelected = false
+//        if indexPath.row == selectdIndex{
+//            isSelected = true
+//        }
+        if categoriesIndexArray.contains(indexPath.row) {
+            cell.catSelected = true
         }
-        cell.config(categories: category, width: 200, isSeleted: isSelected)
+        else {
+            cell.catSelected = false
+        }
+        cell.config(categories: category, width: 200, isSeleted: cell.catSelected)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+   
+        if categoriesIndexArray.contains(indexPath.row) {
+            let index = categoriesIndexArray.index(of: indexPath.row)
+            categoriesIndexArray.remove(at: index ?? 0)
+            
+            let catIndex = categoriesArray.index(of: indexPath.row)
+            categoriesArray.remove(at: catIndex ?? 0)
+            collectionView.reloadItems(at: [indexPath])
+            
+        }
+        else {
+            categoriesIndexArray.append(indexPath.row)
+            categoriesArray.append(categories[indexPath.row].id ?? 0)
+            collectionView.reloadItems(at: [indexPath])
+        }
         selectdIndex = indexPath.row
         selectedCategory = categories[indexPath.row].id ?? 0
         self.collectionCat.reloadData()
@@ -160,43 +196,49 @@ extension UploadViewController: WebManagerDelegate{
         switch(response.result) {
         case .success(let JSON):
             let result = JSON as! NSDictionary
-            let successresponse = result.object(forKey: "success")!
-            if(successresponse as! Bool == false) {
-                let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            } else {
-                do {
-                    let jsonData = try JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)
-                    if let searchResult:SearchModel = self.handleResponse(data: jsonData){
-                        if let listCat = searchResult.data.categories{
-                            if self.isPodcastUploaded{
-                                for (index,i) in listCat.enumerated(){
-                                    if String(i.id ?? -1) == Global.shared.userPodcastCategory {
-                                        selectdIndex = 0
-                                        categories.append(i)
-                                        collectionCat.reloadData()
-                                        break
+            print("result = \(result)")
+             
+            let successresponse = result.object(forKey: "success")
+            if successresponse != nil {
+                if(successresponse as! Bool == false) {
+                    print("successResponse LIne 167 = \(result.object(forKey: "message")! as! String)")
+                    let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                } else {
+                    do {
+                        let jsonData = try JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)
+                        if let searchResult:SearchModel = self.handleResponse(data: jsonData){
+                            if let listCat = searchResult.data.categories{
+                                if self.isPodcastUploaded{
+                                    for (index,i) in listCat.enumerated(){
+                                        if String(i.id ?? -1) == Global.shared.userPodcastCategory {
+                                            selectdIndex = 0
+                                            categories.append(i)
+                                            collectionCat.reloadData()
+                                            break
+                                        }
                                     }
+                                }else {
+                                    categories = listCat
+                                    print("categories = \(categories)")
                                 }
-                            }else {
-                                categories = listCat
+                            }
+                        } else if(successresponse as! Bool == true){
+                            if let msg = result.object(forKey: "message") as? String , msg.contains("successfull"){
+                                Utility.showAlertWithSingleOption(controller: self, title: "Congratulations!", message: "Your Podcast has been submitted to  PDM for review. We will notify you on approvals.", preferredStyle: .alert, buttonText: "Continue to PDM", buttonHandler: {_ in
+                                    self.navigationController?.popToRootViewController(animated: true)
+                                    Global.shared.Home?.refersh()
+                                })
                             }
                         }
-                    } else if(successresponse as! Bool == true){
-                        if let msg = result.object(forKey: "message") as? String , msg.contains("successfull"){
-                            Utility.showAlertWithSingleOption(controller: self, title: "Congratulations!", message: "Your Podcast has been submitted to  PDM for review. We will notify you on approvals.", preferredStyle: .alert, buttonText: "Continue to PDM", buttonHandler: {_ in
-                                self.navigationController?.popToRootViewController(animated: true)
-                                Global.shared.Home?.refersh()
-                            })
-                        }
+                    } catch {
+                        print(error.localizedDescription)
                     }
-                } catch {
-                    print(error.localizedDescription)
+                    self.collectionCat.reloadData()
                 }
-                self.collectionCat.reloadData()
             }
-            
+         
             break
         case .failure(_):
             let alert = UIAlertController(title: "Error", message: "Please enter correct username and password.", preferredStyle: UIAlertController.Style.alert)
