@@ -68,8 +68,7 @@ NSString *FIRMessagingAppIdentifier(void) {
 
 uint64_t FIRMessagingGetFreeDiskSpaceInMB(void) {
   NSError *error;
-  NSArray *paths =
-      NSSearchPathForDirectoriesInDomains(FIRMessagingSupportedDirectory(), NSUserDomainMask, YES);
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 
   NSDictionary *attributesMap =
       [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject]

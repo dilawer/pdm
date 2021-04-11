@@ -242,6 +242,98 @@
             endingLineNumber = "154"
             landmarkName = "ProfileViewController"
             landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "4B80A96F-BD30-4D44-BD73-1FB390B0B6C6 - e28932208213b2f6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PDM_Dev.ProfileViewController.isCoverSelected.getter : Swift.Bool"
+                  moduleName = "PDM-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/pdm/pdm/ViewControllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "154"
+                  endingLineNumber = "154"
+                  offsetFromSymbolStart = "89">
+               </Location>
+               <Location
+                  uuid = "4B80A96F-BD30-4D44-BD73-1FB390B0B6C6 - 66fbe453b4944aaa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PDM_Dev.ProfileViewController.isCoverSelected.setter : Swift.Bool"
+                  moduleName = "PDM-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/pdm/pdm/ViewControllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "154"
+                  endingLineNumber = "154"
+                  offsetFromSymbolStart = "118">
+               </Location>
+               <Location
+                  uuid = "4B80A96F-BD30-4D44-BD73-1FB390B0B6C6 - 596c5759e33344fd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PDM_Dev.ProfileViewController.isCoverSelected.modify : Swift.Bool"
+                  moduleName = "PDM-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/pdm/pdm/ViewControllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  uuid = "4B80A96F-BD30-4D44-BD73-1FB390B0B6C6 - 38e96e87f6a2cf4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PDM_Dev.ProfileViewController.isCoverSelected.modify : Swift.Bool with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "PDM-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/pdm/pdm/ViewControllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "154"
+                  endingLineNumber = "154"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "4B80A96F-BD30-4D44-BD73-1FB390B0B6C6 - d1feee791dc349c6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PDM_Dev.ProfileViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; PDM_Dev.ProfileViewController"
+                  moduleName = "PDM-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/pdm/pdm/ViewControllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "154"
+                  endingLineNumber = "154"
+                  offsetFromSymbolStart = "4333">
+               </Location>
+               <Location
+                  uuid = "4B80A96F-BD30-4D44-BD73-1FB390B0B6C6 - f3f91f9eabbaf99a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PDM_Dev.ProfileViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;PDM_Dev.ProfileViewController&gt;"
+                  moduleName = "PDM-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/pdm/pdm/ViewControllers/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "154"
+                  endingLineNumber = "154"
+                  offsetFromSymbolStart = "4268">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -258,6 +350,70 @@
             endingLineNumber = "65"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BE433FCF-0A65-4795-8495-27945DC890EB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "pdm/Backend/Constants.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "8"
+            endingLineNumber = "8"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "BE433FCF-0A65-4795-8495-27945DC890EB - 324418bf331a5cef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "globalinit_33_3FDC343A6C28DD7F8C1CB64BED68B437_func1"
+                  moduleName = "PDM-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/pdm/pdm/Backend/Constants.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "8"
+                  endingLineNumber = "8"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "BE433FCF-0A65-4795-8495-27945DC890EB - e733230c5b4ebad6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PDM_Dev.kbaseURL.unsafeMutableAddressor : Swift.String"
+                  moduleName = "PDM-Dev"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/pdm/pdm/Backend/Constants.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "8"
+                  endingLineNumber = "8"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FFD0C875-B123-4781-86FA-DC3FC0E53908"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "pdm/Backend/Constants.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

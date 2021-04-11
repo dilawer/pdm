@@ -4,12 +4,19 @@ import Foundation
 let kheader : [String : String] = ["Content-Type":"application/json"]
  
 //MARK: APP URLS
-//let kbaseURL = "https://admin.poddigitalmedia.com/api/"
+#if DEBUG
 let kbaseURL = "https://staging.poddigitalmedia.com/api/"
+let kMixpanelInitializeToken = "136a836213cf57fbc82b6372b9ce4a49"
+#else
+let kbaseURL = "https://admin.poddigitalmedia.com/api/"
+let kMixpanelInitializeToken = "136a836213cf57fbc82b6372b9ce4a49"
+#endif
+
+
 let kTermsUrl = "https://admin.poddigitalmedia.com/terms"
 let kPrivacyURL = "https://admin.poddigitalmedia.com/privacy-policy"
 let kContactUs = "https://poddigitalmedia.com/about-us/"
-let kMixpanelInitializeToken = "136a836213cf57fbc82b6372b9ce4a49"
+
 
 //MARK: Mixpanel Attributes
 let mp_avatar = "$avatar"

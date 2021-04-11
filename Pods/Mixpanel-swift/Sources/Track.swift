@@ -154,14 +154,4 @@ class Track {
         updatedTimedEvents.removeAll()
         return updatedTimedEvents
     }
-    
-    func clearTimedEvent(event: String?, timedEvents: InternalProperties) -> InternalProperties {
-        var updatedTimedEvents = timedEvents
-        guard let event = event, !event.isEmpty else {
-            Logger.error(message: "mixpanel cannot clear an empty timed event")
-            return updatedTimedEvents
-        }
-        updatedTimedEvents.removeValue(forKey: event)
-        return updatedTimedEvents
-    }
 }

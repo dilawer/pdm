@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAFFFC325B3F6E04EE68AA1ED30D154F"
-               BuildableName = "Pods_pdm_pdmUITests.framework"
-               BlueprintName = "Pods-pdm-pdmUITests"
+               BlueprintIdentifier = "A126C38918555B977260FAEA8BA6E475"
+               BuildableName = "Pods_PDM_pdmUITests.framework"
+               BlueprintName = "Pods-PDM-pdmUITests"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

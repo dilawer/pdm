@@ -26,7 +26,7 @@
 static NSString *const kFIRMessagingSubscribeServerHost =
     @"https://iid.googleapis.com/iid/register";
 
-NSString *FIRMessagingSubscriptionsServer(void) {
+NSString *FIRMessagingSubscriptionsServer() {
   static NSString *serverHost = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
