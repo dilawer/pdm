@@ -21,6 +21,7 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     @IBOutlet weak var lblPlayPause: UIButton!
     @IBOutlet weak var ivNextEpisode: UIImageView!
     @IBOutlet weak var lblNextName: UILabel!
+    @IBOutlet weak var cancelScreen: UIButton!
     @IBOutlet weak var btnRepeat: UIButton!
     @IBOutlet weak var btnBackward: UIButton!
     @IBOutlet weak var btnShufffle: UIButton!
@@ -33,7 +34,8 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     //MARK:- Actions
      
     @IBAction func btnShareClicked(_ sender: UIButton) {
-        let items = [activePod?.episodeFileLink] 
+        let shareurl = kdomainUrl+"sharedPodcast/"+podCastID+"/"+String(activePod!.episodeID)
+        let items = [shareurl]
         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
         present(ac, animated: true)
     }
@@ -101,6 +103,11 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
         }
         WebManager.getInstance(delegate: self)?.LikePodcast(parms: ["podcast_id":podCastID,"liked_status":status])
     }
+    @IBAction func actionCancel(_ sender: Any) {
+        
+        self.view.window?.rootViewController = Global.shared.mainTab
+        self.view.window?.makeKeyAndVisible()
+    }
     @IBAction func actionNext(_ sender: Any) {
         if let globalList = Global.shared.podDetails{
             if globalList.pods.count > Global.shared.currentPlayingIndex+1{
@@ -141,6 +148,7 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     var fromMin = false
     var shouldPlay = true
     var found = false
+    var showCancel = false
     var isLiked = false{
         didSet{
             if isLiked{
@@ -186,6 +194,9 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
         }
         if Global.shared.isLiked(id: podCastID){
             isLiked = true
+        }
+        if showCancel{
+            cancelScreen.isHidden = false
         }
     }
     override func viewWillAppear(_ animated: Bool) {

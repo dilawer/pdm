@@ -14,8 +14,9 @@ class SplashViewController: UIViewController {
 //        listOfFonts()
         let user = User.getInstance()
         if user?.isLogin == true{
-            let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController
+            let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? MainTab
             vcone?.modalPresentationStyle = .fullScreen
+            Global.shared.mainTab = vcone
             self.present(vcone!, animated: false, completion: nil)
         }else {
             if let vc = storyboard?.instantiateViewController(identifier: "mainViewController"){

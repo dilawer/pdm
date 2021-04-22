@@ -11,7 +11,8 @@ class WelcomeViewController: UIViewController {
 
     //MARK:- Action
     @IBAction func actionContinue(_ sender: Any) {
-        let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController;
+        let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? MainTab
+        Global.shared.mainTab = vcone
         self.navigationController?.pushViewController(vcone!, animated: true)
     }
     

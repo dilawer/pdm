@@ -25,6 +25,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     presentDetailViewController(compunents: components)
                     return
                 }
+                if components.path.contains("sharedPodcast"){
+                    let userInfo = User.getInstance()
+                    if userInfo?.isLogin == true {
+                        presentSelectedPodcastController(compunents: components)
+                    }else{
+                        // do nothing
+                    }
+                }
                 break
             }
         }
@@ -57,6 +65,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if components.path.contains("forget"){
             presentDetailViewController(compunents: components)
         }
+        if components.path.contains("sharedPodcast"){
+            let userInfo = User.getInstance()
+            if userInfo?.isLogin == true {
+                presentSelectedPodcastController(compunents: components)
+            }else{
+                // do nothing
+            }
+        }
     }
     
     func presentDetailViewController(compunents:URLComponents) {
@@ -65,6 +81,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         detailVC.compunents = compunents
         detailVC.modalPresentationStyle = .automatic
         self.window?.rootViewController = detailVC
+        window?.makeKeyAndVisible()
+    }
+    func presentSelectedPodcastController(compunents:URLComponents) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let selectedPodcastController = storyboard.instantiateViewController(withIdentifier: "LipServiceViewController") as? LipServiceViewController else { return }
+        let path = compunents.path
+        var array = path.split(separator: "/")
+        array = array.suffix(2)
+        selectedPodcastController.podCastID = String(array.first!)
+        selectedPodcastController.showCancel = true
+        selectedPodcastController.modalPresentationStyle = .fullScreen
+        self.window?.rootViewController = selectedPodcastController
         window?.makeKeyAndVisible()
     }
 

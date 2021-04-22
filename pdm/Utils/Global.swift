@@ -28,9 +28,11 @@ class Global {
     var userPodcastImageLink:String = ""
     var userPodcastName = ""
     var userPodcastCategory = ""
+    var userPodcastCategories = [Int]()
     var activeViewController = UIViewController()
     
     var Home:HomeViewController?
+    var mainTab:MainTab?
     var podCastOfTheWeek:Podcast!
     
     func showPlayer(frame:CGRect) -> UniversalPlayer{

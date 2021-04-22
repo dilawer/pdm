@@ -71,8 +71,9 @@ class SignInViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         let user = User.getInstance()
         if user?.isLogin == true{
-            let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? UITabBarController
+            let vcone = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") as? MainTab
             vcone?.modalPresentationStyle = .fullScreen
+            Global.shared.mainTab = vcone
             self.present(vcone!, animated: false, completion: nil)
 //            self.navigationController?.pushViewController(vcone!, animated: false)
         }

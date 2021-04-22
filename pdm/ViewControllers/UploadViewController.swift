@@ -37,10 +37,10 @@ class UploadViewController: UIViewController {
     @IBAction func actionUploadToPDM(_ sender: Any) {
         print("actionUploadToPDM global = \(Global.shared.userPodcastCategory), selected = \(String(selectedCategory))")
         if isValid(){
-            selectedCategoryArray.removeAll()
-            for cat in categoriesArray {
-                selectedCategoryArray.append(String(cat))
-            }
+//            selectedCategoryArray.removeAll()
+//            for cat in categoriesArray {
+//                selectedCategoryArray.append(String(cat))
+//            }
             let podcastID = Global.shared.userPodcastID
             let params:[String:Any] = [
                 "duration":String(sceonds),
@@ -49,17 +49,26 @@ class UploadViewController: UIViewController {
                 "episode_description":tfDescription.text ?? "",
                 "user_podcast_exist":podcastID == nil ? "0" : "1",
                 "podcast":podcastID == nil ? (tfPodcastName.text ?? "") : (podcastID ?? "0"),
-                "category":categoriesArray.description//podcastID == nil ? (String(selectedCategory)) : (Global.shared.userPodcastCategory)
+                "category":selectedCategoryArray.description//podcastID == nil ? (String(selectedCategory)) : (Global.shared.userPodcastCategory)
                 //"category":podcastID == nil ? "1" : "2"
 
             ]
             print("actionUploadToPDM params = \(params)")
             var file = [String:Data]()
-            if !isPodcastUploaded{
+            if imageData != nil {
                 file = ["podcast_icon":imageData ?? Data(),"file":audio ?? Data()]
-            } else {
-                file = ["podcast_icon":imageData ?? Data(),"file":audio ?? Data()]
+            }else{
+                if !isPodcastUploaded{
+                    file = ["podcast_icon":imageData ?? Data(), "file":audio ?? Data()]
+                }else{
+                    file = ["file":audio ?? Data()]
+                }
             }
+//            if !isPodcastUploaded{
+                
+//            } else {
+//                file = ["podcast_icon":imageData ?? Data(),"file":audio ?? Data()]
+//            }
             print("actionUploadToPDM file = \(file)")
             WebManager.getInstance(delegate: self)?.uploadPodcast(parms: params, file: file)
         }
@@ -75,9 +84,9 @@ class UploadViewController: UIViewController {
     
     //MARK:- Veriable
     var array = [Float]()
-    var categoriesArray = [Int]()
-    var selectedCategoryArray = [String]()
-    var categoriesIndexArray = [Int]()
+//    var categoriesArray = [Int]()
+    var selectedCategoryArray = [Int]()
+//    var categoriesIndexArray = [Int]()
     var audio:Data?
     var length = "00:00:00"
     var sceonds:Int = 0
@@ -106,13 +115,14 @@ class UploadViewController: UIViewController {
             tfPodcastName.text = Global.shared.userPodcastName
             tfPodcastName.alpha = 0.5
             tfPodcastName.isUserInteractionEnabled = false
-            for (index,i) in categories.enumerated(){
-                if String(i.id ?? -1) == Global.shared.userPodcastCategory {
-                    selectdIndex = index
-                    collectionCat.reloadData()
-                    break
-                }
-            }
+            self.selectedCategoryArray = Global.shared.userPodcastCategories
+//            for (index,i) in categories.enumerated(){
+//                if String(i.id ?? -1) == Global.shared.userPodcastCategory {
+//                    selectdIndex = index
+//                    collectionCat.reloadData()
+//                    break
+//                }
+//            }
             viewImage.alpha = 0
             lblImage.alpha = 0
         }
@@ -148,7 +158,7 @@ extension UploadViewController:UICollectionViewDelegate,UICollectionViewDataSour
 //        if indexPath.row == selectdIndex{
 //            isSelected = true
 //        }
-        if categoriesIndexArray.contains(indexPath.row) {
+        if selectedCategoryArray.contains(category.id!) {
             cell.catSelected = true
         }
         else {
@@ -158,24 +168,58 @@ extension UploadViewController:UICollectionViewDelegate,UICollectionViewDataSour
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-   
-        if categoriesIndexArray.contains(indexPath.row) {
-            let index = categoriesIndexArray.index(of: indexPath.row)
-            categoriesIndexArray.remove(at: index ?? 0)
+        let categoryID = categories[indexPath.row].id
+        if selectedCategoryArray.contains(categoryID!) {
+            selectedCategoryArray.remove(at: selectedCategoryArray.firstIndex(of: categoryID!)!)
             
-            let catIndex = categoriesArray.index(of: indexPath.row)
-            categoriesArray.remove(at: catIndex ?? 0)
-            collectionView.reloadItems(at: [indexPath])
-            
+        }else{
+            selectedCategoryArray.append(categoryID!)
         }
-        else {
-            categoriesIndexArray.append(indexPath.row)
-            categoriesArray.append(categories[indexPath.row].id ?? 0)
+        
+//        if categoriesIndexArray.contains(indexPath.row) {
+//            let index = categoriesIndexArray.index(of: indexPath.row)
+//            categoriesIndexArray.remove(at: index ?? 0)
+//
+//            let catIndex = categoriesArray.index(of: indexPath.row)
+//            categoriesArray.remove(at: catIndex ?? 0)
+//
+//        }
+//        else {
+//            categoriesIndexArray.append(indexPath.row)
+//            categoriesArray.append(categories[indexPath.row].id ?? 0)
+//        }
+        
+        UIView.setAnimationsEnabled(false)
+        let selectedCell = collectionView.cellForItem(at: indexPath)
+        let visibleRect = collectionView.convert(collectionView.bounds, to: selectedCell)
+
+//        selectedObjects.insert(allObjects[indexPath.item], at: 0)
+        collectionView.performBatchUpdates({
             collectionView.reloadItems(at: [indexPath])
+        }) { (finished) in
+            collectionView.scrollToItem(at: indexPath, at: .right, animated: false)
         }
-        selectdIndex = indexPath.row
-        selectedCategory = categories[indexPath.row].id ?? 0
-        self.collectionCat.reloadData()
+        UIView.setAnimationsEnabled(true)
+        
+        
+//        [myCollectionView reloadItemsAtIndexPaths:[myCollectionView indexPathsForVisibleItems]];
+//        let cell = collectionCat.dequeueReusableCell(withReuseIdentifier: "SmallCategoryCell", for: indexPath) as! SmallCategoryCell
+//        if categoriesIndexArray.contains(indexPath.row) {
+//            cell.catSelected = true
+//        }
+//        else {
+//            cell.catSelected = false
+//        }
+
+        
+        
+//        let selectedCell = collectionView.cellForItem(at: indexPath) as! SmallCategoryCell
+//        if categoriesIndexArray.contains(indexPath.row) {
+//            selectedCell.catSelected = true
+//        }
+//        else {
+//            selectedCell.catSelected = false
+//        }
     }
 }
 
@@ -201,7 +245,6 @@ extension UploadViewController: WebManagerDelegate{
             let successresponse = result.object(forKey: "success")
             if successresponse != nil {
                 if(successresponse as! Bool == false) {
-                    print("successResponse LIne 167 = \(result.object(forKey: "message")! as! String)")
                     let alert = UIAlertController(title: "Error", message: (result.object(forKey: "message")! as! String), preferredStyle: UIAlertController.Style.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
@@ -210,19 +253,20 @@ extension UploadViewController: WebManagerDelegate{
                         let jsonData = try JSONSerialization.data(withJSONObject: result, options: .prettyPrinted)
                         if let searchResult:SearchModel = self.handleResponse(data: jsonData){
                             if let listCat = searchResult.data.categories{
-                                if self.isPodcastUploaded{
-                                    for (index,i) in listCat.enumerated(){
-                                        if String(i.id ?? -1) == Global.shared.userPodcastCategory {
-                                            selectdIndex = 0
-                                            categories.append(i)
-                                            collectionCat.reloadData()
-                                            break
-                                        }
-                                    }
-                                }else {
+//                                if self.isPodcastUploaded{
+//                                    for (index,i) in listCat.enumerated(){
+//                                        if String(i.id ?? -1) == Global.shared.userPodcastCategory {
+//                                            selectdIndex = 0
+//                                            categories.append(i)
+//                                            collectionCat.reloadData()
+//                                            break
+//                                        }
+//                                    }
+//                                }else {
                                     categories = listCat
-                                    print("categories = \(categories)")
-                                }
+                                    collectionCat.reloadData()
+
+//                                }
                             }
                         } else if(successresponse as! Bool == true){
                             if let msg = result.object(forKey: "message") as? String , msg.contains("successfull"){

@@ -19,15 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        #if LOCAL
-            print("BUILD = Local Envioment build")
-        #elseif DEV
-            print("BUILD = DEV Envioment build")
-        #elseif QA
-            print("BUILD = QA Envioment build")
-        #elseif PROD
-            print("BUILD = PROD Envioment build")
-        #endif
         GIDSignIn.sharedInstance().clientID = Global.shared.clientID
         IQKeyboardManager.shared.enable = true
         let audioSession = AVAudioSession.sharedInstance()

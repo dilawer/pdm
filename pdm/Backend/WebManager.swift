@@ -200,7 +200,8 @@ class WebManager: NSObject {
                 headers = [
                     "Authorization": "Bearer \(User.getInstance()?.access_token ?? "")",
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Category": "Multiple"
                 ]
             }
             

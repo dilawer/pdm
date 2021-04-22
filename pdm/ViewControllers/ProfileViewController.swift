@@ -418,7 +418,7 @@ extension ProfileViewController: WebManagerDelegate {
                                     Global.shared.userPodcastID = String(podCastID)
                                     Global.shared.userPodcastImageLink = userPodcast["podcast_icon"] as? String ?? ""
                                     Global.shared.userPodcastName = userPodcast["podcast_name"] as? String ?? ""
-                                    Global.shared.userPodcastCategory = String(userPodcast["category_id"] as? Int ?? 0)
+                                    Global.shared.userPodcastCategories = userPodcast["category_id"] as! [Int]
                                 }
                             }
                         }
