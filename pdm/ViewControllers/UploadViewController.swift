@@ -404,6 +404,12 @@ extension UploadViewController{
             Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Description is Required", preferredStyle: .alert, buttonText: "OK")
             return false
         }
+        if selectedCategoryArray.count == 0 {
+            Utility.showAlertWithSingleOption(controller: self, title: "Error", message: "Please select at least one category.", preferredStyle: .alert, buttonText: "OK")
+            return false
+        }
+        
+        
         return true
     }
 }

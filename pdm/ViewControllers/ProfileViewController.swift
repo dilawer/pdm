@@ -56,6 +56,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
                 let user = User.getInstance()
                 user?.removeUser()
                 user?.saveUser()
+                Global.shared.userPodcastImageLink = ""
+                Global.shared.userPodcastCategories = [Int]()
                 /*
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 let navVC = appDelegate.window?.rootViewController as? UINavigationController

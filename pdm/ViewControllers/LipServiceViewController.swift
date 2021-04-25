@@ -34,8 +34,9 @@ class LipServiceViewController: UIViewController, UICollectionViewDelegate,UICol
     //MARK:- Actions
      
     @IBAction func btnShareClicked(_ sender: UIButton) {
-        let shareurl = kdomainUrl+"sharedPodcast/"+podCastID+"/"+String(activePod!.episodeID)
-        let items = [shareurl]
+//        let shareurl = kdomainUrl+"sharedPodcast/"+podCastID+"/"+String(activePod!.episodeID)
+//        let items = [shareurl]
+        let items = [self]
         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
         present(ac, animated: true)
     }
@@ -386,6 +387,17 @@ extension LipServiceViewController:WebManagerDelegate{
     }
 }
 
+//MARK:- UIActivityViewController
+extension LipServiceViewController: UIActivityItemSource{
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return "Pod Digital Media"
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        let shareurl = kdomainUrl+"sharedPodcast/"+podCastID+"/"+String(activePod!.episodeID)
+        return shareurl
+    }
+}
 //MARK:- Music Player
 extension LipServiceViewController:MusicDelgate{
     func playerStausChanged(isPlaying: Bool) {

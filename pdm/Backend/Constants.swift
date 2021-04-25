@@ -6,11 +6,12 @@ let kheader : [String : String] = ["Content-Type":"application/json"]
 //MARK: APP URLS
 #if DEBUG
 let kbaseURL = "https://staging.poddigitalmedia.com/api/"
-let kdomainUrl = "https://staging.poddigitalmedia.com/"
+let kdomainUrl = "https://staging.poddigitalmedia.com/api/"
 let kMixpanelInitializeToken = "136a836213cf57fbc82b6372b9ce4a49"
 #else
-let kbaseURL = "https://admin.poddigitalmedia.com/api/"
-let kdomainUrl = "https://admin.poddigitalmedia.com/"
+let kbaseURL = "https://staging.poddigitalmedia.com/api/"
+//let kbaseURL = "https://admin.poddigitalmedia.com/api/"
+let kdomainUrl = "https://admin.poddigitalmedia.com/api/"
 let kMixpanelInitializeToken = "136a836213cf57fbc82b6372b9ce4a49"
 #endif
 
